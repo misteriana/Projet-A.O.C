@@ -1,2 +1,2 @@
 Taches a faire:
--
+- prototype base fidelite
