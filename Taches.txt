@@ -1,0 +1,8 @@
+Taches a faire:
+- Architecture:
+	-diagramme
+	-prototype base/Balsamique
+- Code:
+	-classes
+	-interfaces
+
