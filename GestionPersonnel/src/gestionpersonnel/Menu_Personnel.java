@@ -6,6 +6,14 @@
 package gestionpersonnel;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,11 +21,14 @@ import java.awt.event.ActionEvent;
  */
 public class Menu_Personnel extends javax.swing.JFrame {
 
+    PersonnelDAO p = new PersonnelDAO();
+    
     /**
      * Creates new form Menu_Personnel
      */
-    public Menu_Personnel() {
+    public Menu_Personnel() throws IOException, ParseException {
         initComponents();
+        recupererDonnees();
     }
     
     /**
@@ -71,6 +82,12 @@ public class Menu_Personnel extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Nom");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Prenom");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Date d'entrée");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Id");
+        }
 
         jButton1.setText("Retour");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +213,27 @@ public class Menu_Personnel extends javax.swing.JFrame {
         ae.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+
+    
+    public void recupererDonnees() throws IOException, ParseException {
+        p.recupererPersonnels();
+        Object[][] data = new Object[p.personnels.size()][4];
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        for (int i=0; i < p.personnels.size(); i++) {
+            data[i][0] = p.personnels.get(i).getName();
+            data[i][1] = p.personnels.get(i).getPrenom();
+            String dateE = df.format(p.personnels.get(i).getDateE());
+            data[i][2] = dateE;
+            data[i][3] = p.personnels.get(i).getId();
+        }
+        
+        jTable1.setModel(new DefaultTableModel(data, new String [] {
+                "Nom", "Prenom", "Date d'entrée", "Id"
+            }));
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -226,7 +264,13 @@ public class Menu_Personnel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu_Personnel().setVisible(true);
+                try {
+                    new Menu_Personnel().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
