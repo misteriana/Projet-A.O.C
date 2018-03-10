@@ -5,17 +5,22 @@
  */
 package gestionpersonnel;
 
+import java.awt.Frame;
+
 /**
  *
  * @author jonathandetrier
  */
 public class Add_Employe extends javax.swing.JDialog {
 
+    private Frame parent;
+    
     /**
      * Creates new form Add_Employe
      */
     public Add_Employe(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.parent = parent;
         initComponents();
     }
 
@@ -138,7 +143,7 @@ public class Add_Employe extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(52, 52, 52)
@@ -197,7 +202,9 @@ public class Add_Employe extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Verification_Add_Employe vae = new Verification_Add_Employe(parent, rootPaneCheckingEnabled, this);
+        vae.setAlwaysOnTop(true);
+        vae.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -5,6 +5,8 @@
  */
 package gestionpersonnel;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author jonathandetrier
@@ -17,7 +19,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     public Menu_Personnel() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,7 +182,9 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Accueil accueil = new Accueil();
+        accueil.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -188,7 +192,8 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Add_Employe ae = new Add_Employe(this, rootPaneCheckingEnabled);
+        ae.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

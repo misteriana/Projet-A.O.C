@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 
 /**
@@ -28,11 +29,14 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
      */
     public static final int RET_OK = 1;
 
+    private JDialog ouvreur;
+    
     /**
      * Creates new form Verification_Add_Employe
      */
-    public Verification_Add_Employe(java.awt.Frame parent, boolean modal) {
+    public Verification_Add_Employe(java.awt.Frame parent, boolean modal, JDialog ouvreur) {
         super(parent, modal);
+        this.ouvreur = ouvreur;
         initComponents();
 
         // Close the dialog when Esc is pressed
@@ -126,11 +130,12 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        doClose(RET_OK);
+        this.ouvreur.dispose();
+        this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        doClose(RET_CANCEL);
+        this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
@@ -176,7 +181,7 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Verification_Add_Employe dialog = new Verification_Add_Employe(new javax.swing.JFrame(), true);
+                Verification_Add_Employe dialog = new Verification_Add_Employe(new javax.swing.JFrame(), true, new JDialog());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
