@@ -8,8 +8,11 @@ package gestionpersonnel;
 import java.util.Date;
 
 /**
- *
+ * <b> Cette classe définit ce qu'est un "personnel" et permet de récupérer les objets depuis les fichiers CSV </b>
+ * 
  * @author jonathandetrier
+ * @since v 1.0
+ * 
  */
 public class Personnel {
     
@@ -17,6 +20,33 @@ public class Personnel {
     private String nom;
     private String prenom;
     private Date dateEntree;
-    private String[] competences;
+    private Competence[] competences;
     
+    public Personnel(int id, String n, String p, Date d) {
+        this.id = id;
+        this.nom = n;
+        this.prenom = p;
+        this.dateEntree = d;
+        this.competences = new Competence[10];
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public Date getDateE() {
+        return dateEntree;
+    }
+
+    public void addCompetences() {
+    
+    }
 }
