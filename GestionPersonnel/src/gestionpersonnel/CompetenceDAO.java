@@ -2,24 +2,19 @@
 package gestionpersonnel;
 
 import com.opencsv.CSVReader;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
  * <b> Cette classe permet de récupérer la liste des compétences depuis un fichier csv </b>
  * 
- * @author jonathan detrier
+ * @author cédric greufeille
  */
 public class CompetenceDAO {
     
@@ -29,7 +24,7 @@ public class CompetenceDAO {
     List<Competence> competences = new ArrayList<>();
     
     /**
-     * @author jonathan detrier
+     * @author cédric greufeille
      * @throws java.io.FileNotFoundException
      * @throws java.io.IOException
      * @since v 1.0
@@ -57,6 +52,14 @@ public class CompetenceDAO {
         }
     }
     
+    /**
+     * 
+     * Permet de vérifier si une compétence de la liste a déjà cet identifiant
+     * @author cédric greufeille
+     * @param c : Compérence
+     * @return Le booléen disant si il est possible d'ajouter c dans la liste
+     * @since v 1.0
+     */
     public boolean canAddToList(Competence c) {
         for (int i=0; i<this.competences.size(); i++) { 
             if (c.getId().equals(this.competences.get(i).getId())) {
@@ -66,6 +69,12 @@ public class CompetenceDAO {
         return true;
     }
     
+    /**
+     * Permet d'afficher à l'écran le contenu de la liste
+     * 
+     * @author cédric greufeille
+     * @since v 1.0
+     */
     public void lireCompetences() {
         for (Competence c : competences) {
             System.out.println("ID : " + c.getId() + " | Nom : " + c.getName() + " | Nom anglais : " + c.getEnglishname());

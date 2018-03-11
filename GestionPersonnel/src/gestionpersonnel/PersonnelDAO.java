@@ -2,8 +2,6 @@
 package gestionpersonnel;
 
 import com.opencsv.CSVReader;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -14,12 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,7 +24,7 @@ import java.util.logging.Logger;
 public class PersonnelDAO {
     
     /**
-     * Cette liste contiendra l'ensemble des compétences existantes
+     * Cette liste contiendra l'ensemble des personnels existantes
      */
     List<Personnel> personnels = new ArrayList<>();
     
@@ -68,6 +62,12 @@ public class PersonnelDAO {
         }
     }
     
+    /**
+     * 
+     * Permet de vérifier si un personnel de la liste a déjà cet identifiant
+     * @author jonathan detrier
+     * @since v 1.0
+     */
     public boolean canAddToList(Personnel p) {
         for (int i=0; i<this.personnels.size(); i++) { 
             if (p.getId() == this.personnels.get(i).getId()) {
@@ -77,6 +77,12 @@ public class PersonnelDAO {
         return true;
     }
     
+    /**
+     * Permet d'afficher à l'écran le contenu de la liste
+     * 
+     * @author jonathan detrier
+     * @since v 1.0
+     */
     public void lirePersonnels() {
         for (Personnel p : personnels) {
             System.out.println("ID : " + p.getId() + " | Nom : " + p.getName() + " | Prénom : " + p.getPrenom() + " | Date d'entrée : " + p.getDateE());

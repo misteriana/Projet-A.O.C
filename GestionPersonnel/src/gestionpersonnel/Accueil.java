@@ -5,9 +5,14 @@
  */
 package gestionpersonnel;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
- * @author Anseea
+ * @author anseea popescu
  */
 public class Accueil extends javax.swing.JFrame {
 
@@ -150,8 +155,16 @@ public class Accueil extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Menu_Personnel mp = new Menu_Personnel();
-        mp.setVisible(true);
+        Menu_Personnel mp;
+        try {
+            mp = new Menu_Personnel();
+            mp.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

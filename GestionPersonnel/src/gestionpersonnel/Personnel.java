@@ -19,14 +19,14 @@ public class Personnel {
     private int id;
     private String nom;
     private String prenom;
-    private Date dateEntree;
+    private Date dateE;
     private Competence[] competences;
     
     public Personnel(int id, String n, String p, Date d) {
         this.id = id;
         this.nom = n;
         this.prenom = p;
-        this.dateEntree = d;
+        this.dateE = d;
         this.competences = new Competence[10];
     }
 
@@ -43,7 +43,7 @@ public class Personnel {
     }
 
     public Date getDateE() {
-        return dateEntree;
+        return dateE;
     }
 
     public void addCompetences() {

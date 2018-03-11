@@ -16,7 +16,7 @@ import javax.swing.KeyStroke;
 
 /**
  *
- * @author jonathandetrier
+ * @author jonathan detrier
  */
 public class Verification_Add_Employe extends javax.swing.JDialog {
 

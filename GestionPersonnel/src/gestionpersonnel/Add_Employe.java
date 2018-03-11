@@ -9,7 +9,7 @@ import java.awt.Frame;
 
 /**
  *
- * @author jonathandetrier
+ * @author jonathan detrier
  */
 public class Add_Employe extends javax.swing.JDialog {
 

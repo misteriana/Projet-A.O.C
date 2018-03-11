@@ -1,11 +1,10 @@
 
 package gestionpersonnel;
 
-import com.opencsv.bean.CsvBindByPosition;
 
 /**
  *
- * @author jonathandetrier
+ * @author cédric greufeille
  * @since v 1.0
  */
 public class Competence {

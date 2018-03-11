@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author jonathandetrier
+ * @author jonathan detrier
  */
 public class Menu_Personnel extends javax.swing.JFrame {
 
