@@ -38,6 +38,7 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
         super(parent, modal);
         this.ouvreur = ouvreur;
         initComponents();
+        this.setResizable(false);
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";

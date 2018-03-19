@@ -22,12 +22,12 @@ import javax.swing.table.DefaultTableModel;
 public class Menu_Personnel extends javax.swing.JFrame {
 
     PersonnelDAO p = new PersonnelDAO();
-    
     /**
      * Creates new form Menu_Personnel
      */
     public Menu_Personnel() throws IOException, ParseException {
         initComponents();
+        this.setResizable(false);
         recupererDonnees();
     }
     
@@ -209,8 +209,12 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Add_Employe ae = new Add_Employe(this, rootPaneCheckingEnabled);
-        ae.setVisible(true);
+        try {
+            Add_Employe ae = new Add_Employe(this, rootPaneCheckingEnabled);
+            ae.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
 

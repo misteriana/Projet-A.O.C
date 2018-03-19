@@ -21,6 +21,7 @@ public class Accueil extends javax.swing.JFrame {
      */
     public Accueil() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**

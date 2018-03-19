@@ -5,7 +5,9 @@
  */
 package gestionpersonnel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <b> Cette classe définit ce qu'est un "personnel" et permet de récupérer les objets depuis les fichiers CSV </b>
@@ -20,14 +22,13 @@ public class Personnel {
     private String nom;
     private String prenom;
     private Date dateE;
-    private Competence[] competences;
+    public List<Competence> competences = new ArrayList<>();
     
     public Personnel(int id, String n, String p, Date d) {
         this.id = id;
         this.nom = n;
         this.prenom = p;
         this.dateE = d;
-        this.competences = new Competence[10];
     }
 
     public int getId() {
@@ -45,8 +46,5 @@ public class Personnel {
     public Date getDateE() {
         return dateE;
     }
-
-    public void addCompetences() {
     
-    }
 }

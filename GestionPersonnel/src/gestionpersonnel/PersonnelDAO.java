@@ -5,6 +5,7 @@ import com.opencsv.CSVReader;
 
 import java.io.IOException;
 import java.io.Reader;
+import static java.lang.Thread.sleep;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -61,16 +62,73 @@ public class PersonnelDAO {
             }
         }
     }
+        
+    /**
+     *
+     * @throws IOException
+     * @throws ParseException
+     */
+    public void recupererCompetencesPersonnels() throws IOException, ParseException  {
+        
+        Reader r = Files.newBufferedReader(Paths.get("src/ressources/competences_personnel.csv"));
+        CompetenceDAO cDAO = new CompetenceDAO();
+        
+        cDAO.recupererCompetences();
+        /**
+         * CSVReader provient de la librairie open csv, qui facilite l'accès aux fichiers csv
+         */
+        CSVReader c = new CSVReader(r, ';');
+        /**
+         * Ce tableau va récupérer, ligne par ligne, le contenu du fichier csv
+         */
+        List<String[]> lines = c.readAll();
+        lines.remove(0);
+        for (String[] l : lines) {
+            for (Personnel pers : personnels) {
+                if (pers.getId() == Integer.parseInt(l[0])) {
+                    for (int i = 1; i < l.length; i++) {
+                        String competence = l[i];
+                        for (Competence comp : cDAO.competences) {
+                            if (comp.getId().equals(competence) && canAddToListComp(comp, pers)) { 
+                                pers.competences.add(comp);       
+                            }
+                        }
+                    }
+                }
+            }
+        
+        }
+    }
     
     /**
      * 
      * Permet de vérifier si un personnel de la liste a déjà cet identifiant
      * @author jonathan detrier
+     * @param p : Personnel
+     * @return Le booléen disant si on peut ajouter l'élément à la liste
      * @since v 1.0
      */
     public boolean canAddToList(Personnel p) {
         for (int i=0; i<this.personnels.size(); i++) { 
             if (p.getId() == this.personnels.get(i).getId()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * 
+     * Permet de vérifier si une compétence de la liste a déjà cet identifiant
+     * @author jonathan detrier
+     * @param c : Competence
+     * @param p : Personnel
+     * @return Le booléen disant si on peut ajouter l'élément à la liste
+     * @since v 1.0
+     */
+    public boolean canAddToListComp(Competence c, Personnel p) {
+        for (Competence co : p.competences) {
+            if (c.getId().equals(co.getId())) {
                 return false;
             }
         }
@@ -89,11 +147,19 @@ public class PersonnelDAO {
         }
     }
     
-    public static void main (String[] args) throws IOException, ParseException{
+    public void lireCompPers() {
+        for (Personnel p : personnels) {
+            for (Competence compt : p.competences) {
+                System.out.println(p.getName() + " " + p.getPrenom() + " a la compétence " + compt.getName());
+            }
+        }
+    }
+    
+    public static void main (String[] args) throws IOException, ParseException, InterruptedException{
         PersonnelDAO pDAO = new PersonnelDAO();
         pDAO.recupererPersonnels();
-        pDAO.recupererPersonnels();
-        pDAO.lirePersonnels();
+        pDAO.recupererCompetencesPersonnels();
+        pDAO.lireCompPers();
         
     }
     
