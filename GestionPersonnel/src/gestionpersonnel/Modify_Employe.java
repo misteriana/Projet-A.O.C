@@ -7,28 +7,43 @@ package gestionpersonnel;
 
 import java.awt.Frame;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.ListModel;
 
 
 /**
  *
  * @author jonathan detrier
  */
-public class Add_Employe extends javax.swing.JDialog {
+public class Modify_Employe extends javax.swing.JDialog {
 
-    private Frame parent;
+    private JFrame parent;
+    private String id;
+    private String name;
+    private String prenom;
+    private String dateE;
+    private DefaultListModel modele;
     
     /**
      * Creates new form Add_Employe
      * @param parent
      * @param modal
      */
-    public Add_Employe(JFrame parent, boolean modal) throws IOException {
+    public Modify_Employe(JFrame parent, boolean modal, String id) throws IOException, ParseException {
         super(parent, modal);
         this.parent = parent;
+        this.id = id;
+        this.modele = new DefaultListModel();
         initComponents();
+        recupererCompetencesPersonnelParent();
         this.setResizable(false);
         recupererCompetences();
     }
@@ -43,7 +58,6 @@ public class Add_Employe extends javax.swing.JDialog {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -54,18 +68,12 @@ public class Add_Employe extends javax.swing.JDialog {
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new JList(modele);
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
 
         setTitle("Ajouter un employé");
-
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Nom");
 
@@ -147,9 +155,9 @@ public class Add_Employe extends javax.swing.JDialog {
                             .addComponent(jLabel2))
                         .addGap(102, 102, 102)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(jTextField1)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField3))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
@@ -180,8 +188,8 @@ public class Add_Employe extends javax.swing.JDialog {
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,16 +210,12 @@ public class Add_Employe extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
-
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        addCompetenceToPersonnel();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -232,9 +236,40 @@ public class Add_Employe extends javax.swing.JDialog {
         CompetenceDAO c = new CompetenceDAO();
         c.recupererCompetences();
         for (Competence co : c.competences) {
-            String s = co.getId() + " | " + co.getName();
+            String s = co.getName();
             jComboBox1.addItem(s);
         }
+    }
+    
+    public void recupererCompetencesPersonnelParent() throws IOException, ParseException {
+        PersonnelDAO p = new PersonnelDAO();
+        p.recupererPersonnels();
+        p.recupererCompetencesPersonnels();
+        Vector<String> model = new Vector<>();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (Personnel pe : p.personnels) {
+            if (pe.getId() == Integer.parseInt(this.id)) {
+                this.name = pe.getName();
+                this.prenom = pe.getPrenom();
+                this.dateE = df.format(pe.getDateE());
+                jTextField1.setText(this.name);
+                jTextField2.setText(this.prenom);
+                jTextField3.setText(this.dateE);
+                for (Competence c : pe.competences) {
+                    modele.addElement(c.getName());
+                }
+            }
+        }
+        jList1.setModel(modele);
+    }
+    
+    public void addCompetenceToPersonnel() {
+        String text = jComboBox1.getSelectedItem().toString();
+        if (!modele.contains(text)) {
+            modele.addElement(text);
+            jList1.setModel(modele);
+        }
+        
     }
     
     /**
@@ -254,21 +289,22 @@ public class Add_Employe extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Add_Employe dialog = new Add_Employe(new javax.swing.JFrame(), true);
+                    Modify_Employe dialog = new Modify_Employe(new javax.swing.JFrame(), true, new String());
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent e) {
@@ -277,7 +313,9 @@ public class Add_Employe extends javax.swing.JDialog {
                     });
                     dialog.setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(Add_Employe.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Modify_Employe.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Modify_Employe.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -288,7 +326,6 @@ public class Add_Employe extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -299,5 +336,6 @@ public class Add_Employe extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

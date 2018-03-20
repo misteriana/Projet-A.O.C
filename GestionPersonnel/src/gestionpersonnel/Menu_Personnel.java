@@ -30,8 +30,10 @@ import javax.swing.table.TableRowSorter;
  */
 public class Menu_Personnel extends javax.swing.JFrame {
 
-    PersonnelDAO p = new PersonnelDAO();
-    TableRowSorter<TableModel> sorter;
+    private PersonnelDAO p = new PersonnelDAO();
+    private TableRowSorter<TableModel> sorter;
+    private String id = null;
+    
     /**
      * Creates new form Menu_Personnel
      */
@@ -137,14 +139,19 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
         jLabel3.setText("Compétences de l'employé");
 
-        jButton3.setText("Ajouter");
+        jButton3.setText("Modifier");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Modifier");
+        jButton2.setText("Ajouter");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,12 +180,12 @@ public class Menu_Personnel extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(116, 116, 116))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(59, 59, 59))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(64, 64, 64))))
         );
         layout.setVerticalGroup(
@@ -206,9 +213,9 @@ public class Menu_Personnel extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))
-                        .addGap(7, 7, 7))))
+                            .addComponent(jButton2)
+                            .addComponent(jButton3))
+                        .addGap(16, 16, 16))))
         );
 
         pack();
@@ -226,9 +233,11 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-            Add_Employe ae = new Add_Employe(this, rootPaneCheckingEnabled);
+            Modify_Employe ae = new Modify_Employe(this, true, this.id);
             ae.setVisible(true);
         } catch (IOException ex) {
+            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -260,6 +269,10 @@ public class Menu_Personnel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField1KeyReleased
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     
     
     public void recupererDonnees() throws IOException, ParseException {
@@ -281,7 +294,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     
     public void recupererCompetencesPersonnel() throws IOException, ParseException {
         p.recupererCompetencesPersonnels();
-        String id = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        id = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
         Vector<String> model = new Vector<>();
         for (Personnel p : p.personnels) {
             if (p.getId() == Integer.parseInt(id)) {
