@@ -270,7 +270,14 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+            Add_Employe ae = new Add_Employe(this, true);
+            ae.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     

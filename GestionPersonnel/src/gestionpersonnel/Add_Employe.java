@@ -16,12 +16,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 
-
 /**
  *
  * @author jonathan detrier
  */
-public class Modify_Employe extends javax.swing.JDialog {
+public class Add_Employe extends javax.swing.JDialog {
 
     private JFrame parent;
     private String id;
@@ -35,13 +34,11 @@ public class Modify_Employe extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public Modify_Employe(JFrame parent, boolean modal, String id) throws IOException, ParseException {
+    public Add_Employe(JFrame parent, boolean modal) throws IOException, ParseException {
         super(parent, modal);
         this.parent = parent;
-        this.id = id;
         this.modele = new DefaultListModel();
         initComponents();
-        recupererCompetencesPersonnelParent();
         this.setResizable(false);
         recupererCompetences();
     }
@@ -105,11 +102,6 @@ public class Modify_Employe extends javax.swing.JDialog {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jButton2.setText("Enregistrer");
@@ -210,9 +202,9 @@ public class Modify_Employe extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jButton2))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -254,28 +246,6 @@ public class Modify_Employe extends javax.swing.JDialog {
         }
     }
     
-    public void recupererCompetencesPersonnelParent() throws IOException, ParseException {
-        PersonnelDAO p = new PersonnelDAO();
-        p.recupererPersonnels();
-        p.recupererCompetencesPersonnels();
-        Vector<String> model = new Vector<>();
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (Personnel pe : p.personnels) {
-            if (pe.getId() == Integer.parseInt(this.id)) {
-                this.name = pe.getName();
-                this.prenom = pe.getPrenom();
-                this.dateE = df.format(pe.getDateE());
-                jTextField1.setText(this.name);
-                jTextField2.setText(this.prenom);
-                jTextField3.setText(this.dateE);
-                for (Competence c : pe.competences) {
-                    modele.addElement(c.getName());
-                }
-            }
-        }
-        jList1.setModel(modele);
-    }
-    
     public void addCompetenceToPersonnel() {
         String text = jComboBox1.getSelectedItem().toString();
         if (!modele.contains(text)) {
@@ -308,14 +278,16 @@ public class Modify_Employe extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -323,7 +295,7 @@ public class Modify_Employe extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Modify_Employe dialog = new Modify_Employe(new javax.swing.JFrame(), true, new String());
+                    Add_Employe dialog = new Add_Employe(new javax.swing.JFrame(), true);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent e) {
@@ -332,9 +304,9 @@ public class Modify_Employe extends javax.swing.JDialog {
                     });
                     dialog.setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(Modify_Employe.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Add_Employe.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
-                    Logger.getLogger(Modify_Employe.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Add_Employe.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
