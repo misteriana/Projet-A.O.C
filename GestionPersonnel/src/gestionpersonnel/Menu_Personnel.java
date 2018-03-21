@@ -7,6 +7,8 @@ package gestionpersonnel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -67,6 +69,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestion du personnel");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -235,6 +238,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         try {
             Modify_Employe ae = new Modify_Employe(this, true, this.id);
             ae.setVisible(true);
+            recupererDonnees();
         } catch (IOException ex) {
             Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -284,14 +288,14 @@ public class Menu_Personnel extends javax.swing.JFrame {
     
     public void recupererDonnees() throws IOException, ParseException {
         p.recupererPersonnels();
-        Object[][] data = new Object[p.personnels.size()][4];
+        Object[][] data = new Object[PersonnelDAO.personnels.size()][4];
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i=0; i < p.personnels.size(); i++) {
-            data[i][0] = p.personnels.get(i).getName();
-            data[i][1] = p.personnels.get(i).getPrenom();
-            String dateE = df.format(p.personnels.get(i).getDateE());
+        for (int i=0; i < PersonnelDAO.personnels.size(); i++) {
+            data[i][0] = PersonnelDAO.personnels.get(i).getName();
+            data[i][1] = PersonnelDAO.personnels.get(i).getPrenom();
+            String dateE = df.format(PersonnelDAO.personnels.get(i).getDateE());
             data[i][2] = dateE;
-            data[i][3] = p.personnels.get(i).getId();
+            data[i][3] = PersonnelDAO.personnels.get(i).getId();
         }
         
         jTable1.setModel(new DefaultTableModel(data, new String [] {
@@ -303,7 +307,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         p.recupererCompetencesPersonnels();
         id = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
         Vector<String> model = new Vector<>();
-        for (Personnel p : p.personnels) {
+        for (Personnel p : PersonnelDAO.personnels) {
             if (p.getId() == Integer.parseInt(id)) {
                 for (Competence c : p.competences) {
                     model.add(c.getName());

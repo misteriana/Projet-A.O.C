@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -72,7 +73,7 @@ public class Modify_Employe extends javax.swing.JDialog {
         jTextField3 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
 
-        setTitle("Ajouter un employé");
+        setTitle("Modifier un employé");
 
         jLabel1.setText("Nom");
 
@@ -138,6 +139,10 @@ public class Modify_Employe extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(285, 285, 285)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -164,22 +169,19 @@ public class Modify_Employe extends javax.swing.JDialog {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(53, 53, 53)))
+                        .addGap(53, 53, 53))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(195, 195, 195)
+                                .addComponent(jButton3)
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(257, 257, 257)
+                                .addComponent(jLabel3)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(236, 236, 236))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(258, 258, 258))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(195, 195, 195)
-                .addComponent(jButton3)
-                .addGap(27, 27, 27)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,9 +212,9 @@ public class Modify_Employe extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jButton2))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -234,7 +236,8 @@ public class Modify_Employe extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        saveChanges();
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -245,10 +248,26 @@ public class Modify_Employe extends javax.swing.JDialog {
         supprimerCompetence();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    public void saveChanges() {
+        PersonnelDAO p = new PersonnelDAO();
+        for (Personnel pe : PersonnelDAO.personnels) {
+            if (pe.getId() == Integer.parseInt(id)) {
+                try {
+                    pe.setNom(jTextField1.getText());
+                    pe.setPrenom(jTextField2.getText());
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    pe.setDateE(df.parse(jTextField3.getText()));
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(this, "Le format de la date n'est pas bon. Veuillez entrer une date au format : jj/mm/aaaa", "Erreur :" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+    
     public void recupererCompetences() throws IOException {
         CompetenceDAO c = new CompetenceDAO();
         c.recupererCompetences();
-        for (Competence co : c.competences) {
+        for (Competence co : CompetenceDAO.competences) {
             String s = co.getName();
             jComboBox1.addItem(s);
         }
@@ -260,7 +279,7 @@ public class Modify_Employe extends javax.swing.JDialog {
         p.recupererCompetencesPersonnels();
         Vector<String> model = new Vector<>();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (Personnel pe : p.personnels) {
+        for (Personnel pe : PersonnelDAO.personnels) {
             if (pe.getId() == Integer.parseInt(this.id)) {
                 this.name = pe.getName();
                 this.prenom = pe.getPrenom();
@@ -281,6 +300,20 @@ public class Modify_Employe extends javax.swing.JDialog {
         if (!modele.contains(text)) {
             modele.addElement(text);
             jList1.setModel(modele);
+            PersonnelDAO p = new PersonnelDAO();
+            CompetenceDAO c = new CompetenceDAO();
+            Competence temp = null;
+            for (Competence co : CompetenceDAO.competences) {
+                if (text.equals(co.getName())) {
+                    temp = co;
+                }
+            }
+            for (Personnel pe : PersonnelDAO.personnels) {
+                if (pe.getId() == Integer.parseInt(id)) {
+                    
+                    pe.competences.add(temp);
+                }
+            }
         }
         
     }

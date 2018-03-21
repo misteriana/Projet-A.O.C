@@ -27,7 +27,7 @@ public class PersonnelDAO {
     /**
      * Cette liste contiendra l'ensemble des personnels existantes
      */
-    List<Personnel> personnels = new ArrayList<>();
+    static List<Personnel> personnels = new ArrayList<>();
     
     /**
      * @author jonathan detrier
@@ -58,7 +58,7 @@ public class PersonnelDAO {
             Date d = df.parse(date);
             Personnel p = new Personnel(id_int, nom, prenom, d); 
             if (canAddToList(p)) {
-                this.personnels.add(p);
+                PersonnelDAO.personnels.add(p);
             }
         }
     }
@@ -109,8 +109,8 @@ public class PersonnelDAO {
      * @since v 1.0
      */
     public boolean canAddToList(Personnel p) {
-        for (int i=0; i<this.personnels.size(); i++) { 
-            if (p.getId() == this.personnels.get(i).getId()) {
+        for (int i=0; i<PersonnelDAO.personnels.size(); i++) { 
+            if (p.getId() == PersonnelDAO.personnels.get(i).getId()) {
                 return false;
             }
         }

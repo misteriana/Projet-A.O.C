@@ -240,7 +240,7 @@ public class Add_Employe extends javax.swing.JDialog {
     public void recupererCompetences() throws IOException {
         CompetenceDAO c = new CompetenceDAO();
         c.recupererCompetences();
-        for (Competence co : c.competences) {
+        for (Competence co : CompetenceDAO.competences) {
             String s = co.getName();
             jComboBox1.addItem(s);
         }

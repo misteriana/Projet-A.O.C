@@ -21,7 +21,7 @@ public class CompetenceDAO {
     /**
      * Cette liste contiendra l'ensemble des compétences existantes
      */
-    List<Competence> competences = new ArrayList<>();
+    static List<Competence> competences = new ArrayList<>();
     
     /**
      * @author cédric greufeille
@@ -47,7 +47,7 @@ public class CompetenceDAO {
             String name = l[2];
             Competence co = new Competence(id, englishname, name); 
             if (canAddToList(co)) {
-                this.competences.add(co);
+                CompetenceDAO.competences.add(co);
             }
         }
     }
@@ -61,8 +61,8 @@ public class CompetenceDAO {
      * @since v 1.0
      */
     public boolean canAddToList(Competence c) {
-        for (int i=0; i<this.competences.size(); i++) { 
-            if (c.getId().equals(this.competences.get(i).getId())) {
+        for (int i=0; i<CompetenceDAO.competences.size(); i++) { 
+            if (c.getId().equals(CompetenceDAO.competences.get(i).getId())) {
                 return false;
             }
         }

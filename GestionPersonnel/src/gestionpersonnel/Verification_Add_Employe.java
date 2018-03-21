@@ -12,6 +12,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 /**
@@ -34,7 +35,7 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
     /**
      * Creates new form Verification_Add_Employe
      */
-    public Verification_Add_Employe(java.awt.Frame parent, boolean modal, JDialog ouvreur) {
+    public Verification_Add_Employe(JFrame parent, boolean modal, JDialog ouvreur) {
         super(parent, modal);
         this.ouvreur = ouvreur;
         initComponents();

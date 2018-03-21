@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class Personnel {
     
+    static int NUM_ID = 51;
+    
     private int id;
     private String nom;
     private String prenom;
@@ -26,6 +28,14 @@ public class Personnel {
     
     public Personnel(int id, String n, String p, Date d) {
         this.id = id;
+        this.nom = n;
+        this.prenom = p;
+        this.dateE = d;
+    }
+    
+    public Personnel(String n, String p, Date d) {
+        this.id = NUM_ID;
+        NUM_ID++;
         this.nom = n;
         this.prenom = p;
         this.dateE = d;
@@ -46,5 +56,19 @@ public class Personnel {
     public Date getDateE() {
         return dateE;
     }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setDateE(Date dateE) {
+        this.dateE = dateE;
+    }
+    
+    
     
 }
