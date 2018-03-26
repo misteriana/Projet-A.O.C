@@ -36,15 +36,19 @@ public class Modify_Employe extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public Modify_Employe(JFrame parent, boolean modal, String id) throws IOException, ParseException {
+    public Modify_Employe(JFrame parent, boolean modal, String id) throws IOException {
         super(parent, modal);
-        this.parent = parent;
-        this.id = id;
-        this.modele = new DefaultListModel();
-        initComponents();
-        recupererCompetencesPersonnelParent();
-        this.setResizable(false);
-        recupererCompetences();
+        try {
+            this.parent = parent;
+            this.id = id;
+            this.modele = new DefaultListModel();
+            initComponents();
+            recupererCompetencesPersonnelParent();
+            this.setResizable(false);
+            recupererCompetences();
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Le format de la date n'est pas bon. Veuillez entrer une date au format : jj/mm/aaaa", "Erreur :" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -253,10 +257,15 @@ public class Modify_Employe extends javax.swing.JDialog {
         for (Personnel pe : PersonnelDAO.personnels) {
             if (pe.getId() == Integer.parseInt(id)) {
                 try {
+                    if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Veuillez entrer l'ensemble des données demandées (Nom, prénom et Date d'entrée)", "Erreur : Champs requis", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
                     pe.setNom(jTextField1.getText());
                     pe.setPrenom(jTextField2.getText());
                     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                     pe.setDateE(df.parse(jTextField3.getText()));
+                    }
                 } catch (ParseException ex) {
                     JOptionPane.showMessageDialog(this, "Le format de la date n'est pas bon. Veuillez entrer une date au format : jj/mm/aaaa", "Erreur :" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
                 }
@@ -300,8 +309,6 @@ public class Modify_Employe extends javax.swing.JDialog {
         if (!modele.contains(text)) {
             modele.addElement(text);
             jList1.setModel(modele);
-            PersonnelDAO p = new PersonnelDAO();
-            CompetenceDAO c = new CompetenceDAO();
             Competence temp = null;
             for (Competence co : CompetenceDAO.competences) {
                 if (text.equals(co.getName())) {
@@ -365,8 +372,6 @@ public class Modify_Employe extends javax.swing.JDialog {
                     });
                     dialog.setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(Modify_Employe.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ParseException ex) {
                     Logger.getLogger(Modify_Employe.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
