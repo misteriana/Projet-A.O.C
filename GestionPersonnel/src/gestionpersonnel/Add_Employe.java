@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,6 +72,12 @@ public class Add_Employe extends javax.swing.JDialog {
         jButton4 = new javax.swing.JButton();
 
         setTitle("Ajouter un employé");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Nom");
 
@@ -226,7 +234,8 @@ public class Add_Employe extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+            saveEmploye();
+            this.dispose();    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -237,6 +246,36 @@ public class Add_Employe extends javax.swing.JDialog {
         supprimerCompetence();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    public void saveEmploye() {
+        if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez entrer l'ensemble des données demandées (Nom, prénom et Date d'entrée)", "Erreur : Champs requis", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            try {
+                String nom = jTextField1.getText();
+                String prenom = jTextField2.getText();
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateE = df.parse(jTextField3.getText());
+                Personnel p = new Personnel(nom, prenom, dateE);
+                PersonnelDAO.personnels.add(p);
+                
+                for (int i = 0; i < modele.getSize(); i++) {
+                    for (Competence co : CompetenceDAO.competences) {
+                        if (modele.get(i).equals(co.getName())) {
+                            p.competences.add(co);
+                        }
+                    }
+                }
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(this, "Le format de la date n'est pas bon. Veuillez entrer une date au format : jj/mm/aaaa", "Erreur :" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+            }            
+        }
+    }
+    
     public void recupererCompetences() throws IOException {
         CompetenceDAO c = new CompetenceDAO();
         c.recupererCompetences();

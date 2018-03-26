@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListModel;
 import javax.swing.RowFilter;
@@ -35,12 +37,16 @@ public class Menu_Personnel extends javax.swing.JFrame {
     private PersonnelDAO p = new PersonnelDAO();
     private TableRowSorter<TableModel> sorter;
     private String id = null;
+    public static int reload = 0;
     
     /**
      * Creates new form Menu_Personnel
      */
     public Menu_Personnel() throws IOException, ParseException {
         initComponents();
+        if (reload == 0) {
+            p.recupererPersonnels();
+        }
         recupererDonnees();
         this.sorter = new TableRowSorter<>(jTable1.getModel());
         jTable1.setRowSorter(sorter);
@@ -67,6 +73,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestion du personnel");
@@ -156,6 +163,13 @@ public class Menu_Personnel extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Supprimer");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,19 +191,21 @@ public class Menu_Personnel extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(116, 116, 116))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(64, 64, 64))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +233,8 @@ public class Menu_Personnel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
-                            .addComponent(jButton3))
+                            .addComponent(jButton3)
+                            .addComponent(jButton4))
                         .addGap(16, 16, 16))))
         );
 
@@ -275,8 +292,11 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
+            System.out.println(PersonnelDAO.personnels.size());
             Add_Employe ae = new Add_Employe(this, true);
-            ae.setVisible(true);
+            ae.setVisible(true);           
+            addLine();
+            System.out.println(PersonnelDAO.personnels.size());
         } catch (IOException ex) {
             Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -284,10 +304,48 @@ public class Menu_Personnel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (jTable1.getSelectedRow() != -1) {
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (this, "Voulez-vous réellement supprimer l'employé" + jTable1.getValueAt(jTable1.getSelectedRow(), 1) + " " + jTable1.getValueAt(jTable1.getSelectedRow(), 0) +"?","Attention", dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            removeLine();
+        }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Sélectionnez une, et une seule, ligne pour supprimer un enregistrement.", "Erreur : Aucune sélection", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
     
+    public void addLine() {
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        Object[] toAdd = new Object[4];
+        if ( (int) tbm.getValueAt(tbm.getRowCount()-1, tbm.getColumnCount()-1) != PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getId()) {
+            toAdd[0] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getName();
+            toAdd[1] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getPrenom();
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            toAdd[2] = df.format(PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getDateE());
+            toAdd[3] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getId();
+            tbm.addRow(toAdd);
+        }
+    }
+    
+    public void removeLine() {
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        int toDel = jTable1.getSelectedRow();
+        id = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        Personnel perso = null;
+        for (Personnel p : PersonnelDAO.personnels) {
+            if (p.getId() == Integer.parseInt(id)) {
+                perso = p;
+            }
+        }
+        PersonnelDAO.personnels.remove(perso);
+        tbm.removeRow(toDel);
+    }
     
     public void recupererDonnees() throws IOException, ParseException {
-        p.recupererPersonnels();
+        Menu_Personnel.reload = 1;
         Object[][] data = new Object[PersonnelDAO.personnels.size()][4];
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (int i=0; i < PersonnelDAO.personnels.size(); i++) {
@@ -297,12 +355,11 @@ public class Menu_Personnel extends javax.swing.JFrame {
             data[i][2] = dateE;
             data[i][3] = PersonnelDAO.personnels.get(i).getId();
         }
-        
-        jTable1.setModel(new DefaultTableModel(data, new String [] {
-                "Nom", "Prenom", "Date d'entrée", "Id"
-            }));
+        String[] header = new String[] {"Nom", "Prenom", "Date d'entrée", "Id"};
+        DefaultTableModel tbm = new DefaultTableModel(data, header);
+        jTable1.setModel(tbm);
     }
-    
+
     public void recupererCompetencesPersonnel() throws IOException, ParseException {
         p.recupererCompetencesPersonnels();
         id = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
@@ -363,6 +420,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
