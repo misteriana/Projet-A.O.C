@@ -283,9 +283,6 @@ public class Modify_Employe extends javax.swing.JDialog {
     }
     
     public void recupererCompetencesPersonnelParent() throws IOException, ParseException {
-        PersonnelDAO p = new PersonnelDAO();
-        p.recupererPersonnels();
-        p.recupererCompetencesPersonnels();
         Vector<String> model = new Vector<>();
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (Personnel pe : PersonnelDAO.personnels) {
@@ -327,8 +324,20 @@ public class Modify_Employe extends javax.swing.JDialog {
     
     public void supprimerCompetence() {
         String text = jList1.getSelectedValue();
+        int del = -20;
         modele.remove(modele.indexOf(text));
         jList1.setModel(modele);
+        for (Personnel p : PersonnelDAO.personnels) {
+            if (id.equals(String.valueOf(p.getId()))) {
+                for (Competence co : p.competences) {
+                    if (co.getName().equals(text)) {
+                        del = p.competences.indexOf(co);
+                    }
+                }
+                p.competences.remove(del);
+            }
+        }
+        
     }
     
     /**

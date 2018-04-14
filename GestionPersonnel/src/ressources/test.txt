@@ -16,7 +16,7 @@ Bernardo;Besmer;26/05/2014;14
 Millard;Ery;11/09/2014;15
 Oren;Nau;13/11/2014;16
 Normand;Grgurich;01/12/2014;17
-Milton;Hann;14/04/2015;18
+Milton;Hannett;14/04/2015;18
 Pete;Stobierski;12/01/2016;19
 Wilbur;Pommier;22/01/2016;20
 Kelvin;Objio;26/01/2016;21
@@ -49,5 +49,3 @@ Luigi;Gerrish;09/03/2015;47
 Greg;Defrancisco;10/03/2015;48
 August;Novinger;20/04/2016;49
 Carmelo;Roosa;16/11/2016;50
-Detrier;Jonathan;21/11/2018;51
-Jean;Jean;21/11/1997;52

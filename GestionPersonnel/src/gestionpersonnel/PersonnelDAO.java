@@ -28,7 +28,9 @@ public class PersonnelDAO {
      * Cette liste contiendra l'ensemble des personnels existantes
      */
     static List<Personnel> personnels = new ArrayList<>();
-    
+    static boolean hasloadP = false;
+        static boolean hasloadC = false;
+
     /**
      * @author jonathan detrier
      * @throws java.io.FileNotFoundException
@@ -61,6 +63,7 @@ public class PersonnelDAO {
                 PersonnelDAO.personnels.add(p);
             }
         }
+        PersonnelDAO.hasloadP = true;
     }
         
     /**
@@ -98,6 +101,7 @@ public class PersonnelDAO {
             }
         
         }
+        PersonnelDAO.hasloadC = true;
     }
     
     /**
