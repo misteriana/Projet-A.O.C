@@ -3,8 +3,6 @@ package gestionpersonnel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  *
@@ -55,4 +53,17 @@ public class DateEntreprise {
     public Date getDate(){
         return date;
     }  
+    
+    /**
+     * Modifie la date courante de l'entreprise
+     * @param date
+     * @throws java.text.ParseException
+     */
+    public void setDate(String date) throws ParseException {
+        this.date = (Date) FORMAT.parse(date);
+        System.out.println("LA DATE param PG DateEntreprise " + date);
+        System.out.println("LA DATE PG DateEntreprise " + this.date);
+    }
+    
+    
 }

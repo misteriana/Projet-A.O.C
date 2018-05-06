@@ -5,11 +5,7 @@
  */
 package gestionpersonnel;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,22 +14,22 @@ import java.util.logging.Logger;
  * @author Anseea
  */
 public class Parametres extends javax.swing.JFrame {
-    private DateEntreprise d;
+    private DateEntreprise d = new DateEntreprise();
     /**
      * Creates new form Parametres
      */
     public Parametres() {
         initComponents();
-        this.pDate.setText(getDate());
+        this.pDate.setText(d.toString());
         this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
-    public String getDate(){
+    /*public String getDate(){
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
         Calendar cal = Calendar.getInstance();
         String da=dateFormat.format(cal.getTime());
         return da;
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,7 +54,7 @@ public class Parametres extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         pDate = new javax.swing.JFormattedTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("modif");
         setPreferredSize(new java.awt.Dimension(560, 390));
         setResizable(false);
@@ -164,10 +160,16 @@ public class Parametres extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         try {
-            d = new DateEntreprise(this.pDate.getText());
+            String dateUser = this.pDate.getText();
+            System.out.println("LA DATE PG PARAMETRES " + dateUser);
+            //d = new DateEntreprise(this.pDate.getText());
+            d.setDate(dateUser);
         } catch (ParseException ex) {
             Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+        Accueil a = new Accueil(d);
+        a.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
@@ -200,7 +202,7 @@ public class Parametres extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Parametres().setVisible(true);
+                //new Parametres().setVisible(true);
             }
         });
     }

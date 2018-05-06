@@ -5,20 +5,16 @@
  */
 package gestionpersonnel;
 
-import java.io.IOException;
+import static gestionpersonnel.DateEntreprise.FORMAT;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import java.awt.LayoutManager;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -34,14 +30,26 @@ public class Accueil extends javax.swing.JFrame {
     /**
      * Creates new form Accueil
      */
-    public Accueil() {
+    public Accueil(DateEntreprise dateE) {
         initComponents();
-        d = new DateEntreprise();
+        this.d=dateE;
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        date.setText(d.toString());
+        System.out.println("LA DATE PG ACCUEIL " + date.getText());
         timer.start();
         
     }
+    
+    /**
+     * Getter de la date de l'entreprise
+     * @return 
+     *          La date de l'entreprise
+     */
+    public DateEntreprise getDate(){
+        return this.d;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -309,7 +317,6 @@ public class Accueil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    
     private void personnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personnelMouseClicked
         try {
             Menu_Personnel m = new Menu_Personnel();
@@ -324,6 +331,7 @@ public class Accueil extends javax.swing.JFrame {
 
     private void paramMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paramMouseClicked
         new Parametres().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_paramMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -339,20 +347,16 @@ public class Accueil extends javax.swing.JFrame {
             }
         }
         if (r == 2) {
-                Accueil a = new Accueil();
+                Accueil a = new Accueil(d);
                 a.setVisible(true);         
         }
     }//GEN-LAST:event_formWindowClosing
 
     private void timerActionListner(java.awt.event.ActionEvent evt) {                                      
         DateFormat clockFormat = new SimpleDateFormat("HH':'mm",Locale.FRANCE);
-        //DateFormat dateFormat = new SimpleDateFormat("dd' 'MMM' 'yyyy",Locale.FRANCE);
         Calendar cal = Calendar.getInstance();
         String c=clockFormat.format(cal.getTime());
-        //String d=dateFormat.format(cal.getTime());
         clock.setText(c);
-        //date.setText(d);
-        date.setText(d.toString());
     }
     
     /**
@@ -382,11 +386,12 @@ public class Accueil extends javax.swing.JFrame {
         }
         //</editor-fold>
         
+        DateEntreprise d = new DateEntreprise();
         /* Create and display the form */
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Accueil().setVisible(true);
+                new Accueil(d).setVisible(true);
                 //TestPieChart.initAndShowGUI();
             }
         });

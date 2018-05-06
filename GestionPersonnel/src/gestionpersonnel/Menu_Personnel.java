@@ -26,6 +26,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
     private PersonnelDAO p = new PersonnelDAO();
     private TableRowSorter<TableModel> sorter;
+    private DateEntreprise d = new DateEntreprise();
     private String id = null;
     
     /**
@@ -464,7 +465,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_personnelMouseClicked
 
     private void mssmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mssmMouseClicked
-        Accueil accueil = new Accueil();
+        Accueil accueil = new Accueil(d);
         dispose();
         accueil.setVisible(true);
     }//GEN-LAST:event_mssmMouseClicked
