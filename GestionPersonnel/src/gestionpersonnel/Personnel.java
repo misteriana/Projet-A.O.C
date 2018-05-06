@@ -34,6 +34,7 @@ public class Personnel {
     }
     
     public Personnel(String n, String p, Date d) {
+        
         this.id = NUM_ID;
         NUM_ID++;
         this.nom = n;

@@ -37,7 +37,6 @@ public class Menu_Personnel extends javax.swing.JFrame {
             p.recupererPersonnels();
         if (!PersonnelDAO.hasloadC)
             p.recupererCompetencesPersonnels();
-
         recupererDonnees();
         this.sorter = new TableRowSorter<>(jTable1.getModel());
         jTable1.setRowSorter(sorter);
@@ -404,7 +403,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         try {
             System.out.println(PersonnelDAO.personnels.size());
             Add_Employe ae = new Add_Employe(this, true);
-            ae.setVisible(true);           
+            ae.setVisible(true);
             addLine();
             System.out.println(PersonnelDAO.personnels.size());
         } catch (IOException ex) {

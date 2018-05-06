@@ -38,7 +38,6 @@ public class PersonnelDAO {
      * @since v 1.0
      */
     public void recupererPersonnels() throws IOException, ParseException  {
-        
         Reader r = Files.newBufferedReader(Paths.get("src/ressources/liste_personnel.csv"));
         
         /**
@@ -65,12 +64,14 @@ public class PersonnelDAO {
             }
         }
         PersonnelDAO.hasloadP = true;
+        
     }
         
     /**
-     *
+     * @author jonathan detrier
      * @throws IOException
      * @throws ParseException
+     * @since v 1.0
      */
     public void recupererCompetencesPersonnels() throws IOException, ParseException  {
         
