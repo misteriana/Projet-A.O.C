@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
- *
- * @author cedri
+ *<b> Cette interface affiche les différentes missions </b>
+ * @author cedric greufeille
  */
 public class Menu_Mission extends javax.swing.JFrame {
 

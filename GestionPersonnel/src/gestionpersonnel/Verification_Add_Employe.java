@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 /**
- *
+ * <b> Message de confirmation d'un employé </b>
  * @author jonathan detrier
  */
 public class Verification_Add_Employe extends javax.swing.JDialog {

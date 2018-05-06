@@ -19,7 +19,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- *
+ * <b> Cette interface affiche le personnel de l' entreprise. </b>
  * @author jonathan detrier
  */
 public class Menu_Personnel extends javax.swing.JFrame {

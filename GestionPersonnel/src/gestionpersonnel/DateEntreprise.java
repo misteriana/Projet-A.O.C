@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ *<b> Cette Classe permet de gérer la date de l'application</b>
  * @author Anseea
  */
 public class DateEntreprise {

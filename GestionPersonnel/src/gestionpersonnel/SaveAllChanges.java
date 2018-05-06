@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * <b> Sauvegarde l'ensemble des modifications effectuées.   </b>
  * @author jonathandetrier
  */
 public class SaveAllChanges {

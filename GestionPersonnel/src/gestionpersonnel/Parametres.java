@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *<b> Cette interface permet de modifier la date de l'application </b>
  * @author Anseea
  */
 public class Parametres extends javax.swing.JFrame {

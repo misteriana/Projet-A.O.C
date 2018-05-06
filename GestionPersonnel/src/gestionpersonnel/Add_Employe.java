@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,8 +22,11 @@ import javax.swing.JOptionPane;
 
 /**
  *
+ * <b> Cette classe permet d'ajouter un employé</b>
+ * 
  * @author jonathan detrier
  */
+
 public class Add_Employe extends javax.swing.JDialog {
 
     private JFrame parent;

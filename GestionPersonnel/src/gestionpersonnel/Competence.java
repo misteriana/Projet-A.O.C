@@ -3,7 +3,7 @@ package gestionpersonnel;
 
 
 /**
- *
+ *<b> Cette classe correpond aux compétences. </b>
  * @author cédric greufeille
  * @since v 1.0
  */

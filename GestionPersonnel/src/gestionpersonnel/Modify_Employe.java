@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 
 /**
- *
+ *<b> Cette classe permet la modification d'un employé </b>
  * @author jonathan detrier
  */
 public class Modify_Employe extends javax.swing.JDialog {
