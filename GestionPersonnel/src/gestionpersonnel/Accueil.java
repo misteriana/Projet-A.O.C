@@ -5,10 +5,15 @@
  */
 package gestionpersonnel;
 
+import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -61,9 +66,14 @@ public class Accueil extends javax.swing.JFrame {
         date = new javax.swing.JLabel();
         testPieChart1 = new gestionpersonnel.TestPieChart();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MSSM");
         setLocationByPlatform(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,6 +82,11 @@ public class Accueil extends javax.swing.JFrame {
         sidePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(116, 54, 92));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_User_Account_15px.png"))); // NOI18N
@@ -280,6 +295,37 @@ public class Accueil extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        SaveAllChanges s = new SaveAllChanges();
+        int r = JOptionPane.showConfirmDialog(this, "Voulez-vous sauvegarder avant de quitter ? (Toute modification non sauvegardée sera perdue)");
+        if (r == 0) {
+            try {
+                s.saveChanges();
+            } catch (IOException ex) {
+                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (r == 2) {
+                Accueil a = new Accueil();
+                a.setVisible(true);         
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+        try {
+            Menu_Personnel m = new Menu_Personnel();
+            m.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jPanel2MouseClicked
+
+    
     private void timerActionListner(java.awt.event.ActionEvent evt) {                                      
         DateFormat clockFormat = new SimpleDateFormat("HH':'mm",Locale.FRANCE);
         DateFormat dateFormat = new SimpleDateFormat("dd' 'MMM' 'yyyy",Locale.FRANCE);

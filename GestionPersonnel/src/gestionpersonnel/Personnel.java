@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Personnel {
     
-    static int NUM_ID = 51;
+    static int NUM_ID = 1;
     
     private int id;
     private String nom;
@@ -34,6 +34,7 @@ public class Personnel {
     }
     
     public Personnel(String n, String p, Date d) {
+        
         this.id = NUM_ID;
         NUM_ID++;
         this.nom = n;

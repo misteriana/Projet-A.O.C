@@ -38,7 +38,6 @@ public class PersonnelDAO {
      * @since v 1.0
      */
     public void recupererPersonnels() throws IOException, ParseException  {
-        
         Reader r = Files.newBufferedReader(Paths.get("src/ressources/liste_personnel.csv"));
         
         /**
@@ -61,15 +60,18 @@ public class PersonnelDAO {
             Personnel p = new Personnel(id_int, nom, prenom, d); 
             if (canAddToList(p)) {
                 PersonnelDAO.personnels.add(p);
+                Personnel.NUM_ID++;
             }
         }
         PersonnelDAO.hasloadP = true;
+        
     }
         
     /**
-     *
+     * @author jonathan detrier
      * @throws IOException
      * @throws ParseException
+     * @since v 1.0
      */
     public void recupererCompetencesPersonnels() throws IOException, ParseException  {
         
@@ -139,32 +141,10 @@ public class PersonnelDAO {
         return true;
     }
     
-    /**
-     * Permet d'afficher à l'écran le contenu de la liste
-     * 
-     * @author jonathan detrier
-     * @since v 1.0
-     */
-    public void lirePersonnels() {
-        for (Personnel p : personnels) {
-            System.out.println("ID : " + p.getId() + " | Nom : " + p.getName() + " | Prénom : " + p.getPrenom() + " | Date d'entrée : " + p.getDateE());
-        }
-    }
-    
-    public void lireCompPers() {
-        for (Personnel p : personnels) {
-            for (Competence compt : p.competences) {
-                System.out.println(p.getName() + " " + p.getPrenom() + " a la compétence " + compt.getName());
-            }
-        }
-    }
-    
     public static void main (String[] args) throws IOException, ParseException, InterruptedException{
         PersonnelDAO pDAO = new PersonnelDAO();
         pDAO.recupererPersonnels();
         pDAO.recupererCompetencesPersonnels();
-        pDAO.lireCompPers();
-        
     }
     
 }
