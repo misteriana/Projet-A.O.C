@@ -6,28 +6,33 @@
 package gestionpersonnel;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Anseea
  */
 public class Parametres extends javax.swing.JFrame {
-
+    private DateEntreprise d;
     /**
      * Creates new form Parametres
      */
     public Parametres() {
         initComponents();
         this.pDate.setText(getDate());
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
     public String getDate(){
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
         Calendar cal = Calendar.getInstance();
-        String d=dateFormat.format(cal.getTime());
-        return d;
+        String da=dateFormat.format(cal.getTime());
+        return da;
     }
 
     /**
@@ -55,8 +60,8 @@ public class Parametres extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("modif");
-        setLocationByPlatform(true);
         setPreferredSize(new java.awt.Dimension(560, 390));
+        setResizable(false);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -138,19 +143,9 @@ public class Parametres extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 90, 30));
 
         pDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        pDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pDateActionPerformed(evt);
-            }
-        });
         bg.add(pDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 90, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,17 +162,13 @@ public class Parametres extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        //set date et mise a jour 
+        try {
+            d = new DateEntreprise(this.pDate.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1MouseClicked
-
-    private void pDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pDateActionPerformed
 
     /**
      * @param args the command line arguments

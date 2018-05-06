@@ -29,7 +29,7 @@ public class PersonnelDAO {
      */
     static List<Personnel> personnels = new ArrayList<>();
     static boolean hasloadP = false;
-        static boolean hasloadC = false;
+    static boolean hasloadC = false;
 
     /**
      * @author jonathan detrier
@@ -141,10 +141,11 @@ public class PersonnelDAO {
         return true;
     }
     
+    
     public static void main (String[] args) throws IOException, ParseException, InterruptedException{
         PersonnelDAO pDAO = new PersonnelDAO();
         pDAO.recupererPersonnels();
-        pDAO.recupererCompetencesPersonnels();
+        pDAO.recupererCompetencesPersonnels();        
     }
     
 }

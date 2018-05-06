@@ -16,21 +16,31 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import java.awt.LayoutManager;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author anseea popescu
  */
 public class Accueil extends javax.swing.JFrame {
-
+    
+    private DateEntreprise d;
     private Timer timer = new Timer(1, this::timerActionListner);
     /**
      * Creates new form Accueil
      */
     public Accueil() {
         initComponents();
+        d = new DateEntreprise();
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
         timer.start();
+        
     }
 
     /**
@@ -44,16 +54,16 @@ public class Accueil extends javax.swing.JFrame {
 
         bg = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        personnel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        competences = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        mission = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        param = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -68,7 +78,6 @@ public class Accueil extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MSSM");
-        setLocationByPlatform(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -81,10 +90,10 @@ public class Accueil extends javax.swing.JFrame {
         sidePanel.setBackground(new java.awt.Color(74, 35, 68));
         sidePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(116, 54, 92));
-        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        personnel.setBackground(new java.awt.Color(116, 54, 92));
+        personnel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel2MouseClicked(evt);
+                personnelMouseClicked(evt);
             }
         });
 
@@ -96,30 +105,30 @@ public class Accueil extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Personnel");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout personnelLayout = new javax.swing.GroupLayout(personnel);
+        personnel.setLayout(personnelLayout);
+        personnelLayout.setHorizontalGroup(
+            personnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(personnelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addContainerGap(110, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        personnelLayout.setVerticalGroup(
+            personnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(personnelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(personnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        sidePanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 50));
+        sidePanel.add(personnel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 50));
 
-        jPanel3.setBackground(new java.awt.Color(116, 54, 92));
+        competences.setBackground(new java.awt.Color(116, 54, 92));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Development_Skill_15px.png"))); // NOI18N
@@ -129,30 +138,30 @@ public class Accueil extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Compétences");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout competencesLayout = new javax.swing.GroupLayout(competences);
+        competences.setLayout(competencesLayout);
+        competencesLayout.setHorizontalGroup(
+            competencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(competencesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        competencesLayout.setVerticalGroup(
+            competencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(competencesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(competencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        sidePanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 50));
+        sidePanel.add(competences, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 220, 50));
 
-        jPanel4.setBackground(new java.awt.Color(116, 54, 92));
+        mission.setBackground(new java.awt.Color(116, 54, 92));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Task_15px.png"))); // NOI18N
@@ -162,30 +171,36 @@ public class Accueil extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Missions");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout missionLayout = new javax.swing.GroupLayout(mission);
+        mission.setLayout(missionLayout);
+        missionLayout.setHorizontalGroup(
+            missionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(missionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addContainerGap(118, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        missionLayout.setVerticalGroup(
+            missionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(missionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(missionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        sidePanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 220, 50));
+        sidePanel.add(mission, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 220, 50));
 
-        jPanel5.setBackground(new java.awt.Color(116, 54, 92));
+        param.setBackground(new java.awt.Color(116, 54, 92));
+        param.setPreferredSize(new java.awt.Dimension(240, 50));
+        param.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paramMouseClicked(evt);
+            }
+        });
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Settings_15px.png"))); // NOI18N
@@ -195,28 +210,28 @@ public class Accueil extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Paramètres");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout paramLayout = new javax.swing.GroupLayout(param);
+        param.setLayout(paramLayout);
+        paramLayout.setHorizontalGroup(
+            paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paramLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        paramLayout.setVerticalGroup(
+            paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paramLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        sidePanel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, -1, -1));
+        sidePanel.add(param, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(74, 35, 68));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -264,7 +279,7 @@ public class Accueil extends javax.swing.JFrame {
         date.setText("jLabel1");
         jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 179, 40));
 
-        bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 620, 150));
+        bg.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 630, 150));
 
         javax.swing.GroupLayout testPieChart1Layout = new javax.swing.GroupLayout(testPieChart1);
         testPieChart1.setLayout(testPieChart1Layout);
@@ -283,9 +298,7 @@ public class Accueil extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,6 +307,24 @@ public class Accueil extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    
+    private void personnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personnelMouseClicked
+        try {
+            Menu_Personnel m = new Menu_Personnel();
+            m.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_personnelMouseClicked
+
+    private void paramMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paramMouseClicked
+        new Parametres().setVisible(true);
+    }//GEN-LAST:event_paramMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         SaveAllChanges s = new SaveAllChanges();
@@ -313,27 +344,15 @@ public class Accueil extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
-    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        try {
-            Menu_Personnel m = new Menu_Personnel();
-            m.setVisible(true);
-            this.dispose();
-        } catch (IOException ex) {
-            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jPanel2MouseClicked
-
-    
     private void timerActionListner(java.awt.event.ActionEvent evt) {                                      
         DateFormat clockFormat = new SimpleDateFormat("HH':'mm",Locale.FRANCE);
-        DateFormat dateFormat = new SimpleDateFormat("dd' 'MMM' 'yyyy",Locale.FRANCE);
+        //DateFormat dateFormat = new SimpleDateFormat("dd' 'MMM' 'yyyy",Locale.FRANCE);
         Calendar cal = Calendar.getInstance();
         String c=clockFormat.format(cal.getTime());
-        String d=dateFormat.format(cal.getTime());
+        //String d=dateFormat.format(cal.getTime());
         clock.setText(c);
-        date.setText(d);
+        //date.setText(d);
+        date.setText(d.toString());
     }
     
     /**
@@ -376,6 +395,7 @@ public class Accueil extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JLabel clock;
+    private javax.swing.JPanel competences;
     private javax.swing.JLabel date;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -390,11 +410,10 @@ public class Accueil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel mission;
+    private javax.swing.JPanel param;
+    private javax.swing.JPanel personnel;
     private javax.swing.JPanel sidePanel;
     private gestionpersonnel.TestPieChart testPieChart1;
     // End of variables declaration//GEN-END:variables

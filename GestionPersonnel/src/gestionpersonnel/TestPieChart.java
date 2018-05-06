@@ -58,12 +58,12 @@ public class TestPieChart extends JPanel {
         return (scene);
     }
     
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 initAndShowGUI();
             }
         });
-    }*/
+    }
 }
