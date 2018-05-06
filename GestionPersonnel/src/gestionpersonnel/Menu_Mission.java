@@ -6,17 +6,9 @@
 package gestionpersonnel;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 /**
  *<b> Cette interface affiche les différentes missions </b>
  * @author cedric greufeille
@@ -304,9 +296,9 @@ public class Menu_Mission extends javax.swing.JFrame {
     }//GEN-LAST:event_personnel2MouseClicked
 
     private void mssmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mssmMouseClicked
-        Accueil accueil = new Accueil();
+        //Accueil accueil = new Accueil();
         dispose();
-        accueil.setVisible(true);
+        //accueil.setVisible(true);
     }//GEN-LAST:event_mssmMouseClicked
 
     /**
