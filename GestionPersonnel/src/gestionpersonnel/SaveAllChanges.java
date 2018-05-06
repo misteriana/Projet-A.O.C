@@ -25,6 +25,14 @@ public class SaveAllChanges {
     
     private PrintWriter pw;
     
+    /** 
+     * Ecrit dans les fichiers CSV avant de fermer l'application pour sauvegarder les modifications 
+     * @author jonathan detrier 
+     * @throws IOException 
+     * @throws ParseException  
+     * @since v 1.1 
+     */
+    
     public void saveChanges() throws IOException, ParseException {
         try {
             PersonnelDAO pers = new PersonnelDAO();

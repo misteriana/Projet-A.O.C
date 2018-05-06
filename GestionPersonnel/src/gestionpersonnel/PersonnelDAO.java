@@ -29,7 +29,7 @@ public class PersonnelDAO {
      */
     static List<Personnel> personnels = new ArrayList<>();
     static boolean hasloadP = false;
-        static boolean hasloadC = false;
+    static boolean hasloadC = false;
 
     /**
      * @author jonathan detrier
@@ -61,6 +61,7 @@ public class PersonnelDAO {
             Personnel p = new Personnel(id_int, nom, prenom, d); 
             if (canAddToList(p)) {
                 PersonnelDAO.personnels.add(p);
+                Personnel.NUM_ID++;
             }
         }
         PersonnelDAO.hasloadP = true;
@@ -139,32 +140,11 @@ public class PersonnelDAO {
         return true;
     }
     
-    /**
-     * Permet d'afficher à l'écran le contenu de la liste
-     * 
-     * @author jonathan detrier
-     * @since v 1.0
-     */
-    public void lirePersonnels() {
-        for (Personnel p : personnels) {
-            System.out.println("ID : " + p.getId() + " | Nom : " + p.getName() + " | Prénom : " + p.getPrenom() + " | Date d'entrée : " + p.getDateE());
-        }
-    }
-    
-    public void lireCompPers() {
-        for (Personnel p : personnels) {
-            for (Competence compt : p.competences) {
-                System.out.println(p.getName() + " " + p.getPrenom() + " a la compétence " + compt.getName());
-            }
-        }
-    }
     
     public static void main (String[] args) throws IOException, ParseException, InterruptedException{
         PersonnelDAO pDAO = new PersonnelDAO();
         pDAO.recupererPersonnels();
-        pDAO.recupererCompetencesPersonnels();
-        pDAO.lireCompPers();
-        
+        pDAO.recupererCompetencesPersonnels();        
     }
     
 }
