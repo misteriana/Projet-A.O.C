@@ -139,6 +139,11 @@ public class Parametres extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 90, 30));
 
         pDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
@@ -159,6 +164,10 @@ public class Parametres extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             String dateUser = this.pDate.getText();
             System.out.println("LA DATE PG PARAMETRES " + dateUser);
@@ -167,10 +176,10 @@ public class Parametres extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        Accueil a = new Accueil(d);
+        Accueil a = Accueil.getInstance(d);
         a.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

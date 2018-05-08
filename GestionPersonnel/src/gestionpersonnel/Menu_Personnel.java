@@ -26,7 +26,6 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
     private PersonnelDAO p = new PersonnelDAO();
     private TableRowSorter<TableModel> sorter;
-    private DateEntreprise d = new DateEntreprise();
     private String id = null;
     
     /**
@@ -241,7 +240,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Chercher un employé :");
-        body.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
+        body.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         listeP.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         listeP.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +305,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
         listeS.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         listeS.setText("Compétences de l'employé");
-        body.add(listeS, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 16, 189, -1));
+        body.add(listeS, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 230, -1));
 
         jList1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         listeSkills.setViewportView(jList1);
@@ -465,7 +464,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_personnelMouseClicked
 
     private void mssmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mssmMouseClicked
-        Accueil accueil = new Accueil(d);
+        Accueil accueil = Accueil.getInstance();
         dispose();
         accueil.setVisible(true);
     }//GEN-LAST:event_mssmMouseClicked

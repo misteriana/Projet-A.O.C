@@ -32,16 +32,42 @@ public class Accueil extends javax.swing.JFrame {
     /**
      * Creates new form Accueil
      */
-    public Accueil(DateEntreprise dateE) {
+    
+    private static Accueil instance = null;
+    
+    public static Accueil getInstance(DateEntreprise dateE){
+        if (instance == null){
+            instance = new Accueil(dateE);
+        }else{
+            instance.setD(dateE);
+        }
+        return instance;
+    }
+    
+    public static Accueil getInstance(){
+        if (instance == null){
+            instance = new Accueil(new DateEntreprise());
+        }
+        return instance;
+    }
+    
+    private Accueil(DateEntreprise dateE) {
         initComponents();
-        this.d=dateE;
+        setD(dateE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        date.setText(d.toString());
         System.out.println("LA DATE PG ACCUEIL " + date.getText());
         timer.start();
         
     }
+    
+
+    public void setD(DateEntreprise d) {
+        this.d = d;
+        date.setText(d.toString());
+    }
+    
+    
     
     /**
      * Getter de la date de l'entreprise
@@ -207,6 +233,9 @@ public class Accueil extends javax.swing.JFrame {
         param.setBackground(new java.awt.Color(116, 54, 92));
         param.setPreferredSize(new java.awt.Dimension(240, 50));
         param.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                paramMousePressed(evt);
+            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 paramMouseClicked(evt);
             }
@@ -229,7 +258,7 @@ public class Accueil extends javax.swing.JFrame {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
         paramLayout.setVerticalGroup(
             paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,7 +270,7 @@ public class Accueil extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        sidePanel.add(param, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, -1, -1));
+        sidePanel.add(param, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 220, 50));
 
         jPanel6.setBackground(new java.awt.Color(74, 35, 68));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -332,8 +361,7 @@ public class Accueil extends javax.swing.JFrame {
     }//GEN-LAST:event_personnelMouseClicked
 
     private void paramMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paramMouseClicked
-        new Parametres().setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_paramMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -353,6 +381,11 @@ public class Accueil extends javax.swing.JFrame {
                 a.setVisible(true);         
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void paramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paramMousePressed
+        new Parametres().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_paramMousePressed
 
     private void timerActionListner(java.awt.event.ActionEvent evt) {                                      
         DateFormat clockFormat = new SimpleDateFormat("HH':'mm",Locale.FRANCE);
