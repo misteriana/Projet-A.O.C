@@ -40,8 +40,8 @@ public class Menu_Personnel extends javax.swing.JFrame {
         if (!PersonnelDAO.hasloadC)
             p.recupererCompetencesPersonnels();
         recupererDonnees();
-        this.sorter = new TableRowSorter<>(jTable1.getModel());
-        jTable1.setRowSorter(sorter);
+        this.sorter = new TableRowSorter<>(tablePersonnel.getModel());
+        tablePersonnel.setRowSorter(sorter);
         this.setSize(getWidth() + 16, getHeight() + 39);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -84,10 +84,10 @@ public class Menu_Personnel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         listeP = new javax.swing.JTextField();
         listePers = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablePersonnel = new javax.swing.JTable();
         listeS = new javax.swing.JLabel();
         listeSkills = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        competences = new javax.swing.JList<>();
         bSupprimer = new javax.swing.JButton();
         bModifier = new javax.swing.JButton();
         bAjouter = new javax.swing.JButton();
@@ -391,9 +391,9 @@ public class Menu_Personnel extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(74, 74, 74));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablePersonnel.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        tablePersonnel.setForeground(new java.awt.Color(74, 74, 74));
+        tablePersonnel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -419,25 +419,25 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablePersonnel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tablePersonnelMouseClicked(evt);
             }
         });
-        listePers.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("Nom");
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("Prenom");
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Date d'entrée");
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("Id");
+        listePers.setViewportView(tablePersonnel);
+        if (tablePersonnel.getColumnModel().getColumnCount() > 0) {
+            tablePersonnel.getColumnModel().getColumn(0).setHeaderValue("Nom");
+            tablePersonnel.getColumnModel().getColumn(1).setHeaderValue("Prenom");
+            tablePersonnel.getColumnModel().getColumn(2).setHeaderValue("Date d'entrée");
+            tablePersonnel.getColumnModel().getColumn(3).setHeaderValue("Id");
         }
 
         listeS.setFont(new java.awt.Font("Nunito Sans", 0, 18)); // NOI18N
         listeS.setForeground(new java.awt.Color(74, 74, 74));
         listeS.setText("Compétences de l'employé");
 
-        jList1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
-        listeSkills.setViewportView(jList1);
+        competences.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        listeSkills.setViewportView(competences);
 
         bSupprimer.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
         bSupprimer.setForeground(new java.awt.Color(74, 74, 74));
@@ -558,7 +558,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bModifierActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void tablePersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePersonnelMouseClicked
         try {
             recupererCompetencesPersonnel();
         } catch (IOException ex) {
@@ -566,7 +566,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tablePersonnelMouseClicked
 
     private void listePKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listePKeyTyped
         
@@ -600,9 +600,9 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_bAjouterActionPerformed
 
     private void bSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSupprimerActionPerformed
-        if (jTable1.getSelectedRow() != -1) {
+        if (tablePersonnel.getSelectedRow() != -1) {
             int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog (this, "Voulez-vous réellement supprimer l'employé " + jTable1.getValueAt(jTable1.getSelectedRow(), 1) + " " + jTable1.getValueAt(jTable1.getSelectedRow(), 0) +"?","Attention", dialogButton);
+            int dialogResult = JOptionPane.showConfirmDialog (this, "Voulez-vous réellement supprimer l'employé " + tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 1) + " " + tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 0) +"?","Attention", dialogButton);
             if(dialogResult == JOptionPane.YES_OPTION){
                 removeLine();
             }
@@ -654,7 +654,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_tdBMousePressed
     
     public void addLine() {
-        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel tbm = (DefaultTableModel) tablePersonnel.getModel();
         Object[] toAdd = new Object[4];
         if ( (int) tbm.getValueAt(tbm.getRowCount()-1, tbm.getColumnCount()-1) != PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getId()) {
             toAdd[0] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getName();
@@ -663,14 +663,14 @@ public class Menu_Personnel extends javax.swing.JFrame {
             toAdd[2] = df.format(PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getDateE());
             toAdd[3] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getId();
             tbm.addRow(toAdd);
-            jTable1.setModel(tbm);
+            tablePersonnel.setModel(tbm);
         }
     }
     
     public void removeLine() {
-        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
-        int toDel = jTable1.getSelectedRow();
-        id = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        DefaultTableModel tbm = (DefaultTableModel) tablePersonnel.getModel();
+        int toDel = tablePersonnel.getSelectedRow();
+        id = tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 3).toString();
         Personnel perso = null;
         for (Personnel p : PersonnelDAO.personnels) {
             if (p.getId() == Integer.parseInt(id)) {
@@ -679,7 +679,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         }
         PersonnelDAO.personnels.remove(perso);
         tbm.removeRow(toDel);
-        jTable1.setModel(tbm);
+        tablePersonnel.setModel(tbm);
     }
     
     public void recupererDonnees() throws IOException, ParseException {
@@ -694,11 +694,11 @@ public class Menu_Personnel extends javax.swing.JFrame {
         }
         String[] header = new String[] {"Nom", "Prenom", "Date d'entrée", "Id"};
         DefaultTableModel tbm = new DefaultTableModel(data, header);
-        jTable1.setModel(tbm);
+        tablePersonnel.setModel(tbm);
     }
 
     public void recupererCompetencesPersonnel() throws IOException, ParseException {
-        id = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+        id = tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 3).toString();
         Vector<String> model = new Vector<>();
         for (Personnel p : PersonnelDAO.personnels) {
             if (p.getId() == Integer.parseInt(id)) {
@@ -707,7 +707,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 }
             }
         }
-        jList1.setListData(model);
+        competences.setListData(model);
     }
     
     
@@ -757,6 +757,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     private javax.swing.JButton bModifier;
     private javax.swing.JButton bSupprimer;
     private javax.swing.JPanel body;
+    private javax.swing.JList<String> competences;
     private javax.swing.JPanel competences1;
     private javax.swing.JLabel date;
     private javax.swing.JLabel jLabel1;
@@ -776,8 +777,6 @@ public class Menu_Personnel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField listeP;
     private javax.swing.JScrollPane listePers;
     private javax.swing.JLabel listeS;
@@ -786,6 +785,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
     private javax.swing.JPanel param;
     private javax.swing.JPanel personnel1;
     private javax.swing.JPanel sidePanel;
+    private javax.swing.JTable tablePersonnel;
     private javax.swing.JPanel tdB;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables

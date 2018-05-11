@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,6 +11,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,11 +20,13 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-
 /**
- *<b> Cette classe permet la modification d'un employé </b>
+ *
+ * <b> Cette classe permet la modification d'un employé</b>
+ * 
  * @author jonathan detrier
  */
+
 public class Modify_Employe extends javax.swing.JDialog {
 
     private JFrame parent;
@@ -31,22 +36,24 @@ public class Modify_Employe extends javax.swing.JDialog {
     private String dateE;
     private DefaultListModel modele;
     
-    /**
-     * Creates new form Add_Employe
+     /**
+     * Creates new form Modify_Employe
      * @param parent
      * @param modal
+     * @param id
      */
-    public Modify_Employe(JFrame parent, boolean modal, String id) throws IOException {
+    public Modify_Employe(JFrame parent, boolean modal, String id) throws IOException, ParseException {
         super(parent, modal);
-        try {
+        try{
             this.parent = parent;
             this.id = id;
             this.modele = new DefaultListModel();
             initComponents();
             recupererCompetencesPersonnelParent();
             this.setResizable(false);
+            this.setLocationRelativeTo(null);
             recupererCompetences();
-        } catch (ParseException ex) {
+        }catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Le format de la date n'est pas bon. Veuillez entrer une date au format : jj/mm/aaaa", "Erreur :" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -60,211 +67,235 @@ public class Modify_Employe extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        bg = new javax.swing.JPanel();
+        title = new javax.swing.JLabel();
+        identite = new javax.swing.JLabel();
+        nom = new javax.swing.JLabel();
+        nomTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new JList(modele);
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        prenomTextField = new javax.swing.JTextField();
+        dateTextField = new javax.swing.JTextField();
+        date = new javax.swing.JLabel();
+        ligne = new javax.swing.JSeparator();
+        competences = new javax.swing.JLabel();
+        add = new javax.swing.JButton();
+        remove = new javax.swing.JButton();
+        competencesEmployer = new javax.swing.JScrollPane();
+        competencesEmployerListe = new JList(modele);
+        quit = new javax.swing.JButton();
+        save = new javax.swing.JButton();
+        competencesDispo = new javax.swing.JScrollPane();
+        competencesDisponiblesListe = new JList(modele);
 
-        setTitle("Modifier un employé");
+        setTitle("Ajouter un employé");
 
-        jLabel1.setText("Nom");
+        bg.setBackground(new java.awt.Color(248, 249, 250));
 
-        jLabel2.setText("Date d'entrée");
+        title.setFont(new java.awt.Font("Nunito Sans Light", 0, 30)); // NOI18N
+        title.setForeground(new java.awt.Color(74, 74, 74));
+        title.setText("Modifier un employé");
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel3.setText("Compétences");
+        identite.setFont(new java.awt.Font("Nunito Sans Light", 0, 26)); // NOI18N
+        identite.setForeground(new java.awt.Color(74, 74, 74));
+        identite.setText("Identité");
 
-        jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel4.setText("Identité");
+        nom.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        nom.setText("Nom");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
+        nomTextField.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
 
+        jLabel5.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
         jLabel5.setText("Prénom");
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        prenomTextField.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+
+        dateTextField.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+
+        date.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        date.setText("Date d'entrée");
+
+        competences.setFont(new java.awt.Font("Nunito Sans Light", 0, 26)); // NOI18N
+        competences.setForeground(new java.awt.Color(74, 74, 74));
+        competences.setText("Compétences");
+
+        add.setText(">");
+        add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                addActionPerformed(evt);
             }
         });
 
-        jButton1.setText("+");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        remove.setText("<");
+        remove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                removeActionPerformed(evt);
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        competencesEmployerListe.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        competencesEmployerListe.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        competencesEmployerListe.setSelectionBackground(new java.awt.Color(229, 101, 144));
+        competencesEmployer.setViewportView(competencesEmployerListe);
 
-        jButton2.setText("Enregistrer");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        quit.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        quit.setForeground(new java.awt.Color(74, 74, 74));
+        quit.setText("Quitter");
+        quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                quitActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Quitter");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        save.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        save.setForeground(new java.awt.Color(74, 74, 74));
+        save.setText("Enregistrer");
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
 
-        jButton4.setText("-");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        competencesDisponiblesListe.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        competencesDisponiblesListe.setSelectionBackground(new java.awt.Color(229, 101, 144));
+        competencesDispo.setViewportView(competencesDisponiblesListe);
+
+        javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
+        bg.setLayout(bgLayout);
+        bgLayout.setHorizontalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addComponent(competences)
+                        .addGap(375, 375, 375))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addComponent(nom)
+                        .addGap(18, 18, 18)
+                        .addComponent(nomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(identite)
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addComponent(prenomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)
+                                .addComponent(date)
+                                .addGap(18, 18, 18)
+                                .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(64, 64, 64))))
+            .addGroup(bgLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(title)
+                    .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(ligne)
+                        .addGroup(bgLayout.createSequentialGroup()
+                            .addComponent(competencesDispo, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(36, 36, 36)
+                            .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(add)
+                                .addComponent(remove))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                            .addComponent(competencesEmployer, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(bgLayout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(quit)
+                            .addGap(45, 45, 45)
+                            .addComponent(save)
+                            .addGap(266, 266, 266))))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+        bgLayout.setVerticalGroup(
+            bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bgLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(identite, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nom)
+                    .addComponent(jLabel5)
+                    .addComponent(prenomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date)
+                    .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addComponent(ligne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(competences)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(competencesEmployer, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(competencesDispo, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, bgLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(add)
+                        .addGap(29, 29, 29)
+                        .addComponent(remove)))
+                .addGap(33, 33, 33)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(save)
+                    .addComponent(quit))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(285, 285, 285)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2))
-                        .addGap(102, 102, 102)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField3))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(53, 53, 53))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(195, 195, 195)
-                                .addComponent(jButton3)
-                                .addGap(27, 27, 27)
-                                .addComponent(jButton2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(257, 257, 257)
-                                .addComponent(jLabel3)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        saveChanges();
+        this.dispose();
+    }//GEN-LAST:event_saveActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        addCompetenceToPersonnel();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         Verification_Add_Employe vae = new Verification_Add_Employe(parent, true, this);
         vae.setAlwaysOnTop(true);
         vae.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_quitActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        saveChanges();
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
         supprimerCompetence();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_removeActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        addCompetenceToPersonnel();
+    }//GEN-LAST:event_addActionPerformed
 
     public void saveChanges() {
         PersonnelDAO p = new PersonnelDAO();
         for (Personnel pe : PersonnelDAO.personnels) {
             if (pe.getId() == Integer.parseInt(id)) {
                 try {
-                    if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()) {
+                    if (nomTextField.getText().isEmpty() || prenomTextField.getText().isEmpty() || dateTextField.getText().isEmpty()) {
                         JOptionPane.showMessageDialog(this, "Veuillez entrer l'ensemble des données demandées (Nom, prénom et Date d'entrée)", "Erreur : Champs requis", JOptionPane.ERROR_MESSAGE);
                     }
                     else {
-                    pe.setNom(jTextField1.getText());
-                    pe.setPrenom(jTextField2.getText());
-                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                    pe.setDateE(df.parse(jTextField3.getText()));
+			pe.setNom(nomTextField.getText());
+			pe.setPrenom(prenomTextField.getText());
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			pe.setDateE(df.parse(dateTextField.getText()));
                     }
                 } catch (ParseException ex) {
                     JOptionPane.showMessageDialog(this, "Le format de la date n'est pas bon. Veuillez entrer une date au format : jj/mm/aaaa", "Erreur :" + ex.getMessage(), JOptionPane.ERROR_MESSAGE);
@@ -276,36 +307,20 @@ public class Modify_Employe extends javax.swing.JDialog {
     public void recupererCompetences() throws IOException {
         CompetenceDAO c = new CompetenceDAO();
         c.recupererCompetences();
+	Vector<String> model = new Vector<>();
         for (Competence co : CompetenceDAO.competences) {
-            String s = co.getName();
-            jComboBox1.addItem(s);
+            model.add(co.getName());
+            //choisirComboBox1.addItem(s);
         }
-    }
-    
-    public void recupererCompetencesPersonnelParent() throws IOException, ParseException {
-        Vector<String> model = new Vector<>();
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (Personnel pe : PersonnelDAO.personnels) {
-            if (pe.getId() == Integer.parseInt(this.id)) {
-                this.name = pe.getName();
-                this.prenom = pe.getPrenom();
-                this.dateE = df.format(pe.getDateE());
-                jTextField1.setText(this.name);
-                jTextField2.setText(this.prenom);
-                jTextField3.setText(this.dateE);
-                for (Competence c : pe.competences) {
-                    modele.addElement(c.getName());
-                }
-            }
-        }
-        jList1.setModel(modele);
+	competencesDisponiblesListe.setListData(model);
     }
     
     public void addCompetenceToPersonnel() {
-        String text = jComboBox1.getSelectedItem().toString();
+        //String text = choisirComboBox1.getSelectedItem().toString();
+        String text = competencesDisponiblesListe.getSelectedValue();
         if (!modele.contains(text)) {
             modele.addElement(text);
-            jList1.setModel(modele);
+            competencesEmployerListe.setModel(modele);
             Competence temp = null;
             for (Competence co : CompetenceDAO.competences) {
                 if (text.equals(co.getName())) {
@@ -318,15 +333,33 @@ public class Modify_Employe extends javax.swing.JDialog {
                     pe.competences.add(temp);
                 }
             }
+        }  
+    }
+    
+    public void recupererCompetencesPersonnelParent() throws IOException, ParseException {
+        Vector<String> model = new Vector<>();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (Personnel pe : PersonnelDAO.personnels) {
+            if (pe.getId() == Integer.parseInt(this.id)) {
+                this.name = pe.getName();
+                this.prenom = pe.getPrenom();
+                this.dateE = df.format(pe.getDateE());
+                nomTextField.setText(this.name);
+                prenomTextField.setText(this.prenom);
+                dateTextField.setText(this.dateE);
+                for (Competence c : pe.competences) {
+                    modele.addElement(c.getName());
+                }
+            }
         }
-        
+        competencesEmployerListe.setModel(modele);
     }
     
     public void supprimerCompetence() {
-        String text = jList1.getSelectedValue();
+        String text = competencesEmployerListe.getSelectedValue();
         int del = -20;
         modele.remove(modele.indexOf(text));
-        jList1.setModel(modele);
+        competencesEmployerListe.setModel(modele);
         for (Personnel p : PersonnelDAO.personnels) {
             if (id.equals(String.valueOf(p.getId()))) {
                 for (Competence co : p.competences) {
@@ -337,7 +370,6 @@ public class Modify_Employe extends javax.swing.JDialog {
                 p.competences.remove(del);
             }
         }
-        
     }
     
     /**
@@ -357,19 +389,22 @@ public class Modify_Employe extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Modify_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     Modify_Employe dialog = new Modify_Employe(new javax.swing.JFrame(), true, new String());
@@ -381,28 +416,33 @@ public class Modify_Employe extends javax.swing.JDialog {
                     });
                     dialog.setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(Modify_Employe.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Add_Employe.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Add_Employe.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton add;
+    private javax.swing.JPanel bg;
+    private javax.swing.JLabel competences;
+    private javax.swing.JScrollPane competencesDispo;
+    private javax.swing.JList<String> competencesDisponiblesListe;
+    private javax.swing.JScrollPane competencesEmployer;
+    private javax.swing.JList<String> competencesEmployerListe;
+    private javax.swing.JLabel date;
+    private javax.swing.JTextField dateTextField;
+    private javax.swing.JLabel identite;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JSeparator ligne;
+    private javax.swing.JLabel nom;
+    private javax.swing.JTextField nomTextField;
+    private javax.swing.JTextField prenomTextField;
+    private javax.swing.JButton quit;
+    private javax.swing.JButton remove;
+    private javax.swing.JButton save;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
