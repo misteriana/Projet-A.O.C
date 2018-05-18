@@ -331,10 +331,10 @@ public class Menu_Mission extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Chercher une mission:");
-        body.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 140, -1));
+        body.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 140, -1));
 
         listeP.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        body.add(listeP, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 100, -1));
+        body.add(listeP, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 100, -1));
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -374,7 +374,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 bSupprimerActionPerformed(evt);
             }
         });
-        body.add(bSupprimer, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, -1, -1));
+        body.add(bSupprimer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, -1, -1));
 
         bAjouter.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bAjouter.setText("Ajouter");
@@ -388,7 +388,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 bAjouterActionPerformed(evt);
             }
         });
-        body.add(bAjouter, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, -1));
+        body.add(bAjouter, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 460, -1, -1));
 
         bDetail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bDetail.setText("Détails");
@@ -397,7 +397,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 bDetailActionPerformed(evt);
             }
         });
-        body.add(bDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, -1, -1));
+        body.add(bDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 460, -1, -1));
 
         bModifier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bModifier.setText("Modifier");
@@ -406,7 +406,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 bModifierActionPerformed(evt);
             }
         });
-        body.add(bModifier, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, -1));
+        body.add(bModifier, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -414,8 +414,8 @@ public class Menu_Mission extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(63, 63, 63)
-                .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -445,7 +445,7 @@ public class Menu_Mission extends javax.swing.JFrame {
     }//GEN-LAST:event_paramMousePressed
 
     private void bDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDetailActionPerformed
-    Detail_Mission dialog = new Detail_Mission(new javax.swing.JFrame(), true);
+    Detail_Mission dialog = new Detail_Mission();
         dialog.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_bDetailActionPerformed

@@ -14,9 +14,12 @@ public class Detail_Mission extends javax.swing.JDialog {
     /**
      * Creates new form Detail_Mission
      */
-    public Detail_Mission(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Detail_Mission() {
         initComponents();
+        this.setSize(getWidth() + 16, getHeight() + 39);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -46,7 +49,7 @@ public class Detail_Mission extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tTitre.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        tTitre.setText("jLabel1");
+        tTitre.setText("Details de la Mission");
 
         tNom.setText("jLabel1");
 
@@ -222,7 +225,7 @@ public class Detail_Mission extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Detail_Mission dialog = new Detail_Mission(new javax.swing.JFrame(), true);
+                Detail_Mission dialog = new Detail_Mission();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
