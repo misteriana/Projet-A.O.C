@@ -14,12 +14,17 @@ import java.util.logging.Logger;
  * @author cedric greufeille
  */
 public class Menu_Mission extends javax.swing.JFrame {
-
+    
+    private Accueil a = Accueil.getInstance();
     /**
      * Creates new form Menu_Mission
      */
     public Menu_Mission() {
         initComponents();
+        date.setText(a.getDate().toString());
+        this.setSize(getWidth() + 16, getHeight() + 39);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -66,11 +71,9 @@ public class Menu_Mission extends javax.swing.JFrame {
         bModifier = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(991, 540));
         setResizable(false);
 
         sidePanel.setBackground(new java.awt.Color(255, 255, 255));
-        sidePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         title.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -100,7 +103,7 @@ public class Menu_Mission extends javax.swing.JFrame {
         titleLayout.setHorizontalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(88, Short.MAX_VALUE)
                 .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -108,7 +111,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         titleLayout.setVerticalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,8 +126,6 @@ public class Menu_Mission extends javax.swing.JFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
-
-        sidePanel.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 242, -1));
 
         tdB.setBackground(new java.awt.Color(255, 255, 255));
         tdB.setPreferredSize(new java.awt.Dimension(217, 50));
@@ -163,8 +164,6 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        sidePanel.add(tdB, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 215, 242, 51));
-
         personnel.setBackground(new java.awt.Color(255, 255, 255));
         personnel.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.lightGray));
         personnel.setPreferredSize(new java.awt.Dimension(139, 50));
@@ -187,9 +186,9 @@ public class Menu_Mission extends javax.swing.JFrame {
             personnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(personnelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                 .addGap(115, 115, 115))
         );
         personnelLayout.setVerticalGroup(
@@ -201,14 +200,17 @@ public class Menu_Mission extends javax.swing.JFrame {
                         .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, personnelLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        sidePanel.add(personnel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 272, 242, -1));
-
         competences.setBackground(new java.awt.Color(255, 255, 255));
         competences.setPreferredSize(new java.awt.Dimension(174, 50));
+        competences.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                competencesMousePressed(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/skills1-gris.png"))); // NOI18N
@@ -224,9 +226,9 @@ public class Menu_Mission extends javax.swing.JFrame {
             competencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(competencesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                 .addGap(87, 87, 87))
         );
         competencesLayout.setVerticalGroup(
@@ -234,8 +236,6 @@ public class Menu_Mission extends javax.swing.JFrame {
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        sidePanel.add(competences, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 333, 242, 41));
 
         mission.setBackground(new java.awt.Color(255, 255, 255));
         mission.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.lightGray));
@@ -275,10 +275,8 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        sidePanel.add(mission, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 385, 242, 52));
-
         param.setBackground(new java.awt.Color(255, 255, 255));
-        param.setPreferredSize(new java.awt.Dimension(240, 50));
+        param.setPreferredSize(new java.awt.Dimension(1076, 704));
         param.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 paramMousePressed(evt);
@@ -299,9 +297,9 @@ public class Menu_Mission extends javax.swing.JFrame {
             paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paramLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                 .addGap(93, 93, 93))
         );
         paramLayout.setVerticalGroup(
@@ -310,33 +308,60 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addGroup(paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
-
-        sidePanel.add(param, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 448, 242, 43));
 
         date.setFont(new java.awt.Font("Nunito Sans Light", 0, 18)); // NOI18N
         date.setForeground(new java.awt.Color(204, 204, 204));
         date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         date.setText("jLabel1");
-        sidePanel.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 92, 235, -1));
+
+        javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
+        sidePanel.setLayout(sidePanelLayout);
+        sidePanelLayout.setHorizontalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(tdB, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(personnel, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(competences, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mission, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(param, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        sidePanelLayout.setVerticalGroup(
+            sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(date)
+                .addGap(97, 97, 97)
+                .addComponent(tdB, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(personnel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(competences, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mission, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(param, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setMinimumSize(new java.awt.Dimension(0, 0));
-        body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Nunito Sans Light", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(74, 74, 74));
         jLabel2.setText("Liste des missions");
-        body.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 16, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(74, 74, 74));
         jLabel1.setText("Chercher une mission:");
-        body.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 140, -1));
 
         listeP.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        body.add(listeP, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 100, -1));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(74, 74, 74));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -365,18 +390,17 @@ public class Menu_Mission extends javax.swing.JFrame {
         });
         listeMiss.setViewportView(jTable1);
 
-        body.add(listeMiss, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 710, 390));
-
         bSupprimer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        bSupprimer.setForeground(new java.awt.Color(74, 74, 74));
         bSupprimer.setText("Supprimer");
         bSupprimer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bSupprimerActionPerformed(evt);
             }
         });
-        body.add(bSupprimer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, -1, -1));
 
         bAjouter.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        bAjouter.setForeground(new java.awt.Color(74, 74, 74));
         bAjouter.setText("Ajouter");
         bAjouter.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -388,39 +412,86 @@ public class Menu_Mission extends javax.swing.JFrame {
                 bAjouterActionPerformed(evt);
             }
         });
-        body.add(bAjouter, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 460, -1, -1));
 
         bDetail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        bDetail.setForeground(new java.awt.Color(74, 74, 74));
         bDetail.setText("Détails");
         bDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bDetailActionPerformed(evt);
             }
         });
-        body.add(bDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 460, -1, -1));
 
         bModifier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        bModifier.setForeground(new java.awt.Color(74, 74, 74));
         bModifier.setText("Modifier");
         bModifier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bModifierActionPerformed(evt);
             }
         });
-        body.add(bModifier, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, -1, -1));
+
+        javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
+        body.setLayout(bodyLayout);
+        bodyLayout.setHorizontalGroup(
+            bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bodyLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(bodyLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(171, 171, 171)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(listeP, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(bodyLayout.createSequentialGroup()
+                            .addComponent(bSupprimer)
+                            .addGap(5, 5, 5)
+                            .addComponent(bModifier)
+                            .addGap(7, 7, 7)
+                            .addComponent(bAjouter)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bDetail))
+                        .addComponent(listeMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        bodyLayout.setVerticalGroup(
+            bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bodyLayout.createSequentialGroup()
+                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bodyLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(listeP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(bodyLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
+                .addGap(18, 18, 18)
+                .addComponent(listeMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bSupprimer)
+                    .addComponent(bModifier)
+                    .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bAjouter)
+                        .addComponent(bDetail)))
+                .addGap(21, 21, 21))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+            .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -445,9 +516,8 @@ public class Menu_Mission extends javax.swing.JFrame {
     }//GEN-LAST:event_paramMousePressed
 
     private void bDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDetailActionPerformed
-    Detail_Mission dialog = new Detail_Mission();
+        Detail_Mission dialog = new Detail_Mission();
         dialog.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_bDetailActionPerformed
 
     private void bSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSupprimerActionPerformed
@@ -469,8 +539,21 @@ public class Menu_Mission extends javax.swing.JFrame {
     }//GEN-LAST:event_bModifierActionPerformed
 
     private void tdBMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdBMousePressed
-
+        a.setVisible(true);
+        this.dispose(); 
     }//GEN-LAST:event_tdBMousePressed
+
+    private void competencesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_competencesMousePressed
+        try {
+            Menu_Competences c = new Menu_Competences();
+            c.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_competencesMousePressed
 
     
     /**
