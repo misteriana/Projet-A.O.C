@@ -40,7 +40,6 @@ public class Menu_Mission extends javax.swing.JFrame {
         tdB = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         personnel = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -50,6 +49,7 @@ public class Menu_Mission extends javax.swing.JFrame {
         mission = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         param = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -132,22 +132,19 @@ public class Menu_Mission extends javax.swing.JFrame {
         tdB.setBackground(new java.awt.Color(255, 255, 255));
         tdB.setPreferredSize(new java.awt.Dimension(217, 50));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tdB1-rose.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tdB1-gris.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Nunito Sans SemiBold", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(182, 182, 183));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Tableau de bord");
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/line.png"))); // NOI18N
-
         javax.swing.GroupLayout tdBLayout = new javax.swing.GroupLayout(tdB);
         tdB.setLayout(tdBLayout);
         tdBLayout.setHorizontalGroup(
             tdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tdBLayout.createSequentialGroup()
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
@@ -162,9 +159,6 @@ public class Menu_Mission extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tdBLayout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
-            .addGroup(tdBLayout.createSequentialGroup()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
 
         sidePanel.add(tdB, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 215, 242, 51));
@@ -218,6 +212,7 @@ public class Menu_Mission extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/skills1-gris.png"))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Nunito Sans SemiBold", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(182, 182, 183));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Compétences");
 
@@ -250,31 +245,37 @@ public class Menu_Mission extends javax.swing.JFrame {
         });
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mission1-gris.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mission1-rose.png"))); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Nunito Sans", 0, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(182, 182, 183));
+        jLabel18.setForeground(new java.awt.Color(74, 74, 74));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Missions");
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/line.png"))); // NOI18N
 
         javax.swing.GroupLayout missionLayout = new javax.swing.GroupLayout(mission);
         mission.setLayout(missionLayout);
         missionLayout.setHorizontalGroup(
             missionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(missionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(124, 124, 124))
+                .addGap(142, 142, 142))
         );
         missionLayout.setVerticalGroup(
             missionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(missionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(missionLayout.createSequentialGroup()
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         sidePanel.add(mission, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 385, 242, 52));
@@ -324,7 +325,6 @@ public class Menu_Mission extends javax.swing.JFrame {
         sidePanel.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 92, 235, -1));
 
         body.setBackground(new java.awt.Color(255, 255, 255));
-        body.setMaximumSize(new java.awt.Dimension(32767, 32767));
         body.setMinimumSize(new java.awt.Dimension(0, 0));
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -381,7 +381,6 @@ public class Menu_Mission extends javax.swing.JFrame {
 
         bAjouter.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bAjouter.setText("Supprimer");
-        bAjouter.setActionCommand("Supprimer");
         bAjouter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bAjouterActionPerformed(evt);
