@@ -6,47 +6,45 @@
 package gestionpersonnel;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- * <b> Cette interface affiche le personnel de l' entreprise. </b>
- * @author jonathan detrier
+ *
+ * @author Anseea
  */
-public class Menu_Personnel extends javax.swing.JFrame {
+public class Menu_Competences extends javax.swing.JFrame {
 
-    private PersonnelDAO p = new PersonnelDAO();
+    private CompetenceDAO c = new CompetenceDAO();
     private TableRowSorter<TableModel> sorter;
-    private String id = null;
     private Accueil a = Accueil.getInstance();
     
     /**
-     * Creates new form Menu_Personnel
+     * Creates new form Menu_Competences
      */
-    public Menu_Personnel() throws IOException, ParseException {
+    public Menu_Competences() throws IOException, ParseException {      
         initComponents();
         date.setText(a.getDate().toString());
-        if (!PersonnelDAO.hasloadP) 
-            p.recupererPersonnels();
-        if (!PersonnelDAO.hasloadC)
-            p.recupererCompetencesPersonnels();
+        if (!CompetenceDAO.hasloadC) 
+            c.recupererCompetences();
         recupererDonnees();
-        this.sorter = new TableRowSorter<>(tablePersonnel.getModel());
-        tablePersonnel.setRowSorter(sorter);
+        this.sorter = new TableRowSorter<>(tableCompetences.getModel());
+        tableCompetences.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tableCompetences.setRowSorter(sorter);
+        setJTableColumnsWidth(tableCompetences,850,10,50,40);
         this.setSize(getWidth() + 16, getHeight() + 39);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,10 +66,10 @@ public class Menu_Personnel extends javax.swing.JFrame {
         personnel1 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         competences1 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         mission1 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -82,24 +80,14 @@ public class Menu_Personnel extends javax.swing.JFrame {
         body = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        listeP = new javax.swing.JTextField();
+        listeC = new javax.swing.JTextField();
         listePers = new javax.swing.JScrollPane();
-        tablePersonnel = new javax.swing.JTable();
-        listeS = new javax.swing.JLabel();
-        listeSkills = new javax.swing.JScrollPane();
-        competences = new javax.swing.JList<>();
-        bSupprimer = new javax.swing.JButton();
-        bModifier = new javax.swing.JButton();
-        bAjouter = new javax.swing.JButton();
+        tableCompetences = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestion du personnel");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestion de personnel");
+        setPreferredSize(new java.awt.Dimension(1076, 704));
         setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         sidePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,7 +127,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         titleLayout.setVerticalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +172,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
         tdBLayout.setVerticalGroup(
             tdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tdBLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(tdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -194,23 +182,25 @@ public class Menu_Personnel extends javax.swing.JFrame {
         personnel1.setBackground(new java.awt.Color(255, 255, 255));
         personnel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.lightGray));
         personnel1.setPreferredSize(new java.awt.Dimension(139, 50));
+        personnel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                personnel1MousePressed(evt);
+            }
+        });
 
         jLabel20.setFont(new java.awt.Font("Nunito Sans SemiBold", 0, 18)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(74, 74, 74));
+        jLabel20.setForeground(new java.awt.Color(182, 182, 183));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Personnel");
 
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user1-rose.png"))); // NOI18N
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/line.png"))); // NOI18N
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user1-gris.png"))); // NOI18N
 
         javax.swing.GroupLayout personnel1Layout = new javax.swing.GroupLayout(personnel1);
         personnel1.setLayout(personnel1Layout);
         personnel1Layout.setHorizontalGroup(
             personnel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(personnel1Layout.createSequentialGroup()
-                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -220,35 +210,32 @@ public class Menu_Personnel extends javax.swing.JFrame {
             personnel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(personnel1Layout.createSequentialGroup()
                 .addGroup(personnel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         competences1.setBackground(new java.awt.Color(255, 255, 255));
         competences1.setPreferredSize(new java.awt.Dimension(174, 50));
-        competences1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                competences1MousePressed(evt);
-            }
-        });
 
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/skills1-gris.png"))); // NOI18N
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/skills1-rose.png"))); // NOI18N
 
         jLabel23.setFont(new java.awt.Font("Nunito Sans SemiBold", 0, 18)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(182, 182, 183));
+        jLabel23.setForeground(new java.awt.Color(74, 74, 74));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Compétences");
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/line.png"))); // NOI18N
 
         javax.swing.GroupLayout competences1Layout = new javax.swing.GroupLayout(competences1);
         competences1.setLayout(competences1Layout);
         competences1Layout.setHorizontalGroup(
             competences1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(competences1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(97, 97, 97))
@@ -257,6 +244,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
             competences1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
             .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         mission1.setBackground(new java.awt.Color(255, 255, 255));
@@ -337,22 +325,23 @@ public class Menu_Personnel extends javax.swing.JFrame {
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(competences1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addComponent(tdB, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-            .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(mission1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addComponent(personnel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addComponent(param, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
             .addGroup(sidePanelLayout.createSequentialGroup()
-                .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(title, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(date, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(100, 100, 100)
-                .addComponent(tdB, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(tdB, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(personnel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -361,59 +350,59 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 .addComponent(mission1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(param, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(188, 188, 188))
+                .addGap(145, 145, 145))
         );
 
         body.setBackground(new java.awt.Color(248, 249, 250));
 
         jLabel2.setFont(new java.awt.Font("Nunito Sans Light", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(74, 74, 74));
-        jLabel2.setText("Liste du personnel");
+        jLabel2.setText("Liste des compétences");
 
         jLabel1.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(74, 74, 74));
-        jLabel1.setText("Chercher un employé :");
+        jLabel1.setText("Chercher une compétences :");
 
-        listeP.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
-        listeP.setForeground(new java.awt.Color(74, 74, 74));
-        listeP.setHighlighter(null);
-        listeP.setSelectedTextColor(new java.awt.Color(255, 184, 140));
-        listeP.setSelectionColor(new java.awt.Color(255, 184, 140));
-        listeP.addActionListener(new java.awt.event.ActionListener() {
+        listeC.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        listeC.setForeground(new java.awt.Color(74, 74, 74));
+        listeC.setHighlighter(null);
+        listeC.setSelectedTextColor(new java.awt.Color(255, 184, 140));
+        listeC.setSelectionColor(new java.awt.Color(255, 184, 140));
+        listeC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listePActionPerformed(evt);
+                listeCActionPerformed(evt);
             }
         });
-        listeP.addKeyListener(new java.awt.event.KeyAdapter() {
+        listeC.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                listePKeyPressed(evt);
+                listeCKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                listePKeyReleased(evt);
+                listeCKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                listePKeyTyped(evt);
+                listeCKeyTyped(evt);
             }
         });
 
-        tablePersonnel.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
-        tablePersonnel.setForeground(new java.awt.Color(74, 74, 74));
-        tablePersonnel.setModel(new javax.swing.table.DefaultTableModel(
+        tableCompetences.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        tableCompetences.setForeground(new java.awt.Color(74, 74, 74));
+        tableCompetences.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Nom", "Prenom", "Date d'entrée", "Id"
+                "Code", "Nom", "Nom anglais"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -424,84 +413,27 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablePersonnel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablePersonnelMouseClicked(evt);
-            }
-        });
-        listePers.setViewportView(tablePersonnel);
-        if (tablePersonnel.getColumnModel().getColumnCount() > 0) {
-            tablePersonnel.getColumnModel().getColumn(0).setHeaderValue("Nom");
-            tablePersonnel.getColumnModel().getColumn(1).setHeaderValue("Prenom");
-            tablePersonnel.getColumnModel().getColumn(2).setHeaderValue("Date d'entrée");
-            tablePersonnel.getColumnModel().getColumn(3).setHeaderValue("Id");
-        }
-
-        listeS.setFont(new java.awt.Font("Nunito Sans", 0, 18)); // NOI18N
-        listeS.setForeground(new java.awt.Color(74, 74, 74));
-        listeS.setText("Compétences de l'employé");
-
-        competences.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
-        listeSkills.setViewportView(competences);
-
-        bSupprimer.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
-        bSupprimer.setForeground(new java.awt.Color(74, 74, 74));
-        bSupprimer.setText("Supprimer");
-        bSupprimer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bSupprimerActionPerformed(evt);
-            }
-        });
-
-        bModifier.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
-        bModifier.setForeground(new java.awt.Color(74, 74, 74));
-        bModifier.setText("Modifier");
-        bModifier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bModifierActionPerformed(evt);
-            }
-        });
-
-        bAjouter.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
-        bAjouter.setForeground(new java.awt.Color(74, 74, 74));
-        bAjouter.setText("Ajouter");
-        bAjouter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bAjouterActionPerformed(evt);
-            }
-        });
+        listePers.setViewportView(tableCompetences);
 
         javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
         body.setLayout(bodyLayout);
         bodyLayout.setHorizontalGroup(
             bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bodyLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(21, 21, 21)
                 .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bodyLayout.createSequentialGroup()
-                        .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyLayout.createSequentialGroup()
+                        .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(bodyLayout.createSequentialGroup()
-                                .addComponent(bSupprimer)
-                                .addGap(5, 5, 5)
-                                .addComponent(bModifier)
-                                .addGap(7, 7, 7)
-                                .addComponent(bAjouter))
-                            .addGroup(bodyLayout.createSequentialGroup()
-                                .addGap(259, 259, 259)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(listeP, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(listePers, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(bodyLayout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(listeSkills, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(listeS, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))))
-                    .addComponent(jLabel2))
-                .addContainerGap(33, Short.MAX_VALUE))
+                                .addComponent(listeC, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(listePers, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE))
+                        .addGap(25, 25, 25))))
         );
         bodyLayout.setVerticalGroup(
             bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -509,23 +441,12 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bodyLayout.createSequentialGroup()
-                        .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(listeP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listePers, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bodyLayout.createSequentialGroup()
-                        .addComponent(listeS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(listeSkills, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
-                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bSupprimer)
-                    .addComponent(bModifier)
-                    .addComponent(bAjouter))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(listeC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listePers, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -535,8 +456,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 243, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,108 +464,15 @@ public class Menu_Personnel extends javax.swing.JFrame {
             .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        getAccessibleContext().setAccessibleName("Gestion du personnel");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void listePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listePActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_listePActionPerformed
-
-    private void bModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModifierActionPerformed
-        try {
-            Modify_Employe ae = new Modify_Employe(this, true, this.id);
-            ae.setVisible(true);
-            recupererDonnees();
-        } catch (IOException ex) {
-            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_bModifierActionPerformed
-
-    private void tablePersonnelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePersonnelMouseClicked
-        try {
-            recupererCompetencesPersonnel();
-        } catch (IOException ex) {
-            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_tablePersonnelMouseClicked
-
-    private void listePKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listePKeyTyped
-        
-    }//GEN-LAST:event_listePKeyTyped
-
-    private void listePKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listePKeyPressed
-        
-    }//GEN-LAST:event_listePKeyPressed
-
-    private void listePKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listePKeyReleased
-        String text = listeP.getText();
-        if (text.length() == 0) {
-          sorter.setRowFilter(null);
-        } else {
-          sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-        }
-    }//GEN-LAST:event_listePKeyReleased
-
-    private void bAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouterActionPerformed
-        try {
-            System.out.println(PersonnelDAO.personnels.size());
-            Add_Employe ae = new Add_Employe(this, true);
-            ae.setVisible(true);
-            addLine();
-            System.out.println(PersonnelDAO.personnels.size());
-        } catch (IOException ex) {
-            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_bAjouterActionPerformed
-
-    private void bSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSupprimerActionPerformed
-        if (tablePersonnel.getSelectedRow() != -1) {
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog (this, "Voulez-vous réellement supprimer l'employé " + tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 1) + " " + tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 0) +"?","Attention", dialogButton);
-            if(dialogResult == JOptionPane.YES_OPTION){
-                removeLine();
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog(this, "Sélectionnez une, et une seule, ligne pour supprimer un enregistrement.", "Erreur : Aucune sélection", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_bSupprimerActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        SaveAllChanges s = new SaveAllChanges();
-        int r = JOptionPane.showConfirmDialog(this, "Voulez-vous sauvegarder avant de quitter ? (Toute modification non sauvegardée sera perdue)");
-        if (r == 0) {
-            try {
-                s.saveChanges();
-            } catch (IOException ex) {
-                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (r == 2) {
-            try {
-                Menu_Personnel m = new Menu_Personnel();
-                m.setVisible(true);
-            } catch (IOException ex) {
-                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-    }//GEN-LAST:event_formWindowClosing
-
-    private void paramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paramMousePressed
-        new Parametres().setVisible(true);
+    private void tdBMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdBMousePressed
+        a.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_paramMousePressed
+    }//GEN-LAST:event_tdBMousePressed
 
     private void mission1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mission1MousePressed
         Menu_Mission m = new Menu_Mission();
@@ -653,80 +480,68 @@ public class Menu_Personnel extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_mission1MousePressed
 
-    private void tdBMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdBMousePressed
-        a.setVisible(true);
-        this.dispose(); 
-    }//GEN-LAST:event_tdBMousePressed
+    private void paramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paramMousePressed
+        new Parametres().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_paramMousePressed
 
-    private void competences1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_competences1MousePressed
+    private void listeCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listeCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listeCActionPerformed
+
+    private void listeCKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listeCKeyPressed
+
+    }//GEN-LAST:event_listeCKeyPressed
+
+    private void listeCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listeCKeyReleased
+        String text = listeC.getText();
+        if (text.length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+        }
+    }//GEN-LAST:event_listeCKeyReleased
+
+    private void listeCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listeCKeyTyped
+
+    }//GEN-LAST:event_listeCKeyTyped
+
+    private void personnel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personnel1MousePressed
         try {
-            Menu_Competences c = new Menu_Competences();
-            c.setVisible(true);
+            Menu_Personnel m = new Menu_Personnel();
+            m.setVisible(true);
             this.dispose();
         } catch (IOException ex) {
-            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Menu_Competences.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Menu_Competences.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_competences1MousePressed
-    
-    public void addLine() {
-        DefaultTableModel tbm = (DefaultTableModel) tablePersonnel.getModel();
-        Object[] toAdd = new Object[4];
-        if ( (int) tbm.getValueAt(tbm.getRowCount()-1, tbm.getColumnCount()-1) != PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getId()) {
-            toAdd[0] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getName();
-            toAdd[1] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getPrenom();
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            toAdd[2] = df.format(PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getDateE());
-            toAdd[3] = PersonnelDAO.personnels.get(PersonnelDAO.personnels.size()-1).getId();
-            tbm.addRow(toAdd);
-            tablePersonnel.setModel(tbm);
-        }
-    }
-    
-    public void removeLine() {
-        DefaultTableModel tbm = (DefaultTableModel) tablePersonnel.getModel();
-        int toDel = tablePersonnel.getSelectedRow();
-        id = tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 3).toString();
-        Personnel perso = null;
-        for (Personnel p : PersonnelDAO.personnels) {
-            if (p.getId() == Integer.parseInt(id)) {
-                perso = p;
-            }
-        }
-        PersonnelDAO.personnels.remove(perso);
-        tbm.removeRow(toDel);
-        tablePersonnel.setModel(tbm);
-    }
-    
-    public void recupererDonnees() throws IOException, ParseException {
-        Object[][] data = new Object[PersonnelDAO.personnels.size()][4];
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i=0; i < PersonnelDAO.personnels.size(); i++) {
-            data[i][0] = PersonnelDAO.personnels.get(i).getName();
-            data[i][1] = PersonnelDAO.personnels.get(i).getPrenom();
-            String dateE = df.format(PersonnelDAO.personnels.get(i).getDateE());
-            data[i][2] = dateE;
-            data[i][3] = PersonnelDAO.personnels.get(i).getId();
-        }
-        String[] header = new String[] {"Nom", "Prenom", "Date d'entrée", "Id"};
-        DefaultTableModel tbm = new DefaultTableModel(data, header);
-        tablePersonnel.setModel(tbm);
-    }
+    }//GEN-LAST:event_personnel1MousePressed
 
-    public void recupererCompetencesPersonnel() throws IOException, ParseException {
-        id = tablePersonnel.getValueAt(tablePersonnel.getSelectedRow(), 3).toString();
-        Vector<String> model = new Vector<>();
-        for (Personnel p : PersonnelDAO.personnels) {
-            if (p.getId() == Integer.parseInt(id)) {
-                for (Competence c : p.competences) {
-                    model.add(c.getName());
-                }
-            }
+    public void recupererDonnees() throws IOException, ParseException {
+        Object[][] data = new Object[CompetenceDAO.competences.size()][3];
+        for (int i=0; i < CompetenceDAO.competences.size(); i++) {
+            data[i][0] = CompetenceDAO.competences.get(i).getId();
+            data[i][1] = CompetenceDAO.competences.get(i).getName();
+            data[i][2] = CompetenceDAO.competences.get(i).getEnglishname();
         }
-        competences.setListData(model);
+        String[] header = new String[] {"Code", "Nom", "Nom anglais"};
+        DefaultTableModel tbm = new DefaultTableModel(data, header);
+        tableCompetences.setModel(tbm);
+        
     }
     
+    public static void setJTableColumnsWidth(JTable table, int tablePreferredWidth, double... percentages) {
+        double total = 0;
+        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+            total += percentages[i];
+        }
+ 
+        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+            TableColumn column = table.getColumnModel().getColumn(i);
+            column.setPreferredWidth((int)(tablePreferredWidth * (percentages[i] / total)));
+        }
+    }
     
     /**
      * @param args the command line arguments
@@ -745,13 +560,13 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu_Personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Competences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu_Personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Competences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu_Personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Competences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu_Personnel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Competences.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -759,22 +574,18 @@ public class Menu_Personnel extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new Menu_Personnel().setVisible(true);
+                    new Menu_Competences().setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Menu_Competences.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
-                    Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Menu_Competences.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bAjouter;
-    private javax.swing.JButton bModifier;
-    private javax.swing.JButton bSupprimer;
     private javax.swing.JPanel body;
-    private javax.swing.JList<String> competences;
     private javax.swing.JPanel competences1;
     private javax.swing.JLabel date;
     private javax.swing.JLabel jLabel1;
@@ -794,15 +605,13 @@ public class Menu_Personnel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField listeP;
+    private javax.swing.JTextField listeC;
     private javax.swing.JScrollPane listePers;
-    private javax.swing.JLabel listeS;
-    private javax.swing.JScrollPane listeSkills;
     private javax.swing.JPanel mission1;
     private javax.swing.JPanel param;
     private javax.swing.JPanel personnel1;
     private javax.swing.JPanel sidePanel;
-    private javax.swing.JTable tablePersonnel;
+    private javax.swing.JTable tableCompetences;
     private javax.swing.JPanel tdB;
     private javax.swing.JPanel title;
     // End of variables declaration//GEN-END:variables

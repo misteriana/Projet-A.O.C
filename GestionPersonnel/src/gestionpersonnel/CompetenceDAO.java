@@ -22,6 +22,8 @@ public class CompetenceDAO {
      * Cette liste contiendra l'ensemble des compétences existantes
      */
     static List<Competence> competences = new ArrayList<>();
+    static boolean hasloadC = false;
+    
     
     /**
      * @author cédric greufeille
@@ -50,6 +52,7 @@ public class CompetenceDAO {
                 CompetenceDAO.competences.add(co);
             }
         }
+        CompetenceDAO.hasloadC = true;
     }
     
     /**

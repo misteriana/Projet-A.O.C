@@ -266,12 +266,17 @@ public class Accueil extends javax.swing.JFrame {
                         .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, personnelLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         competences.setBackground(new java.awt.Color(255, 255, 255));
         competences.setPreferredSize(new java.awt.Dimension(174, 50));
+        competences.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                competencesMousePressed(evt);
+            }
+        });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/skills1-gris.png"))); // NOI18N
@@ -331,7 +336,7 @@ public class Accueil extends javax.swing.JFrame {
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(missionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -368,7 +373,7 @@ public class Accueil extends javax.swing.JFrame {
                 .addGroup(paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         date.setFont(new java.awt.Font("Nunito Sans Light", 0, 18)); // NOI18N
@@ -672,6 +677,18 @@ public class Accueil extends javax.swing.JFrame {
         m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_missionMousePressed
+
+    private void competencesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_competencesMousePressed
+        try {
+            Menu_Competences c = new Menu_Competences();
+            c.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_competencesMousePressed
 
     /*private void timerActionListner(java.awt.event.ActionEvent evt) {                                      
         DateFormat clockFormat = new SimpleDateFormat("HH':'mm",Locale.FRANCE);
