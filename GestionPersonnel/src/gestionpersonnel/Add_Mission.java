@@ -16,11 +16,11 @@ public class Add_Mission extends javax.swing.JFrame {
      */
     public Add_Mission() {
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
-    Add_Mission(Menu_Mission aThis, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -240,7 +240,9 @@ public class Add_Mission extends javax.swing.JFrame {
     }//GEN-LAST:event_bRetourActionPerformed
 
     private void bValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bValiderActionPerformed
-       
+        Affecter_Mission_Pers amp= new Affecter_Mission_Pers(this,true);
+        amp.setVisible(true);
+        this.dispose();       
     }//GEN-LAST:event_bValiderActionPerformed
 
     private void tDateDebKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tDateDebKeyReleased

@@ -17,6 +17,9 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     public Affecter_Mission_Pers(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setSize(getWidth() + 16, getHeight() + 39);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,24 +31,27 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lTitre = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabComp = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        bEnregistrer = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabPers = new javax.swing.JTable();
-        bEnregistrer = new javax.swing.JButton();
-        lNbPersonnes = new javax.swing.JLabel();
-        bValider = new javax.swing.JButton();
+        lNbPersonnes1 = new javax.swing.JLabel();
+        lNbPersonnes2 = new javax.swing.JLabel();
         bRetour = new javax.swing.JButton();
+        bValider = new javax.swing.JButton();
+        tTtitre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(248, 249, 250));
 
-        lTitre.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        lTitre.setText("jLabel1");
-
+        jLabel4.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
         jLabel4.setText("Compétences nécessaires :");
+
+        jScrollPane1.setForeground(new java.awt.Color(74, 74, 74));
+        jScrollPane1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
 
         tabComp.setAutoCreateRowSorter(true);
         tabComp.setModel(new javax.swing.table.DefaultTableModel(
@@ -81,7 +87,20 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tabComp);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Personnel compétent :"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Personnel compétent :", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Nunito Sans", 0, 14))); // NOI18N
+        jPanel1.setForeground(new java.awt.Color(74, 74, 74));
+        jPanel1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+
+        bEnregistrer.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        bEnregistrer.setForeground(new java.awt.Color(74, 74, 74));
+        bEnregistrer.setText("Enregistrer");
+        bEnregistrer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEnregistrerActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
 
         tabPers.setAutoCreateRowSorter(true);
         tabPers.setModel(new javax.swing.table.DefaultTableModel(
@@ -117,36 +136,60 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tabPers);
 
-        bEnregistrer.setText("Enregistrer");
-        bEnregistrer.addActionListener(new java.awt.event.ActionListener() {
+        lNbPersonnes1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        lNbPersonnes1.setForeground(new java.awt.Color(74, 74, 74));
+        lNbPersonnes1.setText("X/Y");
+
+        lNbPersonnes2.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        lNbPersonnes2.setForeground(new java.awt.Color(74, 74, 74));
+        lNbPersonnes2.setText("Personnels");
+
+        bRetour.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        bRetour.setForeground(new java.awt.Color(74, 74, 74));
+        bRetour.setText("Retour");
+        bRetour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bEnregistrerActionPerformed(evt);
+                bRetourActionPerformed(evt);
             }
         });
-
-        lNbPersonnes.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lNbPersonnes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bEnregistrer)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lNbPersonnes1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lNbPersonnes2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bEnregistrer))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bRetour)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bEnregistrer)
-                    .addComponent(lNbPersonnes)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lNbPersonnes1)
+                        .addComponent(lNbPersonnes2)))
+                .addGap(18, 18, 18)
+                .addComponent(bRetour)
+                .addContainerGap())
         );
 
+        bValider.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        bValider.setForeground(new java.awt.Color(74, 74, 74));
         bValider.setText("Valider");
         bValider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,12 +197,9 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
             }
         });
 
-        bRetour.setText("Retour");
-        bRetour.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bRetourActionPerformed(evt);
-            }
-        });
+        tTtitre.setFont(new java.awt.Font("Nunito Sans", 0, 30)); // NOI18N
+        tTtitre.setForeground(new java.awt.Color(74, 74, 74));
+        tTtitre.setText("Ajouter le personnel compétent à la mission");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,34 +208,31 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lTitre)
-                            .addComponent(jLabel4))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(bRetour)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bValider)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bValider))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tTtitre)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lTitre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tTtitre)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(108, 108, 108)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bValider)
-                    .addComponent(bRetour))
+                .addComponent(bValider)
                 .addContainerGap())
         );
 
@@ -206,14 +243,6 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
 
     }//GEN-LAST:event_tabCompMouseClicked
 
-    private void tabPersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPersMouseClicked
-
-    }//GEN-LAST:event_tabPersMouseClicked
-
-    private void bEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEnregistrerActionPerformed
-       
-    }//GEN-LAST:event_bEnregistrerActionPerformed
-
     private void bValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bValiderActionPerformed
 
     }//GEN-LAST:event_bValiderActionPerformed
@@ -221,6 +250,14 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     private void bRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRetourActionPerformed
         this.dispose();
     }//GEN-LAST:event_bRetourActionPerformed
+
+    private void tabPersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPersMouseClicked
+
+    }//GEN-LAST:event_tabPersMouseClicked
+
+    private void bEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEnregistrerActionPerformed
+
+    }//GEN-LAST:event_bEnregistrerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,8 +309,9 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lNbPersonnes;
-    private javax.swing.JLabel lTitre;
+    private javax.swing.JLabel lNbPersonnes1;
+    private javax.swing.JLabel lNbPersonnes2;
+    private javax.swing.JLabel tTtitre;
     private javax.swing.JTable tabComp;
     private javax.swing.JTable tabPers;
     // End of variables declaration//GEN-END:variables

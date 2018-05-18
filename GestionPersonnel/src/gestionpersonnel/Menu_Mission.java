@@ -531,7 +531,6 @@ public class Menu_Mission extends javax.swing.JFrame {
     private void bAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouterActionPerformed
     Add_Mission admi = new Add_Mission();
         admi.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_bAjouterActionPerformed
 
     private void bModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModifierActionPerformed
