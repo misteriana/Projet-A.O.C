@@ -32,33 +32,29 @@ public class Detail_Mission extends javax.swing.JDialog {
     private void initComponents() {
 
         tTitre = new javax.swing.JLabel();
-        tNom = new javax.swing.JLabel();
-        tStatut = new javax.swing.JLabel();
-        tDates = new javax.swing.JLabel();
-        tNbJours = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabPers = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabComp = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        tNbPersonnes = new javax.swing.JLabel();
-        tCode = new javax.swing.JLabel();
-        tManque = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        NB1 = new javax.swing.JLabel();
+        NB2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(248, 249, 250));
 
-        tTitre.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        tTitre.setFont(new java.awt.Font("Nunito Sans", 0, 30)); // NOI18N
+        tTitre.setForeground(new java.awt.Color(74, 74, 74));
         tTitre.setText("Details de la Mission");
 
-        tNom.setText("jLabel1");
-
-        tStatut.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
-        tStatut.setText("jLabel2");
-
-        tDates.setText("jLabel3");
-
-        tNbJours.setText("jLabel1");
+        jScrollPane1.setForeground(new java.awt.Color(74, 74, 74));
+        jScrollPane1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
 
         tabPers.setAutoCreateRowSorter(true);
         tabPers.setModel(new javax.swing.table.DefaultTableModel(
@@ -69,7 +65,7 @@ public class Detail_Mission extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Compétence", "Code", "Nom", "Prénom"
+                "Compétence", "Id", "Nom", "Prénom"
             }
         ) {
             Class[] types = new Class [] {
@@ -88,6 +84,9 @@ public class Detail_Mission extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(tabPers);
+
+        jScrollPane2.setForeground(new java.awt.Color(74, 74, 74));
+        jScrollPane2.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
 
         tabComp.setAutoCreateRowSorter(true);
         tabComp.setModel(new javax.swing.table.DefaultTableModel(
@@ -118,16 +117,46 @@ public class Detail_Mission extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tabComp);
 
+        jLabel1.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(74, 74, 74));
         jLabel1.setText("Compétences :");
 
+        jLabel2.setFont(new java.awt.Font("Nunito Sans", 0, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(74, 74, 74));
         jLabel2.setText("Personnel :");
 
-        tNbPersonnes.setText("jLabel3");
+        jLabel3.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(74, 74, 74));
+        jLabel3.setText("Cette mission nécéssite ");
 
-        tCode.setText("jLabel3");
+        jLabel4.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(74, 74, 74));
+        jLabel4.setText("compétences.");
 
-        tManque.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        tManque.setText("jLabel3");
+        jLabel5.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(74, 74, 74));
+        jLabel5.setText("personnes.");
+
+        jLabel6.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(74, 74, 74));
+        jLabel6.setText("Cette mission nécéssite ");
+
+        jButton1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(74, 74, 74));
+        jButton1.setText("Retour");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        NB1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        NB1.setForeground(new java.awt.Color(74, 74, 74));
+        NB1.setText("NB");
+
+        NB2.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
+        NB2.setForeground(new java.awt.Color(74, 74, 74));
+        NB2.setText("NB");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,30 +165,31 @@ public class Detail_Mission extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tDates)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tNbJours))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tNbPersonnes))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tTitre)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tTitre)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6))
+                                    .addComponent(jLabel3))
+                                .addGap(13, 13, 13)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(NB1)
+                                    .addComponent(NB2))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)))
+                            .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tStatut))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tNom)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tCode))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tManque)))
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -167,33 +197,36 @@ public class Detail_Mission extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tTitre)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(NB1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tNom)
-                    .addComponent(tCode))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(NB2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tDates)
-                    .addComponent(tNbJours))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tStatut))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                .addGap(2, 2, 2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tNbPersonnes))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                .addGap(8, 8, 8)
-                .addComponent(tManque)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,17 +271,17 @@ public class Detail_Mission extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel NB1;
+    private javax.swing.JLabel NB2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel tCode;
-    private javax.swing.JLabel tDates;
-    private javax.swing.JLabel tManque;
-    private javax.swing.JLabel tNbJours;
-    private javax.swing.JLabel tNbPersonnes;
-    private javax.swing.JLabel tNom;
-    private javax.swing.JLabel tStatut;
     private javax.swing.JLabel tTitre;
     private javax.swing.JTable tabComp;
     private javax.swing.JTable tabPers;
