@@ -40,7 +40,6 @@ public class Menu_Mission extends javax.swing.JFrame {
         tdB = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         personnel = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -50,6 +49,7 @@ public class Menu_Mission extends javax.swing.JFrame {
         mission = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         param = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -58,14 +58,11 @@ public class Menu_Mission extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         listeP = new javax.swing.JTextField();
-        listePers = new javax.swing.JScrollPane();
+        listeMiss = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        listeS = new javax.swing.JLabel();
-        listeSkills = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        bSupprimer = new javax.swing.JButton();
         bAjouter = new javax.swing.JButton();
-        bAjouter1 = new javax.swing.JButton();
-        bAjouter2 = new javax.swing.JButton();
+        bDetail = new javax.swing.JButton();
         bModifier = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -131,23 +128,25 @@ public class Menu_Mission extends javax.swing.JFrame {
 
         tdB.setBackground(new java.awt.Color(255, 255, 255));
         tdB.setPreferredSize(new java.awt.Dimension(217, 50));
+        tdB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tdBMousePressed(evt);
+            }
+        });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tdB1-rose.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tdB1-gris.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Nunito Sans SemiBold", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(182, 182, 183));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Tableau de bord");
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/line.png"))); // NOI18N
-
         javax.swing.GroupLayout tdBLayout = new javax.swing.GroupLayout(tdB);
         tdB.setLayout(tdBLayout);
         tdBLayout.setHorizontalGroup(
             tdBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tdBLayout.createSequentialGroup()
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
@@ -162,9 +161,6 @@ public class Menu_Mission extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tdBLayout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
-            .addGroup(tdBLayout.createSequentialGroup()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
 
         sidePanel.add(tdB, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 215, 242, 51));
@@ -218,6 +214,7 @@ public class Menu_Mission extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/skills1-gris.png"))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Nunito Sans SemiBold", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(182, 182, 183));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Compétences");
 
@@ -243,38 +240,39 @@ public class Menu_Mission extends javax.swing.JFrame {
         mission.setBackground(new java.awt.Color(255, 255, 255));
         mission.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, java.awt.Color.lightGray));
         mission.setPreferredSize(new java.awt.Dimension(126, 50));
-        mission.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                missionMousePressed(evt);
-            }
-        });
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mission1-gris.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mission1-rose.png"))); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Nunito Sans", 0, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(182, 182, 183));
+        jLabel18.setForeground(new java.awt.Color(74, 74, 74));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Missions");
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/line.png"))); // NOI18N
 
         javax.swing.GroupLayout missionLayout = new javax.swing.GroupLayout(mission);
         mission.setLayout(missionLayout);
         missionLayout.setHorizontalGroup(
             missionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(missionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(124, 124, 124))
+                .addGap(142, 142, 142))
         );
         missionLayout.setVerticalGroup(
             missionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(missionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(missionLayout.createSequentialGroup()
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         sidePanel.add(mission, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 385, 242, 52));
@@ -324,7 +322,6 @@ public class Menu_Mission extends javax.swing.JFrame {
         sidePanel.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 92, 235, -1));
 
         body.setBackground(new java.awt.Color(255, 255, 255));
-        body.setMaximumSize(new java.awt.Dimension(32767, 32767));
         body.setMinimumSize(new java.awt.Dimension(0, 0));
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -366,51 +363,41 @@ public class Menu_Mission extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        listePers.setViewportView(jTable1);
+        listeMiss.setViewportView(jTable1);
 
-        body.add(listePers, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 710, 230));
+        body.add(listeMiss, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 710, 390));
 
-        listeS.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        listeS.setText("Etat de la mission : ");
-        body.add(listeS, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 189, -1));
-
-        jList1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        listeSkills.setViewportView(jList1);
-
-        body.add(listeSkills, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 710, 130));
+        bSupprimer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        bSupprimer.setText("Supprimer");
+        bSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSupprimerActionPerformed(evt);
+            }
+        });
+        body.add(bSupprimer, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, -1, -1));
 
         bAjouter.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        bAjouter.setText("Supprimer");
-        bAjouter.setActionCommand("Supprimer");
+        bAjouter.setText("Ajouter");
+        bAjouter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                bAjouterMousePressed(evt);
+            }
+        });
         bAjouter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bAjouterActionPerformed(evt);
             }
         });
-        body.add(bAjouter, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, -1, -1));
+        body.add(bAjouter, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, -1));
 
-        bAjouter1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        bAjouter1.setText("Ajouter");
-        bAjouter1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                bAjouter1MousePressed(evt);
-            }
-        });
-        bAjouter1.addActionListener(new java.awt.event.ActionListener() {
+        bDetail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        bDetail.setText("Détails");
+        bDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bAjouter1ActionPerformed(evt);
+                bDetailActionPerformed(evt);
             }
         });
-        body.add(bAjouter1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, -1, -1));
-
-        bAjouter2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        bAjouter2.setText("Détails");
-        bAjouter2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bAjouter2ActionPerformed(evt);
-            }
-        });
-        body.add(bAjouter2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, -1, -1));
+        body.add(bDetail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, -1, -1));
 
         bModifier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bModifier.setText("Modifier");
@@ -427,12 +414,13 @@ public class Menu_Mission extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63)
+                .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+            .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
             .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -451,46 +439,40 @@ public class Menu_Mission extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_personnelMousePressed
 
-    private void missionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_missionMousePressed
-        Menu_Mission m = new Menu_Mission();
-        m.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_missionMousePressed
-
     private void paramMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paramMousePressed
         new Parametres().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_paramMousePressed
 
-    private void bAjouter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouter2ActionPerformed
+    private void bDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDetailActionPerformed
+    Detail_Mission dialog = new Detail_Mission(new javax.swing.JFrame(), true);
+        dialog.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bDetailActionPerformed
+
+    private void bSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSupprimerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bAjouter2ActionPerformed
+    }//GEN-LAST:event_bSupprimerActionPerformed
+
+    private void bAjouterMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bAjouterMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bAjouterMousePressed
 
     private void bAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouterActionPerformed
-        // TODO add your handling code here:
+    Add_Mission admi = new Add_Mission();
+        admi.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_bAjouterActionPerformed
-
-    private void bAjouter1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bAjouter1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bAjouter1MousePressed
-
-    private void bAjouter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouter1ActionPerformed
-        //try {
-           // System.out.println(PersonnelDAO.personnels.size());
-            Add_Mission am = new Add_Mission(this, true);
-            am.setVisible(true);
-         //   System.out.println(PersonnelDAO.personnels.size());
-        //} catch (IOException ex) {
-        //    Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
-        //} catch (ParseException ex) {
-        //    Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
-       // }        // TODO add your handling code here:
-    }//GEN-LAST:event_bAjouter1ActionPerformed
 
     private void bModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModifierActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bModifierActionPerformed
 
+    private void tdBMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdBMousePressed
+
+    }//GEN-LAST:event_tdBMousePressed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -528,9 +510,9 @@ public class Menu_Mission extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAjouter;
-    private javax.swing.JButton bAjouter1;
-    private javax.swing.JButton bAjouter2;
+    private javax.swing.JButton bDetail;
     private javax.swing.JButton bModifier;
+    private javax.swing.JButton bSupprimer;
     private javax.swing.JPanel body;
     private javax.swing.JPanel competences;
     private javax.swing.JLabel date;
@@ -551,12 +533,9 @@ public class Menu_Mission extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane listeMiss;
     private javax.swing.JTextField listeP;
-    private javax.swing.JScrollPane listePers;
-    private javax.swing.JLabel listeS;
-    private javax.swing.JScrollPane listeSkills;
     private javax.swing.JPanel mission;
     private javax.swing.JPanel param;
     private javax.swing.JPanel personnel;

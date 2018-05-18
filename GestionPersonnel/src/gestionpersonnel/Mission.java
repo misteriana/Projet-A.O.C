@@ -1,117 +1,201 @@
 
 package gestionpersonnel;
 
-import java.util.Date;
+import java.text.ParseException;
 
-
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import gestionpersonnel.DateEntreprise;
 /**
- * 
- * <b> Cette énumération permet de définir l'état d'une mission </b>
- * 
- * 
- * <p>
- * La mission est dans l'état "PREPARATION" lorsqu'elle a été créée.
- * La mission est dans l'état "PLANNIFIEE" lorsque toutes les informations nécessaires ont été entrées, et que du personnel a satisfait les besoins.
- * La mission est dans l'état "EN_COURS" lorsque la date de début est dépassée.
- * La mission est dans l'état "FINIE" lorsqu'elle est terminée.
- * </p>
- * 
- * @author anseea popescu
+ * Mission est la classe représentant une mission au sein de l'entreprise
+ * @author cedri
+ * @version 1.0
  */
 
-enum Etat{PREPARATION, PLANNIFIEE, EN_COURS, FINIE};
-
-/**
- *
- * <b> La classe Mission définie ce qu'est une mission, afin de faire l'interface entre le fichier CSV, et l'interface graphique. </b>
- * 
- * @author anseea popescu
- * @since v 1.0
- */
 public class Mission {
+    private int duree, nbPers;
+    private String nom;
+    private DateEntreprise dateDeb;
+    private HashMap<Integer, String> participants;
+    private HashMap<String, Integer> competences;
+    private StatutMission statut;
     
-    private int nbPeopleBesoin;
-    private Date dateDebut;
-    private int duree;
-    private int id;
-    private Competence[] competences;
-    private Personnel[] personnels;
-    private Etat state;
-    
-    /**
-     * 
-     * @param nbpb
-     * @param db
-     * @param d
-     * @param id
-     * @author anseea popescu
-     * @since v 1.0
-     */
-    public Mission(int nbpb, Date db, int d, int id) {
-        this.nbPeopleBesoin = nbpb;
-        this.dateDebut = db;
-        this.duree = d;
-        this.id = id;
-        this.state = Etat.PREPARATION;
-    }
-    
-    /** 
-     * 
-     * <p> Permet de passer la mission à l'état suivant </p>
-     * 
-     * @author anseea popescu
-     * @since v 1.0
-     */
-    public void nextState() {
-        Etat e = Etat.PREPARATION;
-        if (this.state == Etat.PREPARATION) {
-            e = Etat.PLANNIFIEE;
+   /**
+    * Constructeur d'une mission
+    * @param nom
+    *           Nom de la mission
+    * @param duree
+    *           Durée en jours ouvrés
+    * @param dateDeb
+    *           Date de début de la mission
+    * @see projet.metier.missions.statutMission
+    * @param statut 
+    *           Statut de la mission (En cours, en préparation, planifiée, terminée)
+    * @param nbPers 
+    *           Nombre de personnes nécessaires à la réalisation de la mission
+    */
+    public Mission(String nom, int duree, String dateDeb, StatutMission statut, int nbPers){
+        this.nom = nom;
+        this.statut = statut;
+        this.duree = duree;
+        this.nbPers = nbPers;
+        try {
+            this.dateDeb = new DateEntreprise(dateDeb);
+        } catch (ParseException ex) {
+            Logger.getLogger(Mission.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (this.state == Etat.PLANNIFIEE) {
-            e = Etat.EN_COURS;
-        }
-        if (this.state == Etat.EN_COURS) {
-            e = Etat.FINIE;
-        }
-        if (this.state == Etat.FINIE) {
-            e = Etat.FINIE;
-        }
-        this.state = e;
+        participants = new HashMap<>();
+        competences = new HashMap<>();
     }
     
     /**
-     * 
-     * <p> Permet de récupérer l'identifiant d'une mission </p>
-     * 
-     * @author anseea popescu
-     * @since v 1.0
-     * @return L'identifiant de la mission
+     * Getter sur le nom de la mission
+     * @return le nom de la mission
      */
-    public int getId() {
-        return this.id;
+    public String getNom(){
+        return this.nom;
     }
     
     /**
-     * 
-     * <p> Permet de récupérer l'état d'une mission </p>
-     * 
-     * @author anseea popescu
-     * @since v 1.0
-     * @return L'état de la mission sous forme de string
+     * Modifie le nom de la mission
+     * @param nom 
+     *          Nouveau nom de la mission
      */
-    public String getState() {
-        if (this.state == Etat.EN_COURS) {
-            return "EN COURS";
-        }
-        else if (this.state == Etat.FINIE) {
-            return "FINIE";
-        }
-        else if (this.state == Etat.PLANNIFIEE) {
-            return "PLANNIFIEE";
-        }
-        else {
-            return "PREPARATION";
-        }
+    public void setNom(String nom){
+        this.nom = nom;
     }
     
+    /**
+     * Getter sur le nombre de personnes nécessaires
+     * @return le nombre de personnes nécessaire à la réalisation de la mission
+     */
+    public int getNbPers(){
+        return this.nbPers;
+    }
+    
+    /**
+     * Modifie le nombre de personnes nécessaire à la réalisation de la mission
+     * @param nbPers 
+     *          Nouveau nombre de personnes nécessaires
+     */
+    public void setNbPers(int nbPers){
+        this.nbPers = nbPers;
+    }
+    
+    /**
+     * Calcule le nombre de personnes nécessaires à partir du nombre de personnes nécessaires par compétences nécessaires
+     * @return 
+     *          Le nombre total de personnes nécessaires
+     */
+    public int getNbPersonnesNecessaires(){
+        int nbPersonnes = 0;
+        for(String comp : this.getCompetences().keySet())
+            nbPersonnes += this.getCompetences().get(comp);
+        return nbPersonnes;
+    }
+
+    /**
+     * Getter des compétences nécessaires pour la mission
+     * @return la map des compétences nécessaires (clef compétence, nombre nécéssaire)
+     */
+    public HashMap<String, Integer> getCompetences(){
+        return this.competences;
+    }
+    
+    /**
+     * Getter du statut en cours de la mission
+     * @return le statut de la mission
+     */
+    public StatutMission getStatut(){
+        return this.statut;
+    }
+    
+    /**
+     * Modifie le statut de la mission
+     * @param statut 
+     *          Le nouveau statut de la mission
+     */
+    public void setStatut(StatutMission statut){
+        this.statut = statut;
+    }
+    
+    /**
+     * Getter de la date de début de la mission
+     * @return 
+     *          La date de début de la mission
+     */
+    public DateEntreprise getDate(){
+        return this.dateDeb;
+    }
+    
+    /**
+     * Modifie la date de début de la mission
+     * @param date
+     *          Nouvelle date de début de la mission
+     * @throws ParseException Si la chaine de caractères passée en paramètre n'est pas au format "jj/mm/aaaa"
+     */
+    public void setDate(String date) throws ParseException{
+        DateEntreprise d = new DateEntreprise(date);
+        this.dateDeb = d;
+    }
+    
+    /**
+     * Getter sur la durée en jours ouvrés de la mission
+     * @return la durée en jours ouvrés de la mission
+     */
+    public int getDuree(){
+        return this.duree;
+    }
+    
+    /**
+     * Modifie la durée de la mission
+     * @param duree 
+     *          Nouvelle durée de la mission en jours ouvrés
+     */
+    public void setDuree(int duree){
+        this.duree = duree;
+    }
+    
+    /**
+     * Getter des participants à la mission
+     * @return la map des participants (associés à leur compétence) à la mission (clef personnel, clef compétence)
+     */
+    public HashMap<Integer, String> getParticipants(){
+        return this.participants;
+    }
+    
+    /**
+     * Calcule la date de fin de la mission
+     * @return la date de fin de la mission
+     */
+    public DateEntreprise dateFin(){
+        return DateEntreprise.ajouterJours(dateDeb, duree);
+    }
+    
+    /**
+     * Ajoute un participant pour une compétence pour la mission
+     * La même personne peut participer à la mission pour plusieurs compétences différentes
+     * (Ex: si la même personne s'occupe de la conception et des tests)
+     * 
+     * @param keyPersonnel
+     *          identifiant de la personne
+     * @param keyCompetence
+     *          compétence sur laquelle elle travaille
+     */
+    public void addParticipant(Integer keyPersonnel, String keyCompetence){
+        participants.put(keyPersonnel, keyCompetence);
+    }
+    
+    /**
+     * Ajoute une mission à une personne
+     * 
+     * @param keyCompetence
+     *          identifiant de la conpétence
+     * @param nbParticipantsPourCompetence
+     *          nombre de participants nécessaires
+     */
+    public void addCompetence(String keyCompetence, Integer nbParticipantsPourCompetence){
+        competences.put(keyCompetence, nbParticipantsPourCompetence);
+    }
 }

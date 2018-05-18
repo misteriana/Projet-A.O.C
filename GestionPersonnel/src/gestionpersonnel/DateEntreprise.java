@@ -2,7 +2,9 @@ package gestionpersonnel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *<b> Cette Classe permet de gérer la date de l'application</b>
@@ -63,6 +65,40 @@ public class DateEntreprise {
         this.date = (Date) FORMAT.parse(date);
         System.out.println("LA DATE param PG DateEntreprise " + date);
         System.out.println("LA DATE PG DateEntreprise " + this.date);
+    }
+    
+        public static boolean isJourNonOuvre(Calendar c) {
+        //Ajouter la liste des jours fériés => au moins les jours précis dans l'année
+        return c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
+    }
+        
+        private static int getNbJoursOuvresToAdd(Date date, int nbJoursAdd) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        int nbNonOuvre = 0;
+        if (nbJoursAdd >= 0) {
+            for (int i = 0; i <= nbJoursAdd; i++) {
+                cal.add(Calendar.DAY_OF_YEAR, 1);
+                if (isJourNonOuvre(cal)) {
+                    nbNonOuvre++;
+                }
+            }
+        } else {
+            for (int i = 0; i >= nbJoursAdd; i--) {
+                cal.add(Calendar.DAY_OF_YEAR, -1);
+                if (isJourNonOuvre(cal)) {
+                    nbNonOuvre--;
+                }
+            }
+        }
+        return nbNonOuvre + nbJoursAdd;
+    }
+        public static DateEntreprise ajouterJours(DateEntreprise date, int nbDayToAdd) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(date.getDate());
+        cal.add(Calendar.DAY_OF_YEAR, getNbJoursOuvresToAdd(date.getDate(), nbDayToAdd));
+        DateEntreprise dateFin = new DateEntreprise(cal.getTime());
+        return dateFin;
     }
     
     
