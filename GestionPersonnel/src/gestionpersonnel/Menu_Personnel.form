@@ -54,12 +54,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="competences1" alignment="1" pref="264" max="32767" attributes="0"/>
-              <Component id="tdB" alignment="0" pref="264" max="32767" attributes="0"/>
+              <Component id="competences1" alignment="1" pref="260" max="32767" attributes="0"/>
+              <Component id="tdB" alignment="0" pref="260" max="32767" attributes="0"/>
               <Component id="title" alignment="0" max="32767" attributes="0"/>
-              <Component id="mission1" alignment="1" pref="264" max="32767" attributes="0"/>
-              <Component id="personnel1" alignment="1" pref="264" max="32767" attributes="0"/>
-              <Component id="param" pref="264" max="32767" attributes="0"/>
+              <Component id="mission1" alignment="1" pref="260" max="32767" attributes="0"/>
+              <Component id="personnel1" alignment="1" pref="260" max="32767" attributes="0"/>
+              <Component id="param" pref="260" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <Component id="date" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -73,7 +73,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="date" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                  <Component id="tdB" pref="42" max="32767" attributes="0"/>
+                  <Component id="tdB" pref="43" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="personnel1" min="-2" pref="51" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>

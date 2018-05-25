@@ -36,10 +36,17 @@ public class SaveAllChanges {
     public void saveChanges() throws IOException, ParseException {
         try {
             PersonnelDAO pers = new PersonnelDAO();
+            MissionDAO miss = new MissionDAO();
             if (!PersonnelDAO.hasloadP)
                 pers.recupererPersonnels();
             if (!PersonnelDAO.hasloadC)
                 pers.recupererCompetencesPersonnels();
+            if (!MissionDAO.hasloadM)
+                miss.recupererMissions();
+            if (!MissionDAO.hasloadC)
+                miss.recupererCompetencesMissions();
+            if (!MissionDAO.hasloadP)
+                miss.recupererParticipantsMissions();              
             File f = new File("src/ressources/liste_personnel.csv");
             pw = new PrintWriter(new FileOutputStream(f));
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -64,6 +71,46 @@ public class SaveAllChanges {
                     pw.print(";" + c.getId());
                 }
                 if (i < PersonnelDAO.personnels.size())
+                    pw.println();
+            }
+            pw.close();
+            File f3 = new File("src/ressources/competences_mission.csv");
+            pw = new PrintWriter(new FileOutputStream(f3));
+            pw.println("Mission;Liste Competences avec quantité besoin");
+            i = 0;
+            for (Mission m : MissionDAO.missions) {
+                i++;
+                pw.print(String.valueOf(m.getId()));
+                for (String s : m.getCompetences().keySet()) {
+                    pw.print(";" + s + ";" + m.getCompetences().get(s));
+                }
+                if (i < PersonnelDAO.personnels.size())
+                    pw.println();
+            }
+            pw.close();
+            File f4 = new File("src/ressources/liste_missions.csv");
+            pw = new PrintWriter(new FileOutputStream(f4));
+            pw.println("Id;Nom;Duree;DateDeb;NbPersTot;Statut"); 
+            i = 0;
+            for (Mission m : MissionDAO.missions) {
+                i++;
+                if (i < MissionDAO.missions.size())
+                    pw.println(String.valueOf(m.getId()) + ";" + m.getNom() + ";" + String.valueOf(m.getDuree()) + ";" + df.format(m.getDate().getDate()) + ";" + String.valueOf(m.getNbPers()) + ";" + String.valueOf(m.getStatut()));
+                if (i == MissionDAO.missions.size()) 
+                    pw.print(String.valueOf(m.getId()) + ";" + m.getNom() + ";" + String.valueOf(m.getDuree()) + ";" + df.format(m.getDate().getDate()) + ";" + String.valueOf(m.getNbPers()) + ";" + String.valueOf(m.getStatut()));
+            }         
+            pw.close();
+            File f5 = new File("src/ressources/personnels_mission.csv");
+            pw = new PrintWriter(new FileOutputStream(f5));
+            pw.println("Mission;Liste Personnels");
+            i = 0;
+            for (Mission m : MissionDAO.missions) {
+                i++;
+                pw.print(String.valueOf(m.getId()));
+                for (Integer in : m.getParticipants().keySet()) {
+                    pw.print(";" + in);
+                }
+                if (i < MissionDAO.missions.size())
                     pw.println();
             }
             pw.close();

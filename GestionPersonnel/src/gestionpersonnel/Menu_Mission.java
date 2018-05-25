@@ -6,9 +6,14 @@
 package gestionpersonnel;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *<b> Cette interface affiche les différentes missions </b>
  * @author cedric greufeille
@@ -16,11 +21,26 @@ import java.util.logging.Logger;
 public class Menu_Mission extends javax.swing.JFrame {
     
     private Accueil a = Accueil.getInstance();
+    private MissionDAO mDAO = new MissionDAO();
+    
     /**
      * Creates new form Menu_Mission
      */
-    public Menu_Mission() {
+    public Menu_Mission() throws ParseException, IOException {
+        if (!MissionDAO.hasloadM) {
+            mDAO.recupererMissions();
+            MissionDAO.hasloadM = true;
+        }
+        if (!MissionDAO.hasloadP) {
+            mDAO.recupererParticipantsMissions();
+            MissionDAO.hasloadP = true;
+        }
+        if (!MissionDAO.hasloadC) {
+            mDAO.recupererCompetencesMissions();
+            MissionDAO.hasloadC = true;
+        }
         initComponents();
+        recupererDonnees();
         date.setText(a.getDate().toString());
         this.setSize(getWidth() + 16, getHeight() + 39);
         this.setResizable(false);
@@ -150,7 +170,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 137, Short.MAX_VALUE)
                 .addGap(59, 59, 59))
         );
         tdBLayout.setVerticalGroup(
@@ -186,9 +206,9 @@ public class Menu_Mission extends javax.swing.JFrame {
             personnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(personnelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                 .addGap(115, 115, 115))
         );
         personnelLayout.setVerticalGroup(
@@ -200,7 +220,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                         .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, personnelLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -226,9 +246,9 @@ public class Menu_Mission extends javax.swing.JFrame {
             competencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(competencesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(87, 87, 87))
         );
         competencesLayout.setVerticalGroup(
@@ -272,7 +292,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(missionLayout.createSequentialGroup()
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         param.setBackground(new java.awt.Color(255, 255, 255));
@@ -297,9 +317,9 @@ public class Menu_Mission extends javax.swing.JFrame {
             paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paramLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
                 .addGap(93, 93, 93))
         );
         paramLayout.setVerticalGroup(
@@ -308,7 +328,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addGroup(paramLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         date.setFont(new java.awt.Font("Nunito Sans Light", 0, 18)); // NOI18N
@@ -389,6 +409,14 @@ public class Menu_Mission extends javax.swing.JFrame {
             }
         });
         listeMiss.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Code");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Nom");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Etat");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Date Début");
+            jTable1.getColumnModel().getColumn(4).setHeaderValue("Date fin");
+            jTable1.getColumnModel().getColumn(5).setHeaderValue("Nb pers.");
+        }
 
         bSupprimer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         bSupprimer.setForeground(new java.awt.Color(74, 74, 74));
@@ -440,8 +468,8 @@ public class Menu_Mission extends javax.swing.JFrame {
                 .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(bodyLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(171, 171, 171)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(listeP, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,7 +549,16 @@ public class Menu_Mission extends javax.swing.JFrame {
     }//GEN-LAST:event_bDetailActionPerformed
 
     private void bSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSupprimerActionPerformed
-        // TODO add your handling code here:
+        if (jTable1.getSelectedRow() != -1) {
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog (this, "Voulez-vous réellement supprimer la mission " + jTable1.getValueAt(jTable1.getSelectedRow(), 1) + "?","Attention", dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                removeLine();
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Sélectionnez une, et une seule, ligne pour supprimer un enregistrement.", "Erreur : Aucune sélection", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_bSupprimerActionPerformed
 
     private void bAjouterMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bAjouterMousePressed
@@ -554,6 +591,41 @@ public class Menu_Mission extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_competencesMousePressed
 
+    public void recupererDonnees() throws IOException, ParseException {
+        Object[][] data = new Object[MissionDAO.missions.size()][6];
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (int i=0; i < MissionDAO.missions.size(); i++) {
+            data[i][0] = MissionDAO.missions.get(i).getId();
+            data[i][1] = MissionDAO.missions.get(i).getNom();
+            data[i][2] = MissionDAO.missions.get(i).getStatutTexte();
+            String dateDeb = df.format(MissionDAO.missions.get(i).getDate().getDate());
+            data[i][3] = dateDeb;      
+            Calendar c = Calendar.getInstance();
+            c.setTime(df.parse(dateDeb));
+            c.add(Calendar.DATE, MissionDAO.missions.get(i).getDuree());
+            String dateFin = df.format(c.getTime());
+            data[i][4] = dateFin;
+            data[i][5] = MissionDAO.missions.get(i).getNbPers();
+        }
+        String[] header = new String[] {"Code", "Nom", "Statut", "Date de début", "Date de fin programmée", "Nombre de personnes nécessaire"};
+        DefaultTableModel tbm = new DefaultTableModel(data, header);
+        jTable1.setModel(tbm);
+    }
+    
+    public void removeLine() {
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        int toDel = jTable1.getSelectedRow();
+        String id = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
+        Mission miss = null;
+        for (Mission m : MissionDAO.missions) {
+            if (m.getId() == Integer.parseInt(id)) {
+                miss = m;
+            }
+        }
+        PersonnelDAO.personnels.remove(miss);
+        tbm.removeRow(toDel);
+        jTable1.setModel(tbm);
+    }
     
     /**
      * @param args the command line arguments
@@ -585,7 +657,13 @@ public class Menu_Mission extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu_Mission().setVisible(true);
+                try {
+                    new Menu_Mission().setVisible(true);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

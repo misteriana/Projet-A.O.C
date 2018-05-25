@@ -14,13 +14,16 @@ import gestionpersonnel.DateEntreprise;
  */
 
 public class Mission {
-    private int duree, nbPers;
+    
+    static int NUM_ID = 1;
+    
+    private int duree, nbPers, id;
     private String nom;
     private DateEntreprise dateDeb;
-    private HashMap<Integer, String> participants;
+    private HashMap<Integer, Personnel> participants;
     private HashMap<String, Integer> competences;
-    private StatutMission statut;
-    
+    private int statut;
+  
    /**
     * Constructeur d'une mission
     * @param nom
@@ -35,7 +38,8 @@ public class Mission {
     * @param nbPers 
     *           Nombre de personnes nécessaires à la réalisation de la mission
     */
-    public Mission(String nom, int duree, String dateDeb, StatutMission statut, int nbPers){
+    public Mission(int id, String nom, int duree, String dateDeb, int statut, int nbPers){
+        this.id = id;
         this.nom = nom;
         this.statut = statut;
         this.duree = duree;
@@ -47,6 +51,14 @@ public class Mission {
         }
         participants = new HashMap<>();
         competences = new HashMap<>();
+    }
+    
+    /**
+     * Getter sur l'id de la mission
+     * @return le nom de la mission
+     */
+    public int getId() {
+        return id;
     }
     
     /**
@@ -83,17 +95,17 @@ public class Mission {
         this.nbPers = nbPers;
     }
     
-    /**
-     * Calcule le nombre de personnes nécessaires à partir du nombre de personnes nécessaires par compétences nécessaires
-     * @return 
-     *          Le nombre total de personnes nécessaires
-     */
-    public int getNbPersonnesNecessaires(){
-        int nbPersonnes = 0;
-        for(String comp : this.getCompetences().keySet())
-            nbPersonnes += this.getCompetences().get(comp);
-        return nbPersonnes;
-    }
+//    /**
+//     * Calcule le nombre de personnes nécessaires à partir du nombre de personnes nécessaires par compétences nécessaires
+//     * @return 
+//     *          Le nombre total de personnes nécessaires
+//     */
+//    public int getNbPersonnesNecessaires(){
+//        int nbPersonnes = 0;
+//        for(String comp : this.getCompetences().keySet())
+//            nbPersonnes += this.getCompetences().get(comp);
+//        return nbPersonnes;
+//    }
 
     /**
      * Getter des compétences nécessaires pour la mission
@@ -107,8 +119,24 @@ public class Mission {
      * Getter du statut en cours de la mission
      * @return le statut de la mission
      */
-    public StatutMission getStatut(){
+    public int getStatut(){
         return this.statut;
+    }
+    
+    public String getStatutTexte() {
+        if (this.statut == 1) {
+            return "EN PREPARATION";
+        }
+        if (this.statut == 2) {
+            return "PLANNIFIEE";
+        }
+        if (this.statut == 3) {
+            return "EN COURS";
+        }
+        if (this.statut == 4) {
+            return "TERMINEE";
+        }
+        return null;
     }
     
     /**
@@ -116,7 +144,7 @@ public class Mission {
      * @param statut 
      *          Le nouveau statut de la mission
      */
-    public void setStatut(StatutMission statut){
+    public void setStatut(int statut){
         this.statut = statut;
     }
     
@@ -161,7 +189,7 @@ public class Mission {
      * Getter des participants à la mission
      * @return la map des participants (associés à leur compétence) à la mission (clef personnel, clef compétence)
      */
-    public HashMap<Integer, String> getParticipants(){
+    public HashMap<Integer, Personnel> getParticipants(){
         return this.participants;
     }
     
@@ -183,12 +211,12 @@ public class Mission {
      * @param keyCompetence
      *          compétence sur laquelle elle travaille
      */
-    public void addParticipant(Integer keyPersonnel, String keyCompetence){
-        participants.put(keyPersonnel, keyCompetence);
+    public void addParticipant(Integer keyPersonnel, Personnel p){
+        participants.put(keyPersonnel, p);
     }
     
     /**
-     * Ajoute une mission à une personne
+     * Ajoute une compétence nécessaire dans la mission
      * 
      * @param keyCompetence
      *          identifiant de la conpétence

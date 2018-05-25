@@ -648,9 +648,15 @@ public class Menu_Personnel extends javax.swing.JFrame {
     }//GEN-LAST:event_paramMousePressed
 
     private void mission1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mission1MousePressed
-        Menu_Mission m = new Menu_Mission();
-        m.setVisible(true);
-        this.dispose();
+        try {
+            Menu_Mission m = new Menu_Mission();
+            m.setVisible(true);
+            this.dispose();
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mission1MousePressed
 
     private void tdBMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdBMousePressed
