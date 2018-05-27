@@ -5,11 +5,31 @@
  */
 package gestionpersonnel;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Cedric Greufeille
  */
 public class Detail_Mission extends javax.swing.JDialog {
+
+    private Integer i;
+    private int nbComp;
+    private int nbPers;
+    
+    /**
+     * Creates new form Detail_Mission
+     */
+    public Detail_Mission(Integer i) {
+        initComponents();
+        this.setSize(getWidth() + 16, getHeight() + 39);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);  
+        this.i = i;
+        recupererDonnees();
+    }
 
     /**
      * Creates new form Detail_Mission
@@ -18,10 +38,9 @@ public class Detail_Mission extends javax.swing.JDialog {
         initComponents();
         this.setSize(getWidth() + 16, getHeight() + 39);
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        
+        this.setLocationRelativeTo(null);   
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -228,6 +247,60 @@ public class Detail_Mission extends javax.swing.JDialog {
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+    public void recupererDonnees() { 
+        Mission mi = null;
+        for (Mission m : MissionDAO.missions) {
+            if (m.getId() == i) {
+                mi = m;
+            }
+        }
+        Object[][] data = new Object[mi.getCompetences().keySet().size()][3];
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        int in = 0;
+        for (String s : mi.getCompetences().keySet()) {
+            data[in][0] = mi.getCompetences().get(s);
+            data[in][1] = s;
+            String nom = null;
+            for (Competence c : CompetenceDAO.competences) {
+                if (c.getId().equals(s)) {
+                    nom = c.getName();
+                }
+            }
+            data[in][2] = nom;
+            this.nbComp += mi.getCompetences().get(s);
+            in++;
+        }
+        String[] header = new String[] {"NB Nécessaire", "Code", "Nom"};
+        DefaultTableModel tbm = new DefaultTableModel(data, header);
+        tabComp.setModel(tbm);
+        in = 0;
+        Object[][] donnees = new Object[mi.getParticipants().size()][4];
+        for (Integer inte : mi.getParticipants().keySet()) {
+            String toString = "";
+            Personnel per = null;
+            for (Personnel p : mi.getParticipants().values()) {
+                if (p.getId() == inte) {
+                    per = p;
+                    for (Competence c : p.competences) {
+                        toString = toString + " " + c.getId();
+                    }
+                }
+            }
+            donnees[in][0] = toString;
+            donnees[in][1] = inte;
+            donnees[in][2] = per.getName();
+            donnees[in][3] = per.getPrenom();
+            in++;
+            this.nbPers++;
+        }
+        String[] entete = new String[] {"Compétences", "Code", "Nom", "Prenom"};
+        DefaultTableModel tb = new DefaultTableModel(donnees, entete);
+        tabPers.setModel(tb);
+        NB1.setText(String.valueOf(nbComp));
+        NB2.setText(String.valueOf(nbPers));
+    }
+    
     /**
      * @param args the command line arguments
      */

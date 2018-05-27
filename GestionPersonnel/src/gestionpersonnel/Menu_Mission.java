@@ -13,7 +13,10 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *<b> Cette interface affiche les différentes missions </b>
  * @author cedric greufeille
@@ -22,6 +25,8 @@ public class Menu_Mission extends javax.swing.JFrame {
     
     private Accueil a = Accueil.getInstance();
     private MissionDAO mDAO = new MissionDAO();
+    private TableRowSorter<TableModel> sorter;
+
     
     /**
      * Creates new form Menu_Mission
@@ -41,6 +46,8 @@ public class Menu_Mission extends javax.swing.JFrame {
         }
         initComponents();
         recupererDonnees();
+        this.sorter = new TableRowSorter<>(jTable1.getModel());
+        jTable1.setRowSorter(sorter);
         date.setText(a.getDate().toString());
         this.setSize(getWidth() + 16, getHeight() + 39);
         this.setResizable(false);
@@ -92,6 +99,11 @@ public class Menu_Mission extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         sidePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -379,6 +391,11 @@ public class Menu_Mission extends javax.swing.JFrame {
         jLabel1.setText("Chercher une mission:");
 
         listeP.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        listeP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                listePKeyReleased(evt);
+            }
+        });
 
         jTable1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(74, 74, 74));
@@ -482,7 +499,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(bDetail))
                         .addComponent(listeMiss, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         bodyLayout.setVerticalGroup(
             bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,7 +532,8 @@ public class Menu_Mission extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(sidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,7 +562,7 @@ public class Menu_Mission extends javax.swing.JFrame {
     }//GEN-LAST:event_paramMousePressed
 
     private void bDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDetailActionPerformed
-        Detail_Mission dialog = new Detail_Mission();
+        Detail_Mission dialog = new Detail_Mission((Integer) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
         dialog.setVisible(true);
     }//GEN-LAST:event_bDetailActionPerformed
 
@@ -565,9 +583,41 @@ public class Menu_Mission extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bAjouterMousePressed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+        SaveAllChanges s = new SaveAllChanges();
+        int r = JOptionPane.showConfirmDialog(this, "Voulez-vous sauvegarder avant de quitter ? (Toute modification non sauvegardée sera perdue)");
+        if (r == 0) {
+            try {
+                s.saveChanges();
+            } catch (IOException ex) {
+                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (r == 2) {
+            try {
+                Menu_Mission m = new Menu_Mission();
+                m.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }
+    
     private void bAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouterActionPerformed
-    Add_Mission admi = new Add_Mission();
-        admi.setVisible(true);
+        try {
+            Add_Mission admi = new Add_Mission(this, true);
+            admi.setVisible(true);
+            addLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu_Mission.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bAjouterActionPerformed
 
     private void bModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModifierActionPerformed
@@ -591,25 +641,67 @@ public class Menu_Mission extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_competencesMousePressed
 
+    private void listePKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listePKeyReleased
+        String text = listeP.getText();
+        if (text.length() == 0) {
+          sorter.setRowFilter(null);
+        } else {
+          sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+        }
+    }//GEN-LAST:event_listePKeyReleased
+/*
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
+*/
     public void recupererDonnees() throws IOException, ParseException {
         Object[][] data = new Object[MissionDAO.missions.size()][6];
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateEntreprise d = new DateEntreprise();
         for (int i=0; i < MissionDAO.missions.size(); i++) {
-            data[i][0] = MissionDAO.missions.get(i).getId();
-            data[i][1] = MissionDAO.missions.get(i).getNom();
-            data[i][2] = MissionDAO.missions.get(i).getStatutTexte();
             String dateDeb = df.format(MissionDAO.missions.get(i).getDate().getDate());
-            data[i][3] = dateDeb;      
             Calendar c = Calendar.getInstance();
             c.setTime(df.parse(dateDeb));
             c.add(Calendar.DATE, MissionDAO.missions.get(i).getDuree());
             String dateFin = df.format(c.getTime());
+            if (df.parse(dateDeb).before(d.getDate())) {
+                MissionDAO.missions.get(i).setStatut(3);
+            }
+            if (df.parse(dateFin).before(d.getDate())) {
+                MissionDAO.missions.get(i).setStatut(4);
+            }
+            
+            data[i][0] = MissionDAO.missions.get(i).getId();
+            data[i][1] = MissionDAO.missions.get(i).getNom();
+            data[i][2] = MissionDAO.missions.get(i).getStatutTexte();
+            data[i][3] = dateDeb;       
             data[i][4] = dateFin;
             data[i][5] = MissionDAO.missions.get(i).getNbPers();
         }
         String[] header = new String[] {"Code", "Nom", "Statut", "Date de début", "Date de fin programmée", "Nombre de personnes nécessaire"};
         DefaultTableModel tbm = new DefaultTableModel(data, header);
         jTable1.setModel(tbm);
+    }
+    
+    public void addLine() throws ParseException {
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        Object[] toAdd = new Object[6];
+        if ( (int) tbm.getValueAt(tbm.getRowCount()-1, tbm.getColumnCount()-1) != MissionDAO.missions.get(MissionDAO.missions.size()-1).getId()) {
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            toAdd[0] = String.valueOf(MissionDAO.missions.get(MissionDAO.missions.size()-1).getId());
+            toAdd[1] = MissionDAO.missions.get(MissionDAO.missions.size()-1).getNom();
+            toAdd[2] = MissionDAO.missions.get(MissionDAO.missions.size()-1).getStatutTexte();
+            String datedeb = df.format(MissionDAO.missions.get(MissionDAO.missions.size()-1).getDate().getDate());
+            toAdd[3] = datedeb;
+            Calendar c = Calendar.getInstance();
+            c.setTime(df.parse(datedeb));
+            c.add(Calendar.DATE, MissionDAO.missions.get(MissionDAO.missions.size()-1).getDuree());
+            String dateFin = df.format(c.getTime());
+            toAdd[4] = dateFin;
+            toAdd[5] = MissionDAO.missions.get(MissionDAO.missions.size()-1).getNbPers();
+            tbm.addRow(toAdd);
+            jTable1.setModel(tbm);
+        }
     }
     
     public void removeLine() {
@@ -622,7 +714,7 @@ public class Menu_Mission extends javax.swing.JFrame {
                 miss = m;
             }
         }
-        PersonnelDAO.personnels.remove(miss);
+        MissionDAO.missions.remove(miss);
         tbm.removeRow(toDel);
         jTable1.setModel(tbm);
     }

@@ -53,6 +53,22 @@ public class Mission {
         competences = new HashMap<>();
     }
     
+    public Mission(String nom, int duree, String dateDeb, int statut, int nbPers){
+        this.id = NUM_ID;
+        NUM_ID++;
+        this.nom = nom;
+        this.statut = statut;
+        this.duree = duree;
+        this.nbPers = nbPers;
+        try {
+            this.dateDeb = new DateEntreprise(dateDeb);
+        } catch (ParseException ex) {
+            Logger.getLogger(Mission.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        participants = new HashMap<>();
+        competences = new HashMap<>();
+    }
+    
     /**
      * Getter sur l'id de la mission
      * @return le nom de la mission

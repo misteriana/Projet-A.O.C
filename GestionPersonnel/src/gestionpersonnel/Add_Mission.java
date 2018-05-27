@@ -5,23 +5,63 @@
  */
 package gestionpersonnel;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.ListModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author cedri
  */
-public class Add_Mission extends javax.swing.JFrame {
+public class Add_Mission extends javax.swing.JDialog {
 
+    HashMap<String, Integer> competences;
+    private DefaultListModel modele;
+    private int nbComps = 0;
+    private JFrame m;
+    
     /**
      * Creates new form Add_Mission
      */
-    public Add_Mission() {
+    public Add_Mission() throws IOException {
+        this.modele = new DefaultListModel();
         initComponents();
+        recupererCompetences();
+        jList1.removeAll();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        competences = new HashMap<>();
     }
-
-
-
+    
+    /**
+     * Creates new form Add_Mission
+     */
+    public Add_Mission(JFrame parent, boolean modal) throws IOException {
+        super(parent, modal);
+        this.modele = new DefaultListModel();
+        initComponents();
+        recupererCompetences();
+        jList1.removeAll();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        competences = new HashMap<>();
+        this.m = parent;
+    }
+    
+    public boolean isCellEditable(int row,int column) {
+        return true;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,16 +76,21 @@ public class Add_Mission extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lDateFin = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabComp = new javax.swing.JTable();
         lNbPers = new javax.swing.JLabel();
         bRetour = new javax.swing.JButton();
         bValider = new javax.swing.JButton();
-        tDateDeb = new javax.swing.JFormattedTextField();
-        tNbJours = new javax.swing.JTextField();
         tTtitre = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new JList(modele);
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(74, 74, 74));
@@ -62,54 +107,6 @@ public class Add_Mission extends javax.swing.JFrame {
         lDateFin.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
         lDateFin.setForeground(new java.awt.Color(74, 74, 74));
         lDateFin.setText("Date de fin prévue :");
-
-        jScrollPane1.setForeground(new java.awt.Color(74, 74, 74));
-        jScrollPane1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
-
-        tabComp.setAutoCreateRowSorter(true);
-        tabComp.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Code", "Nom", "Nb necessaire"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabComp.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabCompMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tabCompMousePressed(evt);
-            }
-        });
-        tabComp.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tabCompKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tabCompKeyTyped(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tabComp);
 
         lNbPers.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
         lNbPers.setForeground(new java.awt.Color(74, 74, 74));
@@ -132,22 +129,56 @@ public class Add_Mission extends javax.swing.JFrame {
             }
         });
 
-        tDateDeb.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        tDateDeb.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tDateDebKeyReleased(evt);
-            }
-        });
-
-        tNbJours.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tNbJoursKeyReleased(evt);
-            }
-        });
-
         tTtitre.setFont(new java.awt.Font("Nunito Sans", 0, 30)); // NOI18N
         tTtitre.setForeground(new java.awt.Color(74, 74, 74));
         tTtitre.setText("Ajouter une Mission");
+
+        jScrollPane2.setViewportView(jList1);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("+");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("-");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Date de début (dd/mm/yyyy)");
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,55 +192,74 @@ public class Add_Mission extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bValider))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(73, 73, 73)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE))
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lNbPers)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tNbJours, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tNom, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(tDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(37, 37, 37)
-                                                .addComponent(lDateFin)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(lDateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(91, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1)
-                            .addComponent(tTtitre))
+                            .addComponent(tTtitre)
+                            .addComponent(lNbPers, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2)
+                                    .addComponent(tNom, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tTtitre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tNom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lDateFin)
-                    .addComponent(tDateDeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(tNbJours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(lNbPers)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(lNbPers)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bValider)
                     .addComponent(bRetour))
@@ -219,40 +269,121 @@ public class Add_Mission extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tabCompMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCompMouseClicked
-      
-    }//GEN-LAST:event_tabCompMouseClicked
-
-    private void tabCompMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCompMousePressed
-
-    }//GEN-LAST:event_tabCompMousePressed
-
-    private void tabCompKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabCompKeyReleased
-       
-    }//GEN-LAST:event_tabCompKeyReleased
-
-    private void tabCompKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabCompKeyTyped
-        
-    }//GEN-LAST:event_tabCompKeyTyped
-
     private void bRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRetourActionPerformed
         this.dispose();
     }//GEN-LAST:event_bRetourActionPerformed
 
+    
+    
     private void bValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bValiderActionPerformed
-        Affecter_Mission_Pers amp= new Affecter_Mission_Pers(this,true);
-        amp.setVisible(true);
-        this.dispose();       
+        try {
+            String[] strings = new String[4];
+            strings[0] = tNom.getText();
+            strings[1] = jTextField2.getText();
+            strings[2] = jTextField3.getText();
+            strings[3] = String.valueOf(nbComps);
+            Affecter_Mission_Pers amp= new Affecter_Mission_Pers(this.m,true, this.competences, strings);
+            amp.setVisible(true);       
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Add_Mission.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Add_Mission.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bValiderActionPerformed
 
-    private void tDateDebKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tDateDebKeyReleased
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (!jList1.isSelectionEmpty()) {
+            String text = jList1.getSelectedValue();
+            modele.remove(modele.indexOf(text));
+            jList1.setModel(modele);
+            String key = null;
+            for (Competence c : CompetenceDAO.competences){
+                if (c.getName().equals(text)) {
+                    key = c.getId();
+                }
+            } 
+            Integer nb = competences.get(key);
+            this.nbComps -= nb;
+            lNbPers.setText("Nombre de personnes nécessaires : " +  this.nbComps);
+            competences.remove(key);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!"".equals(jTextField1.getText())) {
+            String text = jComboBox1.getSelectedItem().toString();
+            String id = null;
+            for (Competence c : CompetenceDAO.competences) {
+                if (c.getName().equals(text)) {
+                    id = c.getId();
+                }
+            }
+            if (!modele.contains(text)) {
+                modele.addElement(text);
+                jList1.setModel(modele);
+                this.nbComps += Integer.parseInt(jTextField1.getText());
+                lNbPers.setText("Nombre de personnes nécessaires : " +  this.nbComps);
+                competences.put(id, Integer.parseInt(jTextField1.getText()));
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         
-    }//GEN-LAST:event_tDateDebKeyReleased
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void tNbJoursKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tNbJoursKeyReleased
-      
-    }//GEN-LAST:event_tNbJoursKeyReleased
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        if (!jTextField2.getText().equals("") && !jTextField3.getText().equals("")) {
+            try {
+                String dateEnString = jTextField2.getText();
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                int duree = Integer.parseInt(jTextField3.getText());
+                Calendar c = Calendar.getInstance();
+                c.setTime(df.parse(dateEnString));
+                c.add(Calendar.DATE, duree);
+                String dateFin = df.format(c.getTime());
+                lDateFin.setText("Date de fin prévue : " + dateFin);
+            } catch (ParseException ex) {
+                Logger.getLogger(Add_Mission.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jTextField2KeyReleased
 
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        if (!jTextField2.getText().equals("") && !jTextField3.getText().equals("")) {
+            try {
+                String dateEnString = jTextField2.getText();
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                int duree = Integer.parseInt(jTextField3.getText());
+                Calendar c = Calendar.getInstance();
+                c.setTime(df.parse(dateEnString));
+                c.add(Calendar.DATE, duree);
+                String dateFin = df.format(c.getTime());
+                lDateFin.setText("Date de fin prévue : " + dateFin);
+            } catch (ParseException ex) {
+                Logger.getLogger(Add_Mission.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    public void recupererCompetences() throws IOException {
+        CompetenceDAO c = new CompetenceDAO();
+        c.recupererCompetences();
+        jComboBox1.removeAll();
+        for (Competence co : CompetenceDAO.competences) {
+            jComboBox1.addItem(co.getName());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -283,7 +414,11 @@ public class Add_Mission extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Add_Mission().setVisible(true);
+                try {
+                    new Add_Mission().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Add_Mission.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -291,16 +426,21 @@ public class Add_Mission extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bRetour;
     private javax.swing.JButton bValider;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lDateFin;
     private javax.swing.JLabel lNbPers;
-    private javax.swing.JFormattedTextField tDateDeb;
-    private javax.swing.JTextField tNbJours;
     private javax.swing.JTextField tNom;
     private javax.swing.JLabel tTtitre;
-    private javax.swing.JTable tabComp;
     // End of variables declaration//GEN-END:variables
 }

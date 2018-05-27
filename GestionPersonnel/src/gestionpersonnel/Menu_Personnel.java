@@ -335,12 +335,12 @@ public class Menu_Personnel extends javax.swing.JFrame {
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(competences1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-            .addComponent(tdB, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(competences1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(tdB, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
             .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mission1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-            .addComponent(personnel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-            .addComponent(param, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(mission1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(personnel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(param, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
             .addGroup(sidePanelLayout.createSequentialGroup()
                 .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -352,7 +352,7 @@ public class Menu_Personnel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(100, 100, 100)
-                .addComponent(tdB, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(tdB, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(personnel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -385,14 +385,14 @@ public class Menu_Personnel extends javax.swing.JFrame {
             }
         });
         listeP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                listePKeyTyped(evt);
+            }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 listePKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 listePKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                listePKeyTyped(evt);
             }
         });
 
@@ -592,11 +592,9 @@ public class Menu_Personnel extends javax.swing.JFrame {
 
     private void bAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouterActionPerformed
         try {
-            System.out.println(PersonnelDAO.personnels.size());
             Add_Employe ae = new Add_Employe(this, true);
             ae.setVisible(true);
             addLine();
-            System.out.println(PersonnelDAO.personnels.size());
         } catch (IOException ex) {
             Logger.getLogger(Menu_Personnel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {

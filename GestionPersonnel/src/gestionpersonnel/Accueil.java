@@ -8,6 +8,7 @@ package gestionpersonnel;
 import javax.swing.SwingUtilities;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -59,7 +60,24 @@ public class Accueil extends javax.swing.JFrame {
         progress.setUI(new ProgressCircleUI());
         progress.setStringPainted(true);
         progress.setFont(progress.getFont().deriveFont(20f));
-        progress.setValue(50);//CALCULER LE NB DES MISSIONS EN COURS
+        int nbencours = 2;
+        int nbtot = 4;
+        for (Mission m : MissionDAO.missions) {
+            if (m.getStatut() == 3) {
+                nbencours++;
+            }
+            nbtot++;
+        };
+        int fin = 2;
+        if (nbtot != 0) {
+            fin = (nbencours/nbtot)*100;
+        }
+//        else {
+//            fin = 0;
+//        }
+        progress.setValue(fin);
+        
+        
     }
     
     public void setD(DateEntreprise d) {
@@ -130,7 +148,6 @@ public class Accueil extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MSSM");
-        setPreferredSize(new java.awt.Dimension(1076, 704));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -491,7 +508,7 @@ public class Accueil extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97)
+                .addGap(100, 100, 100)
                 .addComponent(text1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(48, 48, 48))
         );
@@ -628,7 +645,7 @@ public class Accueil extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 194, Short.MAX_VALUE))
+                .addGap(0, 202, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(sidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -730,7 +747,7 @@ public class Accueil extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        DateEntreprise d = new DateEntreprise();
+        DateEntreprise d = new DateEntreprise(new Date());
         /* Create and display the form */
         SwingUtilities.invokeLater(new Runnable() {
             @Override

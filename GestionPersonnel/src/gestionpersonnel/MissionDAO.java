@@ -57,7 +57,7 @@ public class MissionDAO {
             Mission m = new Mission(id, nom, duree, de, statut, nbPersTot); 
             if (canAddToList(m)) {
                 MissionDAO.missions.add(m);
-                Mission.NUM_ID++;
+                Mission.NUM_ID = id + 1;
             }
         }
         

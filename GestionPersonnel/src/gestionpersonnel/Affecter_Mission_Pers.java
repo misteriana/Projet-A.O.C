@@ -5,12 +5,34 @@
  */
 package gestionpersonnel;
 
+import java.awt.Frame;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author cedri
  */
 public class Affecter_Mission_Pers extends javax.swing.JDialog {
 
+    private HashMap<String, Integer> competences = new HashMap<>();
+    private String[] strings = new String[4];
+    private ArrayList<Integer> personnels = new ArrayList<>();
+    private int nbBesoins = 0;
+    private int nbSelect = 0;
+    
     /**
      * Creates new form Affecter_Mission_Pers
      */
@@ -20,6 +42,19 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
         this.setSize(getWidth() + 16, getHeight() + 39);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        
+    }
+    
+    public Affecter_Mission_Pers(Frame parent, boolean modal, HashMap<String, Integer> competences, String[] strings) throws IOException, ParseException {
+        super(parent, modal);
+        initComponents();
+        this.setSize(getWidth() + 16, getHeight() + 39);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.competences = competences;
+        this.strings = strings;
+        recupererDonnees();
+        recupererPersonnelCompetent();
     }
 
     /**
@@ -84,6 +119,9 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabCompMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tabCompMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(tabComp);
 
@@ -93,7 +131,7 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
 
         bEnregistrer.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
         bEnregistrer.setForeground(new java.awt.Color(74, 74, 74));
-        bEnregistrer.setText("Enregistrer");
+        bEnregistrer.setText("Mettre à jour");
         bEnregistrer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bEnregistrerActionPerformed(evt);
@@ -159,31 +197,31 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lNbPersonnes1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lNbPersonnes2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bEnregistrer))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(bRetour)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 693, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lNbPersonnes1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lNbPersonnes2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bEnregistrer)
+                .addGap(101, 101, 101))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bEnregistrer)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lNbPersonnes1)
-                        .addComponent(lNbPersonnes2)))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lNbPersonnes1)
+                    .addComponent(lNbPersonnes2)
+                    .addComponent(bEnregistrer))
+                .addGap(23, 23, 23)
                 .addComponent(bRetour)
                 .addContainerGap())
         );
@@ -210,13 +248,13 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 709, Short.MAX_VALUE)
                         .addComponent(bValider))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(tTtitre)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -244,6 +282,22 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     }//GEN-LAST:event_tabCompMouseClicked
 
     private void bValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bValiderActionPerformed
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            Mission m = new Mission(this.strings[0], Integer.parseInt(this.strings[2]),this.strings[1] , 1, Integer.parseInt(this.strings[3]));
+            for (String s : this.competences.keySet()) {
+                m.addCompetence(s, this.competences.get(s));
+            }
+            Personnel ps = null;
+            for (Integer i : this.personnels) {
+                for (Personnel p : PersonnelDAO.personnels) {
+                    if (p.getId() == i) {
+                        ps = p;
+                    }
+                }
+                m.addParticipant(i, ps);
+            }
+            MissionDAO.missions.add(m);
+            this.dispose();
 
     }//GEN-LAST:event_bValiderActionPerformed
 
@@ -252,13 +306,98 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     }//GEN-LAST:event_bRetourActionPerformed
 
     private void tabPersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPersMouseClicked
-
     }//GEN-LAST:event_tabPersMouseClicked
 
+    
+    
     private void bEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEnregistrerActionPerformed
-
+        nbSelect = 0;
+        this.personnels = new ArrayList<Integer>();
+        for (int i = 0; i < tabPers.getRowCount(); i++) {
+            int id = Integer.parseInt((String) tabPers.getValueAt(i, 0));
+            if ((boolean) tabPers.getValueAt(i, 3) ) {
+                nbSelect++;             
+                this.personnels.add(id);
+                lNbPersonnes1.setText(nbSelect + " / " + nbBesoins);
+            }
+            else {
+                if (this.personnels.contains(id)) {
+                    this.personnels.remove(Integer.valueOf(id));
+                    nbSelect--;
+                    lNbPersonnes1.setText(nbSelect + " / " + nbBesoins);
+                }
+            }
+        } 
     }//GEN-LAST:event_bEnregistrerActionPerformed
 
+    private void tabCompMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCompMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabCompMouseEntered
+
+    
+    public void recupererDonnees() throws IOException, ParseException {
+        Object[][] data = new Object[this.competences.size()][3];
+        Set<String> keys = this.competences.keySet();
+        int i = 0;
+        String nom = null;
+        for (String s : keys) {          
+            data[i][0] = s;
+            for (Competence c : CompetenceDAO.competences) {
+                if (c.getId().equals(s))
+                    nom = c.getName();
+            }
+            data[i][1] = nom;
+            data[i][2] = this.competences.get(s);
+            i++;
+            nbBesoins += this.competences.get(s);
+        }
+        String[] header = new String[] {"Code", "Nom", "Nombre de personnes nécessaire"};
+        DefaultTableModel tbm = new DefaultTableModel(data, header);
+        tabComp.setModel(tbm);
+    }
+    
+    public void recupererPersonnelCompetent() throws IOException, ParseException {
+        if (!PersonnelDAO.hasloadP) {
+            PersonnelDAO pDAO = new PersonnelDAO();
+            pDAO.recupererPersonnels();
+        }
+        if (!PersonnelDAO.hasloadC) {
+            PersonnelDAO pDAO = new PersonnelDAO();
+            pDAO.recupererCompetencesPersonnels();
+        }
+        ArrayList<Personnel> pCompetent = new ArrayList<>();
+        Set<String> keys = this.competences.keySet();
+        for (String s : keys) {          
+            for (Personnel p : PersonnelDAO.personnels) {
+                for (Competence c : p.competences) {
+                    if ((canAddToList((Integer.valueOf(p.getId())), pCompetent)) && (c.getId().equals(s))) {
+                        pCompetent.add(p);
+                    }
+                }
+            }
+        }
+        int i = 0;
+        DefaultTableModel dtm = (DefaultTableModel) tabPers.getModel();
+        dtm.setRowCount(pCompetent.size());
+        tabPers.setModel(dtm);
+        for (Personnel p : pCompetent) {
+            tabPers.setValueAt(String.valueOf(p.getId()), i, 0);
+            tabPers.setValueAt(p.getName(), i, 1);
+            tabPers.setValueAt(p.getPrenom(), i, 2);
+            tabPers.setValueAt(false, i, 3);
+            i++;
+        }
+    }
+    
+    public boolean canAddToList(Integer toAdd, ArrayList<Personnel> arraylist) {
+        for (Personnel p : arraylist) {
+            if (p.getId() == toAdd) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     /**
      * @param args the command line arguments
      */
