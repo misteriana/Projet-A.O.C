@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
@@ -282,8 +283,21 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     }//GEN-LAST:event_tabCompMouseClicked
 
     private void bValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bValiderActionPerformed
+        try {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            Mission m = new Mission(this.strings[0], Integer.parseInt(this.strings[2]),this.strings[1] , 1, Integer.parseInt(this.strings[3]));
+            int statut = 1;
+            Date deb = df.parse(this.strings[1]);
+            if (deb.before(new Date())) {
+                statut = 3;
+            }
+            Calendar c = Calendar.getInstance();
+            c.setTime(deb);
+            c.add(Calendar.DATE, Integer.parseInt(this.strings[2]));
+            Date dfin = c.getTime();
+            if (dfin.before(new Date())) {
+                statut = 4;
+            }
+            Mission m = new Mission(this.strings[0], Integer.parseInt(this.strings[2]),this.strings[1] , statut, Integer.parseInt(this.strings[3]));
             for (String s : this.competences.keySet()) {
                 m.addCompetence(s, this.competences.get(s));
             }
@@ -298,6 +312,9 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
             }
             MissionDAO.missions.add(m);
             this.dispose();
+        } catch (ParseException ex) {
+            Logger.getLogger(Affecter_Mission_Pers.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_bValiderActionPerformed
 

@@ -8,6 +8,7 @@ package gestionpersonnel;
 import javax.swing.SwingUtilities;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,27 +33,112 @@ public class Accueil extends javax.swing.JFrame {
     
     private static Accueil instance = null;
     
-    public static Accueil getInstance(DateEntreprise dateE){
+    public static Accueil getInstance(DateEntreprise dateE) throws IOException, ParseException{
         if (instance == null){
             instance = new Accueil(dateE);
         }else{
             instance.setD(dateE);
         }
+        if (!MissionDAO.hasloadM) {
+            MissionDAO mDAO = new MissionDAO();
+            mDAO.recupererMissions();
+        }
+        int nbencours = 0;
+        int nbtot = 0;
+        for (Mission m : MissionDAO.missions) {
+            if (m.getStatut() == 3) {
+                nbencours++;
+            }
+            nbtot++;
+        };
+        int fin = 0;
+        if (nbtot != 0) {
+            fin = (int) ((Double.parseDouble(String.valueOf(nbencours)) / Double.parseDouble(String.valueOf(nbtot)))*100);
+        }
+        progress.setValue(fin);
+        int nbOccup = 0;
+        int nbTotal = 0;
+        if (!MissionDAO.hasloadP) {
+            MissionDAO mDAO = new MissionDAO();
+            mDAO.recupererParticipantsMissions();
+        }
+        if (!PersonnelDAO.hasloadP) {
+            PersonnelDAO pDAO = new PersonnelDAO();
+            pDAO.recupererPersonnels();
+        }
+        ArrayList<Integer> passes = new ArrayList<>();
+        for (Personnel p : PersonnelDAO.personnels) {
+            for (Mission m : MissionDAO.missions) {
+                for (Integer i : m.getParticipants().keySet()) {
+                    if (p.getId() == i && !passes.contains(p.getId())) {
+                        nbOccup++;
+                        passes.add(p.getId());
+                    }
+                }
+            }
+            nbTotal++;
+        }
+        int pourcent = (int) ((Double.parseDouble(String.valueOf(nbOccup)) / Double.parseDouble(String.valueOf(nbTotal)))*100);
+        nb.setText(pourcent + " %");
         return instance;
     }
     
-    public static Accueil getInstance(){
+    public static Accueil getInstance() throws IOException, ParseException{
         if (instance == null){
             instance = new Accueil(new DateEntreprise());
         }
-        return instance;
+        if (!MissionDAO.hasloadM) {
+            MissionDAO mDAO = new MissionDAO();
+            mDAO.recupererMissions();
+        }
+        int nbencours = 0;
+        int nbtot = 0;
+        for (Mission m : MissionDAO.missions) {
+            if (m.getStatut() == 3) {
+                nbencours++;
+            }
+            nbtot++;
+        };
+        int fin = 0;
+        if (nbtot != 0) {
+            fin = (int) ((Double.parseDouble(String.valueOf(nbencours)) / Double.parseDouble(String.valueOf(nbtot)))*100);
+        }
+        progress.setValue(fin);
+        int nbOccup = 0;
+        int nbTotal = 0;
+        if (!MissionDAO.hasloadP) {
+            MissionDAO mDAO = new MissionDAO();
+            mDAO.recupererParticipantsMissions();
+        }
+        if (!PersonnelDAO.hasloadP) {
+            PersonnelDAO pDAO = new PersonnelDAO();
+            pDAO.recupererPersonnels();
+        }
+        ArrayList<Integer> passes = new ArrayList<>();
+        for (Personnel p : PersonnelDAO.personnels) {
+            for (Mission m : MissionDAO.missions) {
+                for (Integer i : m.getParticipants().keySet()) {
+                    if (p.getId() == i && !passes.contains(p.getId())) {
+                        nbOccup++;
+                        passes.add(p.getId());
+                    }
+                }
+            }
+            nbTotal++;
+        }
+        int pourcent = (int) ((Double.parseDouble(String.valueOf(nbOccup)) / Double.parseDouble(String.valueOf(nbTotal)))*100);
+        nb.setText(pourcent + " %");
+        return instance;  
     }
     
-    private Accueil(DateEntreprise dateE) {
+    private Accueil(DateEntreprise dateE) throws IOException, ParseException {
         initComponents();
         setD(dateE);
         this.setSize(getWidth() + 16, getHeight() + 39);
-        
+        if (!MissionDAO.hasloadM) {
+            MissionDAO mDAO = new MissionDAO();
+            mDAO.recupererMissions();
+        }
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         //System.out.println("LA DATE PG ACCUEIL " + date.getText());
@@ -60,24 +146,43 @@ public class Accueil extends javax.swing.JFrame {
         progress.setUI(new ProgressCircleUI());
         progress.setStringPainted(true);
         progress.setFont(progress.getFont().deriveFont(20f));
-        int nbencours = 2;
-        int nbtot = 4;
+        int nbencours = 0;
+        int nbtot = 0;
         for (Mission m : MissionDAO.missions) {
             if (m.getStatut() == 3) {
                 nbencours++;
             }
             nbtot++;
         };
-        int fin = 2;
+        int fin = 0;
         if (nbtot != 0) {
-            fin = (nbencours/nbtot)*100;
+            fin = (int) ((Double.parseDouble(String.valueOf(nbencours)) / Double.parseDouble(String.valueOf(nbtot)))*100);
         }
-//        else {
-//            fin = 0;
-//        }
         progress.setValue(fin);
-        
-        
+        int nbOccup = 0;
+        int nbTotal = 0;
+        if (!MissionDAO.hasloadP) {
+            MissionDAO mDAO = new MissionDAO();
+            mDAO.recupererParticipantsMissions();
+        }
+        if (!PersonnelDAO.hasloadP) {
+            PersonnelDAO pDAO = new PersonnelDAO();
+            pDAO.recupererPersonnels();
+        }
+        ArrayList<Integer> passes = new ArrayList<>();
+        for (Personnel p : PersonnelDAO.personnels) {
+            for (Mission m : MissionDAO.missions) {
+                for (Integer i : m.getParticipants().keySet()) {
+                    if (p.getId() == i && !passes.contains(p.getId())) {
+                        nbOccup++;
+                        passes.add(p.getId());
+                    }
+                }
+            }
+            nbTotal++;
+        }
+        int pourcent = (int) ((Double.parseDouble(String.valueOf(nbOccup)) / Double.parseDouble(String.valueOf(nbTotal)))*100);
+        nb.setText(pourcent + " %");
     }
     
     public void setD(DateEntreprise d) {
@@ -458,7 +563,7 @@ public class Accueil extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(nbPersonnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nb, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE))
+                    .addComponent(text, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(nbPersonnelLayout.createSequentialGroup()
                 .addGap(194, 194, 194)
@@ -497,7 +602,7 @@ public class Accueil extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(text1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(text1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -558,9 +663,9 @@ public class Accueil extends javax.swing.JFrame {
                             .addComponent(gagnant1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(TOPLayout.createSequentialGroup()
-                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(text2, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                        .addComponent(text2, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                         .addGap(21, 21, 21))))
         );
         TOPLayout.setVerticalGroup(
@@ -667,8 +772,14 @@ public class Accueil extends javax.swing.JFrame {
             }
         }
         if (r == 2) {
+            try {
                 Accueil a = new Accueil(d);
                 a.setVisible(true);         
+            } catch (IOException ex) {
+                Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_formWindowClosing
 
@@ -752,8 +863,14 @@ public class Accueil extends javax.swing.JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Accueil(d).setVisible(true);
-                //TestPieChart.initAndShowGUI();
+                try {
+                    new Accueil(d).setVisible(true);
+                    //TestPieChart.initAndShowGUI();
+                } catch (IOException ex) {
+                    Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });
@@ -790,11 +907,11 @@ public class Accueil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel mission;
-    private javax.swing.JLabel nb;
+    private static javax.swing.JLabel nb;
     private javax.swing.JPanel nbPersonnel;
     private javax.swing.JPanel param;
     private javax.swing.JPanel personnel;
-    private javax.swing.JProgressBar progress;
+    private static javax.swing.JProgressBar progress;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JPanel tdB;
     private javax.swing.JLabel text;

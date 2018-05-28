@@ -94,7 +94,6 @@ public class MissionDAO {
                         for (Competence comp : cDAO.competences) {
                             if (comp.getId().equals(competence) && canAddToListComp(comp, m)) { 
                                 m.addCompetence(competence, nbComp);
-                                System.out.println(m.getCompetences().toString());
                             }
                         }
                     }
@@ -135,7 +134,6 @@ public class MissionDAO {
                         for (Personnel p : pDAO.personnels) {
                             if (p.getId() == (int) personnel && canAddToListPers(p, m)) { 
                                 m.addParticipant(personnel, p);
-                                System.out.println(m.getParticipants().toString());
                             }
                         }
                     }
