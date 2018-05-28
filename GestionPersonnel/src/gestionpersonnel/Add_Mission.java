@@ -21,7 +21,7 @@ import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ *<b> Cette interface permet d'ajouter une mission</b>
  * @author cedri
  */
 public class Add_Mission extends javax.swing.JDialog {
@@ -33,6 +33,9 @@ public class Add_Mission extends javax.swing.JDialog {
     
     /**
      * Creates new form Add_Mission
+     * @throws java.io.IOException
+     * 
+     *  Exception
      */
     public Add_Mission() throws IOException {
         this.modele = new DefaultListModel();
@@ -46,6 +49,12 @@ public class Add_Mission extends javax.swing.JDialog {
     
     /**
      * Creates new form Add_Mission
+     * @param parent
+     *      La frame parent est Menu_Mission
+     * @param modal
+     *       Boolean modal
+     * @throws java.io.IOException
+     *          Exception
      */
     public Add_Mission(JFrame parent, boolean modal) throws IOException {
         super(parent, modal);
@@ -91,6 +100,7 @@ public class Add_Mission extends javax.swing.JDialog {
         jTextField3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(248, 249, 250));
 
         jLabel1.setFont(new java.awt.Font("Nunito Sans", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(74, 74, 74));

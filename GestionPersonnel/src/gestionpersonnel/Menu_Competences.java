@@ -18,7 +18,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- *
+ *<b> Cette interface affiche les différentes competences</b>
  * @author Anseea
  */
 public class Menu_Competences extends javax.swing.JFrame {
@@ -29,6 +29,10 @@ public class Menu_Competences extends javax.swing.JFrame {
     
     /**
      * Creates new form Menu_Competences
+     * @throws java.io.IOException
+     *  Exception
+     * @throws java.text.ParseException
+     *  Exception
      */
     public Menu_Competences() throws IOException, ParseException {      
         initComponents();

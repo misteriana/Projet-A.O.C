@@ -10,11 +10,9 @@ package gestionpersonnel;
 public class Competence {
 
     private String id;
-
     private String englishname;
-
     private String name;
-    
+  
     public Competence() {
         
     }

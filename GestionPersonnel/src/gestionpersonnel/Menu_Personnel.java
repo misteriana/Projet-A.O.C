@@ -19,7 +19,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- * <b> Cette interface affiche le personnel de l' entreprise. </b>
+ * <b> Cette interface affiche le personnel de l'entreprise. </b>
  * @author jonathan detrier
  */
 public class Menu_Personnel extends javax.swing.JFrame {
@@ -31,6 +31,10 @@ public class Menu_Personnel extends javax.swing.JFrame {
     
     /**
      * Creates new form Menu_Personnel
+     * @throws java.io.IOException
+     * Exception
+     * @throws java.text.ParseException
+     * Exception
      */
     public Menu_Personnel() throws IOException, ParseException {
         initComponents();

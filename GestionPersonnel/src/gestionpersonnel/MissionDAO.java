@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * <b> Cette classe permet de récupérer la liste des missions depuis un fichier csv </b>
  * @author jonathandetrier
  */
 public class MissionDAO {
@@ -32,7 +32,11 @@ public class MissionDAO {
      /**
      * @author jonathan detrier
      * @throws java.io.FileNotFoundException
+     *  Exception
+     * @throws java.text.ParseException
+     *  Exception
      * @throws java.io.IOException
+     *  Exception
      * @since v 1.0
      */
     public void recupererMissions() throws IOException, ParseException  {
@@ -66,7 +70,9 @@ public class MissionDAO {
     /**
      * @author jonathan detrier
      * @throws IOException
+     * Exception
      * @throws ParseException
+     * ParseException
      * @since v 1.0
      */
     public void recupererCompetencesMissions() throws IOException, ParseException  {
@@ -107,7 +113,9 @@ public class MissionDAO {
     /**
      * @author jonathan detrier
      * @throws IOException
+     *  Exception
      * @throws ParseException
+     *  Exception
      * @since v 1.0
      */
     public void recupererParticipantsMissions() throws IOException, ParseException  {
@@ -180,10 +188,12 @@ public class MissionDAO {
 
         /**
      * 
-     * Permet de vérifier si une compétence de la liste a déjà cet identifiant
+     * Permet de vérifier si un personnel de la liste a déjà cet identifiant
      * @author jonathan detrier
-     * @param c : Competence
-     * @param m : Mission
+     * @param p 
+     *      Personnel
+     * @param m 
+     *      Mission
      * @return Le booléen disant si on peut ajouter l'élément à la liste
      * @since v 1.0
      */

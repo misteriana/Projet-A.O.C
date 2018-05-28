@@ -30,6 +30,10 @@ public class Menu_Mission extends javax.swing.JFrame {
     
     /**
      * Creates new form Menu_Mission
+     * @throws java.text.ParseException
+     * Exception
+     * @throws java.io.IOException
+     * Exception
      */
     public Menu_Mission() throws ParseException, IOException {
         if (!MissionDAO.hasloadM) {

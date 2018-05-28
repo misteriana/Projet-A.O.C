@@ -26,13 +26,14 @@ public class Mission {
   
    /**
     * Constructeur d'une mission
+    * @param id
+    *           L'identifiant de la mission
     * @param nom
     *           Nom de la mission
     * @param duree
     *           Durée en jours ouvrés
     * @param dateDeb
     *           Date de début de la mission
-    * @see projet.metier.missions.statutMission
     * @param statut 
     *           Statut de la mission (En cours, en préparation, planifiée, terminée)
     * @param nbPers 
@@ -224,8 +225,8 @@ public class Mission {
      * 
      * @param keyPersonnel
      *          identifiant de la personne
-     * @param keyCompetence
-     *          compétence sur laquelle elle travaille
+     * @param p
+     *          personne a ajoutee
      */
     public void addParticipant(Integer keyPersonnel, Personnel p){
         participants.put(keyPersonnel, p);

@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * <b> Cette classe permet d'ajouter un employé</b>
+ * <b> Cette interface permet d'ajouter un employé</b>
  * 
  * @author jonathan detrier
  */
@@ -39,7 +37,13 @@ public class Add_Employe extends javax.swing.JDialog {
     /**
      * Creates new form Add_Employe
      * @param parent
+     *          La frame parent Menu_Personnel
      * @param modal
+     *          Boolean modal                                  
+     * @throws java.io.IOException
+     *          Exception
+     * @throws java.text.ParseException
+     *          ParseException
      */
     public Add_Employe(JFrame parent, boolean modal) throws IOException, ParseException {
         super(parent, modal);
@@ -374,6 +378,7 @@ public class Add_Employe extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     Add_Employe dialog = new Add_Employe(new javax.swing.JFrame(), true);

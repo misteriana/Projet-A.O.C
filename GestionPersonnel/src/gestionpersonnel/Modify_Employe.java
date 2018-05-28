@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * <b> Cette classe permet la modification d'un employé</b>
+ * <b> Cette interface permet la modification d'un employé</b>
  * 
  * @author jonathan detrier
  */
@@ -39,8 +39,15 @@ public class Modify_Employe extends javax.swing.JDialog {
      /**
      * Creates new form Modify_Employe
      * @param parent
+     *  Frame parent Menu_Personnel
      * @param modal
+     *      boolean modal
      * @param id
+     *      String id
+     * @throws java.io.IOException
+     *      Exception
+     * @throws java.text.ParseException
+     *      ParseException
      */
     public Modify_Employe(JFrame parent, boolean modal, String id) throws IOException, ParseException {
         super(parent, modal);

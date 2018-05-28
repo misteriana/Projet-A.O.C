@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
 /**
- *
+ * <b> Cette classe permet de creer le progress bar de la page d'accueil </b>
  * @author Anseea
  */
 public class ProgressCircleUI extends BasicProgressBarUI {

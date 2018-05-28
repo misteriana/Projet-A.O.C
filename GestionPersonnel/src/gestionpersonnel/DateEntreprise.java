@@ -59,7 +59,9 @@ public class DateEntreprise {
     /**
      * Modifie la date courante de l'entreprise
      * @param date
+     *          La nouvelle date de l'entreprise
      * @throws java.text.ParseException
+     *          Exception
      */
     public void setDate(String date) throws ParseException {
         this.date = (Date) FORMAT.parse(date);

@@ -33,7 +33,9 @@ public class PersonnelDAO {
     /**
      * @author jonathan detrier
      * @throws java.io.FileNotFoundException
+     *      Exception
      * @throws java.io.IOException
+     *      Exception
      * @since v 1.0
      */
     public void recupererPersonnels() throws IOException, ParseException  {
@@ -69,7 +71,9 @@ public class PersonnelDAO {
     /**
      * @author jonathan detrier
      * @throws IOException
+     *      Exception
      * @throws ParseException
+     *      Exception
      * @since v 1.0
      */
     public void recupererCompetencesPersonnels() throws IOException, ParseException  {

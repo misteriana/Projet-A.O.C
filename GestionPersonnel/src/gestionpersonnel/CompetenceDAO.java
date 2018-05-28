@@ -27,8 +27,8 @@ public class CompetenceDAO {
     
     /**
      * @author cédric greufeille
-     * @throws java.io.FileNotFoundException
      * @throws java.io.IOException
+     *      Exception
      * @since v 1.0
      */
     public void recupererCompetences() throws IOException  {

@@ -22,7 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ *<b> Cette interface permet d'affecter un employé a une mission</b>
  * @author cedri
  */
 public class Affecter_Mission_Pers extends javax.swing.JDialog {
@@ -35,6 +35,10 @@ public class Affecter_Mission_Pers extends javax.swing.JDialog {
     
     /**
      * Creates new form Affecter_Mission_Pers
+     * @param parent
+     *      Frame parent est Menu_Mission
+     * @param modal
+     *      boolean modal
      */
     public Affecter_Mission_Pers(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

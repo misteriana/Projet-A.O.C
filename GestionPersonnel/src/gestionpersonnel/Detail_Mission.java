@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ *<b> Cette interface permet d'avoir les details de la mission</b>
  * @author Cedric Greufeille
  */
 public class Detail_Mission extends javax.swing.JDialog {
@@ -21,6 +21,8 @@ public class Detail_Mission extends javax.swing.JDialog {
     
     /**
      * Creates new form Detail_Mission
+     * @param i
+     *          Integer i pour la mission
      */
     public Detail_Mission(Integer i) {
         initComponents();
@@ -330,6 +332,7 @@ public class Detail_Mission extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Detail_Mission dialog = new Detail_Mission();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {

@@ -34,6 +34,12 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
     
     /**
      * Creates new form Verification_Add_Employe
+     * @param parent
+     *  Frame parent Add_Employe
+     * @param modal
+     *  boolean modal
+     * @param ouvreur
+     *  JDialog
      */
     public Verification_Add_Employe(JFrame parent, boolean modal, JDialog ouvreur) {
         super(parent, modal);
@@ -74,12 +80,14 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setTitle("Confirmation");
+        setBackground(new java.awt.Color(255, 255, 255));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
 
+        okButton.setFont(new java.awt.Font("Nunito Sans Light", 0, 14)); // NOI18N
         okButton.setText("Oui");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +95,7 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
             }
         });
 
+        cancelButton.setFont(new java.awt.Font("Nunito Sans Light", 0, 14)); // NOI18N
         cancelButton.setText("Non");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +103,7 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Nunito Sans Light", 0, 14)); // NOI18N
         jLabel1.setText("Souhaitez-vous vraiment quitter sans enregistrer ?");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -102,24 +112,21 @@ public class Verification_Add_Employe extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(66, 66, 66)
-                .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cancelButton)
+                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(20, 20, 20))
+                .addGap(34, 34, 34))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelButton, okButton});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addContainerGap(61, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(okButton))
