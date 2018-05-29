@@ -443,17 +443,23 @@ public class Parametres extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String dateUser = this.pDate.getText();
-            //System.out.println("LA DATE PG PARAMETRES " + dateUser);
-            //d = new DateEntreprise(this.pDate.getText());
-            d.setDate(dateUser);
+        try {                                         
+            try {
+                String dateUser = this.pDate.getText();
+                //System.out.println("LA DATE PG PARAMETRES " + dateUser);
+                //d = new DateEntreprise(this.pDate.getText());
+                d.setDate(dateUser);
+            } catch (ParseException ex) {
+                Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Accueil a = Accueil.getInstance(d);
+            a.setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        Accueil a = Accueil.getInstance(d);
-        a.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void personnelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_personnelMousePressed
@@ -481,9 +487,15 @@ public class Parametres extends javax.swing.JFrame {
     }//GEN-LAST:event_missionMousePressed
 
     private void tdBMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdBMousePressed
-        Accueil a = Accueil.getInstance(d);
-        a.setVisible(true);
-        this.dispose(); 
+        try {
+            Accueil a = Accueil.getInstance(d);
+            a.setVisible(true); 
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Parametres.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_tdBMousePressed
 
     /**
